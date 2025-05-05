@@ -1,0 +1,13 @@
+{
+    "mcpServers": {
+        "blender": {
+            "command": "uv",
+            "args": [
+                "--directory",
+                "/Users/caseymanning/Documents/mcp-new",
+                "run",
+                "server.py"
+            ]
+        }
+    }
+}

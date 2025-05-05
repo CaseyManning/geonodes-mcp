@@ -270,7 +270,31 @@ def add_node(ctx: Context, node_type: str, inputValues: Dict[str, Any]) -> str:
 
 @mcp.tool()
 def set_node_values(ctx: Context, node_id: int, inputValues: Dict[str, Any]) -> str:
+    """Set the values of a node
+    Parameters:
+    - node_id: The id of the node to set the values of
+    - inputValues: Dictionary of default values for the node inputs
+    """
     return send_blender_command("set_node_values", {"node_id": node_id, "inputValues": inputValues})
+
+@mcp.tool()
+def add_link(ctx: Context, from_node: int, from_socket: str, to_node: int, to_socket: str) -> str:
+    """Add a link between two nodes
+    Parameters:
+    - from_node: The id of the node to link from
+    - from_socket: The socket to link from
+    - to_node: The id of the node to link to
+    - to_socket: The socket to link to
+    """
+    return send_blender_command("add_link", {"from_node": from_node, "from_socket": from_socket, "to_node": to_node, "to_socket": to_socket})
+
+@mcp.tool()
+def get_node_state(ctx: Context, node_id: int) -> str:
+    """Get the values and connections of a node in the graph
+    Parameters:
+    - node_id: The id of the node to get the values of
+    """
+    return send_blender_command("get_node_state", {"node_id": node_id})
 
 @mcp.tool()
 def get_current_graph(ctx: Context) -> str:
@@ -281,6 +305,14 @@ def get_current_graph(ctx: Context) -> str:
 def test_blender_connection(ctx: Context) -> str:
     """Test the Blender connection"""
     return get_blender_connection()
+
+@mcp.tool()
+def set_output_node(ctx: Context, node_id: int) -> str:
+    """Set the output node
+    Parameters:
+    - node_id: The id of the node to set as the output node
+    """
+    return send_blender_command("set_output_node", {"node_id": node_id})
 
 def load_node_data():
     global node_data

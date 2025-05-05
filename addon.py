@@ -37,7 +37,8 @@ class BlenderMCPServer:
         self.socket = None
         self.server_thread = None
         self.nodes = {}
-    
+        self.output_node = None
+
     def start(self):
         if self.running:
             print("Server is already running")
@@ -198,6 +199,9 @@ class BlenderMCPServer:
             "add_node": self.add_node,
             "get_current_graph": self.get_current_graph,
             "set_node_values": self.set_node_values,
+            "get_node_state": self.get_node_state,
+            "add_link": self.add_link,
+            "set_output_node": self.set_output_node
         }
         
         handler = handlers.get(cmd_type)
@@ -229,6 +233,7 @@ class BlenderMCPServer:
         if(inputValues is not None):
             for inputSocket in inputValues.keys():
                 if(not inputSocket in new_node.inputs):
+                    geo_node_group.nodes.remove(new_node)
                     return {"status": "error", "message": f"Input socket {inputSocket} not found for node {node_type}. Available inputs: {new_node.inputs.keys()}"}
                 new_node.inputs[inputSocket].default_value = inputValues[inputSocket]
         
@@ -245,18 +250,76 @@ class BlenderMCPServer:
         newValues = {}
         for inputSocket in inputValues.keys():
             if(not inputSocket in node.inputs):
-                return {"status": "error", "message": f"Input socket {inputSocket} not found for node {node_type}. Available inputs: {node.inputs.keys()}"}
+                return {"status": "error", "message": f"Input socket {inputSocket} not found for node. Available inputs: {node.inputs.keys()}"}
             node.inputs[inputSocket].default_value = inputValues[inputSocket]
-            newValues[inputSocket] = node.inputs[inputSocket].default_value
+            newValues[inputSocket] = str(node.inputs[inputSocket].default_value)
                 
         return {"status": "success", "result": {"nodeValues": newValues}}
+
+    def get_node_state(self, node_id):
+        if(not node_id in self.nodes):
+            return {"status": "error", "message": f"Node with id {node_id} not found"}
+        
+        node = self.nodes[node_id]
+
+        nodeState = {}
+        nodeState["inputs"] = {}
+        nodeState["outputs"] = []
+
+        for inputSocket in node.inputs:
+            if(inputSocket.is_linked):
+                for link in inputSocket.links:
+                    nodeState["inputs"][inputSocket.name] = {"node": link.from_node.name, "id": link.from_node['id']}
+            else:
+                nodeState["inputs"][inputSocket.name] = inputSocket.default_value
+
+        for outputSocket in node.outputs:
+            if(outputSocket.is_linked):
+                for link in outputSocket.links:
+                    nodeState["outputs"].append({"socket": outputSocket.name, "to": link.to_node.name})
+            else:
+                nodeState["outputs"].append({"socket": outputSocket.name, "to": "None"})
+
+        return {"status": "success", "result": nodeState}
+
+    def add_link(self, from_node: int, from_socket: str, to_node: int, to_socket: str):
+        if(not from_node in self.nodes):
+            return {"status": "error", "message": f"Node with id {from_node} not found"}
+        
+        if(not to_node in self.nodes):
+            return {"status": "error", "message": f"Node with id {to_node} not found"}
+        
+        from_node = self.nodes[from_node]
+        to_node = self.nodes[to_node]
+
+        if(from_socket not in from_node.outputs and from_socket == "Geometry" and "Mesh" in from_node.outputs):
+            from_socket = "Mesh"
+
+        if(len(from_node.outputs) == 1):
+            geo_node_group.links.new(from_node.outputs[0], to_node.inputs[to_socket])
+        else:
+            geo_node_group.links.new(from_node.outputs[from_socket], to_node.inputs[to_socket])
+
+        return {"status": "success", "message": f"Link added between {from_node.name} and {to_node.name}"}
+
+    def set_output_node(self, node_id: int):
+        if(not node_id in self.nodes):
+            return {"status": "error", "message": f"Node with id {node_id} not found"}
+        
+        if(self.output_node == None):
+            self.output_node = geo_node_group.nodes.new("NodeGroupOutput")
+            self.output_node['id'] = self.generate_id()
+
+        geo_node_group.links.new(self.nodes[node_id].outputs[0], self.output_node.inputs[0])
+
+        return {"status": "success", "message": f"Output node set to {self.output_node.name}"}
 
     def get_current_graph(self):
         nodes = geo_node_group.nodes
         links = geo_node_group.links
 
         nodesData = {}
-        nodesData["nodes"] = [node.name for node in nodes]
+        nodesData["nodes"] = [{"id": node["id"], "name": node.name} for node in nodes]
         nodesData["links"] = []
 
         for link in links:
