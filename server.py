@@ -7,8 +7,7 @@ import socket
 import json
 import asyncio
 import logging
-from typing import AsyncIterator, Dict, Any, List
-
+from typing import AsyncIterator, Dict, Any, List, Annotated
 # Initialize FastMCP server
 mcp = FastMCP("weather")
 
@@ -217,40 +216,23 @@ def get_blender_connection():
     
     return _blender_connection
 
-@mcp.tool()
-def get_scene_info(ctx: Context) -> str:
-    """Get detailed information about the current Blender scene"""
+def send_blender_command(command: str, params: Dict[str, Any] = None):
     try:
         blender = get_blender_connection()
-        result = blender.send_command("get_scene_info")
+        result = blender.send_command(command, params)
         
-        # Just return the JSON representation of what Blender sent us
         return json.dumps(result, indent=2)
     except Exception as e:
-        print(f"Error getting scene info from Blender: {str(e)}")
-        return f"Error getting scene info: {str(e)}"
+        return f"Error with command {command}: {str(e)}"
 
-@mcp.tool()
-def get_object_info(ctx: Context, object_name: str) -> str:
-    """
-    Get detailed information about a specific object in the Blender scene.
-    
-    Parameters:
-    - object_name: The name of the object to get information about
-    """
-    try:
-        blender = get_blender_connection()
-        result = blender.send_command("get_object_info", {"name": object_name})
-        
-        # Just return the JSON representation of what Blender sent us
-        return json.dumps(result, indent=2)
-    except Exception as e:
-        print(f"Error getting object info from Blender: {str(e)}")
-        return f"Error getting object info: {str(e)}"
 
 @mcp.tool()
 def list_node_types(ctx: Context) -> str:
-    """List all the available geometry node types"""
+    """List all the available geometry node types in a category
+    
+    Parameters:
+    - category: Any of [Hair, Material, Object, Texture, Utility]
+    """
 
     if(node_data is None):
         load_node_data()
@@ -258,14 +240,47 @@ def list_node_types(ctx: Context) -> str:
     return json.dumps(list(node_data.keys()), indent=2)
 
 @mcp.tool()
-def get_node_info(ctx: Context, node_type: str) -> str:
+def get_node_type_info(ctx: Context, node_type: str) -> str:
     """Get detailed information about a specific geometry node type"""
     if(node_data is None):
         load_node_data()
 
     return json.dumps(node_data[node_type], indent=2)
 
+@mcp.tool()
+def get_current_graph(ctx: Context) -> str:
+    """see the current node graph"""
+    return send_blender_command("get_current_graph")
 
+@mcp.tool()
+def add_node(ctx: Context, node_type: str, inputValues: Dict[str, Any]) -> str:
+    """Add a node to the geometry nodes graph
+    
+    Parameters:
+    - node_type: The type of node to add
+    - inputValues: Dictionary of default values for the node inputs
+
+    Returns:
+    - New node id
+    """
+    if(not node_type in node_data.keys()):
+        raise Exception(f"Node type {node_type} not found, use an exact key from the list of node types")
+
+    return send_blender_command("add_node", {"node_type": node_type, "inputValues": inputValues})
+
+@mcp.tool()
+def set_node_values(ctx: Context, node_id: int, inputValues: Dict[str, Any]) -> str:
+    return send_blender_command("set_node_values", {"node_id": node_id, "inputValues": inputValues})
+
+@mcp.tool()
+def get_current_graph(ctx: Context) -> str:
+    """Get the current graph"""
+    return send_blender_command("get_current_graph")
+
+@mcp.tool()
+def test_blender_connection(ctx: Context) -> str:
+    """Test the Blender connection"""
+    return get_blender_connection()
 
 def load_node_data():
     global node_data

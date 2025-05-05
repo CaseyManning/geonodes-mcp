@@ -8,6 +8,7 @@ import socket
 import time
 import requests
 import tempfile
+import uuid
 import traceback
 import os
 import shutil
@@ -27,7 +28,7 @@ bl_info = {
 
 OBJECT_NAME = "Object"
 
-
+id_counter = 0
 class BlenderMCPServer:
     def __init__(self, host='localhost', port=9876):
         self.host = host
@@ -35,6 +36,7 @@ class BlenderMCPServer:
         self.running = False
         self.socket = None
         self.server_thread = None
+        self.nodes = {}
     
     def start(self):
         if self.running:
@@ -192,10 +194,10 @@ class BlenderMCPServer:
 
         # Base handlers that are always available
         handlers = {
-            "get_scene_info": self.get_scene_info,
-            "get_object_info": self.get_object_info,
-            "execute_code": self.execute_code,
             "ping": self.ping,
+            "add_node": self.add_node,
+            "get_current_graph": self.get_current_graph,
+            "set_node_values": self.set_node_values,
         }
         
         handler = handlers.get(cmd_type)
@@ -212,10 +214,59 @@ class BlenderMCPServer:
         else:
             return {"status": "error", "message": f"Unknown command type: {cmd_type}"}
 
-    def add_node(self, node_type):
-        new_node = node_group.nodes.new(node_type)
-        new_node.location = (-340,80)
-        return new_node
+    def generate_id(self):
+        global id_counter
+        id_counter += 1
+        return id_counter
+
+    def add_node(self, node_type, inputValues):
+        if(geo_node_group is None):
+            return {"status": "error", "message": "No geometry node group found"}
+        
+        new_node = geo_node_group.nodes.new(node_type)
+        new_node['id'] = self.generate_id()
+
+        if(inputValues is not None):
+            for inputSocket in inputValues.keys():
+                if(not inputSocket in new_node.inputs):
+                    return {"status": "error", "message": f"Input socket {inputSocket} not found for node {node_type}. Available inputs: {new_node.inputs.keys()}"}
+                new_node.inputs[inputSocket].default_value = inputValues[inputSocket]
+        
+        self.nodes[new_node['id']] = new_node
+
+        return {"status": "success", "result": {"nodeId": new_node['id']}}
+
+    def set_node_values(self, node_id, inputValues):
+        if(not node_id in self.nodes):
+            return {"status": "error", "message": f"Node with id {node_id} not found"}
+        
+        node = self.nodes[node_id]
+
+        newValues = {}
+        for inputSocket in inputValues.keys():
+            if(not inputSocket in node.inputs):
+                return {"status": "error", "message": f"Input socket {inputSocket} not found for node {node_type}. Available inputs: {node.inputs.keys()}"}
+            node.inputs[inputSocket].default_value = inputValues[inputSocket]
+            newValues[inputSocket] = node.inputs[inputSocket].default_value
+                
+        return {"status": "success", "result": {"nodeValues": newValues}}
+
+    def get_current_graph(self):
+        nodes = geo_node_group.nodes
+        links = geo_node_group.links
+
+        nodesData = {}
+        nodesData["nodes"] = [node.name for node in nodes]
+        nodesData["links"] = []
+
+        for link in links:
+            fromData = link.from_node.id + ": " + link.from_node.name + " [" + link.from_socket.name + "]"
+            toData = link.to_node.id + ": " + link.to_node.name + " [" + link.to_socket.name + "]"
+            nodesData["links"].append({"from": fromData, "to": toData})
+
+        print(nodesData)
+
+        return {"status": "success", "result": nodesData}
 
     def ping(self):
         return {"status": "success", "message": "Pong"}
@@ -296,18 +347,31 @@ class BLENDERMCP_OT_Initialize(bpy.types.Operator):
         node_group = bpy.data.node_groups.new("mcp nodes", type='GeometryNodeTree')
         node_group.interface.new_socket(name="Geo Out", in_out ="OUTPUT", socket_type="NodeSocketGeometry")
 
-        node_in        = node_group.nodes.new("NodeGroupInput")
-        node_transform = node_group.nodes.new("GeometryNodeTransform")
-        node_out       = node_group.nodes.new("NodeGroupOutput")
+        # node_in        = node_group.nodes.new("NodeGroupInput")
+        # node_transform = node_group.nodes.new("GeometryNodeTransform")
+        # node_out       = node_group.nodes.new("NodeGroupOutput")
 
-        for node_type in node_types:
-            node = node_group.nodes.new(node_type)
-            print_node_data(node)
 
-        node_group.links.new(node_in.outputs[0], node_transform.inputs[0])
-        node_group.links.new(node_transform.outputs[0], node_out.inputs[0])
+        # nodesData = {}
+        # for node_type in node_types:
+        #     node = node_group.nodes.new(node_type)
+        #     nodesData[node_type] = print_node_data(node)
 
-        node_transform.inputs["Translation"].default_value[2] = 1
+        # print(json.dumps(nodesData, indent=2))
+
+        # node_group.links.new(node_in.outputs[0], node_transform.inputs[0])
+        # node_group.links.new(node_transform.outputs[0], node_out.inputs[0])
+
+        # node_transform.inputs["Translation"].default_value[2] = 1
+
+        ddir = lambda data, filter_str: [i for i in dir(data) if i.startswith(filter_str)]
+        get_nodes = lambda cat: [i for i in getattr(bpy.types, cat).category.items(None)]
+
+        cycles_categories = ddir(bpy.types, "NODE_MT_category_SH_NEW")
+        for cat in cycles_categories: 
+            print(cat)
+            for node in get_nodes(cat):
+                print('bl_idname: {node.nodetype}, type: {node.label}'.format(node=node))      
 
         mod.node_group = node_group
 
@@ -322,16 +386,20 @@ def print_node_data(node):
     nodeData["outputs"] = []
 
     for i in range(len(node.inputs)):
-        name = str(i) + ": " + str(node.inputs[i].name) + " [" + type(node.inputs[i]).__name__.replace("NodeSocket", "") + "]"
+        name = str(node.inputs[i].name) + ": " + type(node.inputs[i]).__name__.replace("NodeSocket", "")
         nodeData["inputs"].append(name)
 
     for i in range(len(node.outputs)):
-        name = str(i) + ": " + str(node.outputs[i].name) + " [" + type(node.outputs[i]).__name__.replace("NodeSocket", "") + "]"
+        name = str(node.outputs[i].name) + ": " + type(node.outputs[i]).__name__.replace("NodeSocket", "")
         nodeData["outputs"].append(name)
 
-    nodeData = {node.name: nodeData}
+    nodeData["description"] = node.bl_description
 
-    print(json.dumps(nodeData))
+    nodeData = {type(node).__name__: nodeData}
+
+    return nodeData
+
+    # print(json.dumps(nodeData))
 
 class BLENDERMCP_OT_Test(bpy.types.Operator):
     bl_idname = "blendermcp.test"
@@ -579,6 +647,50 @@ node_types = [
     "GeometryNodeViewportTransform",
     "GeometryNodeVolumeCube",
     "GeometryNodeVolumeToMesh",
+    "FunctionNodeAlignEulerToVector",
+    "FunctionNodeAlignRotationToVector",
+    "FunctionNodeAxesToRotation",
+    "FunctionNodeAxisAngleToRotation",
+    "FunctionNodeBooleanMath",
+    "FunctionNodeCombineColor",
+    "FunctionNodeCombineMatrix",
+    "FunctionNodeCombineTransform",
+    "FunctionNodeCompare",
+    "FunctionNodeEulerToRotation",
+    "FunctionNodeFindInString",
+    "FunctionNodeFloatToInt",
+    "FunctionNodeHashValue",
+    "FunctionNodeInputBool",
+    "FunctionNodeInputColor",
+    "FunctionNodeInputInt",
+    "FunctionNodeInputRotation",
+    "FunctionNodeInputSpecialCharacters",
+    "FunctionNodeInputString",
+    "FunctionNodeInputVector",
+    "FunctionNodeIntegerMath",
+    "FunctionNodeInvertMatrix",
+    "FunctionNodeInvertRotation",
+    "FunctionNodeMatrixDeterminant",
+    "FunctionNodeMatrixMultiply",
+    "FunctionNodeProjectPoint",
+    "FunctionNodeQuaternionToRotation",
+    "FunctionNodeRandomValue",
+    "FunctionNodeReplaceString",
+    "FunctionNodeRotateEuler",
+    "FunctionNodeRotateRotation",
+    "FunctionNodeRotateVector",
+    "FunctionNodeRotationToAxisAngle",
+    "FunctionNodeRotationToEuler",
+    "FunctionNodeRotationToQuaternion",
+    "FunctionNodeSeparateColor",
+    "FunctionNodeSeparateMatrix",
+    "FunctionNodeSeparateTransform",
+    "FunctionNodeSliceString",
+    "FunctionNodeStringLength",
+    "FunctionNodeTransformDirection",
+    "FunctionNodeTransformPoint",
+    "FunctionNodeTransposeMatrix",
+    "FunctionNodeValueToString",
 ]
 
 # Registration functions

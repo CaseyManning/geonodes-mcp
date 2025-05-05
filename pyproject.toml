@@ -9,4 +9,5 @@ dependencies = [
     "future-fstrings>=1.2.0",
     "httpx>=0.28.1",
     "mcp[cli]>=1.7.1",
+    "uuid>=1.30",
 ]
