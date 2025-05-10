@@ -8,7 +8,8 @@ import json
 import asyncio
 import logging
 from typing import AsyncIterator, Dict, Any, List, Annotated
-# Initialize FastMCP server
+from gemini_image import describe_image, evaluate_image
+
 mcp = FastMCP("weather")
 
 data_filepath = "node_data.json"
@@ -156,7 +157,7 @@ class BlenderConnection:
             print(f"Error communicating with Blender: {str(e)}")
             # Don't try to reconnect here - let the get_blender_connection handle reconnection
             self.sock = None
-            raise Exception(f"Communication error with Blender: {str(e)}")
+            raise Exception(f"Blender error: {str(e)}")
 
 @asynccontextmanager
 async def server_lifespan(server: FastMCP) -> AsyncIterator[Dict[str, Any]]:
@@ -313,6 +314,27 @@ def set_output_node(ctx: Context, node_id: int) -> str:
     - node_id: The id of the node to set as the output node
     """
     return send_blender_command("set_output_node", {"node_id": node_id})
+
+
+@mcp.tool()
+def visually_evaluate_node(ctx: Context, node_id: int, expected_output_description: str) -> str:
+    """Visually evaluate a node
+    Parameters:
+    - node_id: The id of the node to visually evaluate
+    - expected_output_description: A description of the expected visual output of that node
+    """
+    blender_out = send_blender_command("visually_evaluate_node", {"node_id": node_id})
+    # return "got blender out: " + blender_out
+
+    blender_out = json.loads(blender_out)
+
+    if not blender_out["status"] == "success":
+        return blender_out
+    
+    filepath = blender_out["message"]
+    # return "got filepath: " + filepath
+    result = evaluate_image(filepath, expected_output_description)
+    return result
 
 def load_node_data():
     global node_data

@@ -27,6 +27,9 @@ bl_info = {
 }
 
 OBJECT_NAME = "Object"
+img_filepath = "//viewport_render.png"
+
+initialized_output_node = None
 
 id_counter = 0
 class BlenderMCPServer:
@@ -38,6 +41,7 @@ class BlenderMCPServer:
         self.server_thread = None
         self.nodes = {}
         self.output_node = None
+        self.viewer_node = None
 
     def start(self):
         if self.running:
@@ -145,6 +149,7 @@ class BlenderMCPServer:
                                 response = self.execute_command(command)
                                 response_json = json.dumps(response)
                                 try:
+                                    print("Sending response: ", response_json)
                                     client.sendall(response_json.encode('utf-8'))
                                 except:
                                     print("Failed to send response - client disconnected")
@@ -201,7 +206,8 @@ class BlenderMCPServer:
             "set_node_values": self.set_node_values,
             "get_node_state": self.get_node_state,
             "add_link": self.add_link,
-            "set_output_node": self.set_output_node
+            "set_output_node": self.set_output_node,
+            "visually_evaluate_node": self.visually_evaluate_node
         }
         
         handler = handlers.get(cmd_type)
@@ -229,15 +235,20 @@ class BlenderMCPServer:
         
         new_node = geo_node_group.nodes.new(node_type)
         new_node['id'] = self.generate_id()
+        
+        print('inputValues: ', inputValues)
+        print('new_node.inputs: ', new_node.inputs)
 
         if(inputValues is not None):
             for inputSocket in inputValues.keys():
                 if(not inputSocket in new_node.inputs):
-                    geo_node_group.nodes.remove(new_node)
+                    # geo_node_group.nodes.remove(new_node) TODO: this seems to break it
                     return {"status": "error", "message": f"Input socket {inputSocket} not found for node {node_type}. Available inputs: {new_node.inputs.keys()}"}
                 new_node.inputs[inputSocket].default_value = inputValues[inputSocket]
         
         self.nodes[new_node['id']] = new_node
+
+        self.set_viewer_node(new_node['id'])
 
         return {"status": "success", "result": {"nodeId": new_node['id']}}
 
@@ -314,17 +325,139 @@ class BlenderMCPServer:
 
         return {"status": "success", "message": f"Output node set to {self.output_node.name}"}
 
+    def set_viewer_node(self, node_id: int):
+        print('setting viewer node to: ', node_id)
+        if(not node_id in self.nodes):
+            return {"status": "error", "message": f"Node with id {node_id} not found"}
+        
+        if(self.viewer_node == None):
+            self.viewer_node = geo_node_group.nodes.new("GeometryNodeViewer")
+            self.viewer_node['id'] = self.generate_id()
+
+        geo_node_group.links.new(self.nodes[node_id].outputs[0], self.viewer_node.inputs[0])
+
+        return {"status": "success", "message": f"Viewer node set to {self.viewer_node.name}"}
+
+    def get_current_output_node(self):
+        if self.output_node is None:
+            if(initialized_output_node is None):
+                return None
+            self.output_node = initialized_output_node
+
+        input_socket = self.output_node.inputs[0]
+        if(len(input_socket.links) == 0):
+            return None
+        return input_socket.links[0].from_node
+
+    def visually_evaluate_node(self, node_id):
+        scene = bpy.context.scene
+
+        prev_output_node = self.get_current_output_node()
+
+        obj = bpy.context.scene.objects[OBJECT_NAME]
+        bpy.ops.object.select_all(action='DESELECT')
+        bpy.context.view_layer.objects.active = obj
+        obj.select_set(True)
+
+        self.set_output_node(node_id)
+
+        # Store current render settings to restore later
+        prev_engine = scene.render.engine
+        prev_filepath = scene.render.filepath
+        
+        # Switch to Workbench engine for viewport render (if not already)
+        scene.render.engine = 'BLENDER_WORKBENCH'
+        # Ensure output format and filepath
+        scene.render.image_settings.file_format = 'PNG'
+        scene.render.filepath = bpy.path.abspath(img_filepath)
+        
+        # Find a 3D View area and region in the current context (for override)
+        window = bpy.context.window or bpy.context.window_manager.windows[0]
+        area = None
+        region = None
+        for win in bpy.context.window_manager.windows:
+            for ar in win.screen.areas:
+                if ar.type == 'VIEW_3D':
+                    area = ar
+                    # Find the 'WINDOW' region (the 3D viewport region) within this area
+                    for reg in ar.regions:
+                        if reg.type == 'WINDOW':
+                            region = reg
+                            break
+                    if region:
+                        window = win
+                        break
+            if area and region:
+                break
+        if area is None or region is None:
+            # Restore render settings
+            scene.render.engine = prev_engine
+            scene.render.filepath = prev_filepath
+            return {"status": "error", "message": "No 3D Viewport available for rendering"}
+
+        for space in area.spaces:
+            if space.type == 'VIEW_3D':
+                space.overlay.show_floor = False
+                space.overlay.show_axis_x = False
+                space.overlay.show_axis_y = False
+                space.overlay.show_axis_z = False
+                space.overlay.show_object_origins = False
+        
+        # If currently in camera view, switch to user perspective so we capture viewport view
+        space_data = area.spaces.active
+        if space_data.type == 'VIEW_3D' and space_data.region_3d.view_perspective == 'CAMERA':
+            space_data.region_3d.view_perspective = 'PERSP'
+        # Set viewport shading to Solid (Workbench)
+        if space_data.type == 'VIEW_3D':
+            space_data.shading.type = 'SOLID'
+        
+        # Frame the active object in the viewport
+        with bpy.context.temp_override(area=area, region=area.regions[-1]):
+            bpy.ops.view3d.view_selected()
+
+            # prevent selection lines in render
+            for ob in bpy.context.selected_objects:
+                ob.select_set(False)
+
+            # Perform a viewport render and write straight to file
+            bpy.ops.render.opengl(write_still=True, view_context=True)
+        
+        # Restore original render settings
+        scene.render.engine = prev_engine
+        scene.render.filepath = prev_filepath
+
+        for space in area.spaces: # TODO: lame
+            if space.type == 'VIEW_3D':
+                space.overlay.show_floor = True
+                space.overlay.show_axis_x = True
+                space.overlay.show_axis_y = True
+                space.overlay.show_axis_z = True
+                space.overlay.show_object_origins = True
+
+        print('scene.render.filepath: ', scene.render.filepath)
+
+        if(prev_output_node is not None):
+            self.set_output_node(prev_output_node['id'])
+        
+        return {"status": "success", "message": f"{scene.render.filepath}"}
+
     def get_current_graph(self):
         nodes = geo_node_group.nodes
         links = geo_node_group.links
 
         nodesData = {}
-        nodesData["nodes"] = [{"id": node["id"], "name": node.name} for node in nodes]
+        nodesData["nodes"] = []
+        for node in nodes:
+            if not hasattr(node, 'id'):
+                node['id'] = self.generate_id()
+                print('err: no node id for node: ', node.name, ". regenerating.")
+            nodesData["nodes"].append({"id": node["id"], "name": node.name})
+            self.nodes[node["id"]] = node #TODO: verify this works
         nodesData["links"] = []
 
         for link in links:
-            fromData = link.from_node.id + ": " + link.from_node.name + " [" + link.from_socket.name + "]"
-            toData = link.to_node.id + ": " + link.to_node.name + " [" + link.to_socket.name + "]"
+            fromData = link.from_node['id'] + ": " + link.from_node.name + " [" + link.from_socket.name + "]"
+            toData = link.to_node['id'] + ": " + link.to_node.name + " [" + link.to_socket.name + "]"
             nodesData["links"].append({"from": fromData, "to": toData})
 
         print(nodesData)
@@ -356,7 +489,8 @@ class BLENDERMCP_PT_Panel(bpy.types.Panel):
 
         layout.operator("blendermcp.initialize", text="Initialize")
         layout.operator("blendermcp.test", text="Test")
-
+        layout.operator("blendermcp.frame_viewport_render", text="Frame & Render")
+        
 class BLENDERMCP_OT_StartServer(bpy.types.Operator):
     bl_idname = "blendermcp.start_server"
     bl_label = "Connect to Claude"
@@ -398,8 +532,10 @@ class BLENDERMCP_OT_Initialize(bpy.types.Operator):
         for ob in context.selected_objects:
             ob.select_set(False)
 
+        global OBJECT_NAME
         mesh = bpy.data.meshes.new(name="EmptyMesh")
         obj = bpy.data.objects.new(name=OBJECT_NAME, object_data=mesh)
+        OBJECT_NAME = obj.name
 
         context.collection.objects.link(obj)
 
@@ -412,8 +548,10 @@ class BLENDERMCP_OT_Initialize(bpy.types.Operator):
 
         # node_in        = node_group.nodes.new("NodeGroupInput")
         # node_transform = node_group.nodes.new("GeometryNodeTransform")
-        # node_out       = node_group.nodes.new("NodeGroupOutput")
-
+        node_out       = node_group.nodes.new("NodeGroupOutput")
+        node_out['id'] = 0
+        global initialized_output_node
+        initialized_output_node = node_out
 
         # nodesData = {}
         # for node_type in node_types:
@@ -440,6 +578,9 @@ class BLENDERMCP_OT_Initialize(bpy.types.Operator):
 
         global geo_node_group
         geo_node_group = node_group
+
+        bpy.context.scene.render.resolution_x = 1080
+        bpy.context.scene.render.resolution_y = 1080
 
         return {'FINISHED'}
 
@@ -507,6 +648,98 @@ class BLENDERMCP_OT_StopServer(bpy.types.Operator):
         
         return {'FINISHED'}
 
+class BLENDERMCP_OT_FrameViewportRender(bpy.types.Operator):
+    """Frame active object and capture a Workbench viewport render"""
+    bl_idname = "blendermcp.frame_viewport_render"
+    bl_label = "Frame Object & Viewport Render"
+    bl_options = {'REGISTER', 'UNDO'}
+    
+    # Optional: allow specifying an output filepath via operator property
+    filepath: bpy.props.StringProperty(
+        name="Output File",
+        description="File path to save the viewport render image",
+        default="//viewport_render.png",
+        subtype='FILE_PATH'
+    )
+    
+    def execute(self, context):
+        scene = context.scene
+        # obj = context.active_object
+        # bpy.context.scene.objects[OBJECT_NAME].select_set(True)
+
+        obj = bpy.context.scene.objects[OBJECT_NAME]       # Get the object
+        bpy.ops.object.select_all(action='DESELECT') # Deselect all objects
+        bpy.context.view_layer.objects.active = obj   # Make the cube the active object 
+        obj.select_set(True)                          # Select the cube
+
+        # if obj is None:
+        #     self.report({'WARNING'}, "No active object to frame")
+        #     return {'CANCELLED'}
+        
+        # Store current render settings to restore later
+        prev_engine = scene.render.engine
+        prev_filepath = scene.render.filepath
+        
+        # Switch to Workbench engine for viewport render (if not already)
+        scene.render.engine = 'BLENDER_WORKBENCH'
+        # Ensure output format and filepath
+        scene.render.image_settings.file_format = 'PNG'
+        scene.render.filepath = bpy.path.abspath(img_filepath)
+        
+        # Find a 3D View area and region in the current context (for override)
+        window = context.window or context.window_manager.windows[0]
+        area = None
+        region = None
+        for win in context.window_manager.windows:
+            for ar in win.screen.areas:
+                if ar.type == 'VIEW_3D':
+                    area = ar
+                    # Find the 'WINDOW' region (the 3D viewport region) within this area
+                    for reg in ar.regions:
+                        if reg.type == 'WINDOW':
+                            region = reg
+                            break
+                    if region:
+                        window = win
+                        break
+            if area and region:
+                break
+        if area is None or region is None:
+            self.report({'ERROR'}, "No 3D Viewport available for rendering")
+            # Restore render settings
+            scene.render.engine = prev_engine
+            scene.render.filepath = prev_filepath
+            return {'CANCELLED'}
+        
+        # If currently in camera view, switch to user perspective so we capture viewport view
+        space_data = area.spaces.active
+        if space_data.type == 'VIEW_3D' and space_data.region_3d.view_perspective == 'CAMERA':
+            space_data.region_3d.view_perspective = 'PERSP'
+        # Set viewport shading to Solid (Workbench)
+        if space_data.type == 'VIEW_3D':
+            space_data.shading.type = 'SOLID'
+        
+        # Override context to 3D View area for view and render operators
+        override_ctx = {
+            "window": window,
+            "screen": window.screen,
+            "area": area,
+            "region": region,
+            "scene": scene
+        }
+        # Frame the active object in the viewport
+        bpy.ops.view3d.view_selected(use_all_regions=False)
+        # Perform a viewport render and write straight to file
+        bpy.ops.render.opengl(write_still=True, view_context=True)
+        
+        # Restore original render settings
+        scene.render.engine = prev_engine
+        scene.render.filepath = prev_filepath
+
+        print('scene.render.filepath: ', scene.render.filepath)
+        
+        self.report({'INFO'}, f"Viewport render saved to {scene.render.filepath}")
+        return {'FINISHED'}
 
 node_types = [
     "GeometryNodeAccumulateField",
@@ -776,6 +1009,7 @@ def register():
     bpy.utils.register_class(BLENDERMCP_OT_StopServer)
     bpy.utils.register_class(BLENDERMCP_OT_Initialize)
     bpy.utils.register_class(BLENDERMCP_OT_Test)
+    bpy.utils.register_class(BLENDERMCP_OT_FrameViewportRender)
     print("CaseyMCP addon registered")
 
 def unregister():
@@ -789,7 +1023,7 @@ def unregister():
     bpy.utils.unregister_class(BLENDERMCP_OT_StopServer)
     bpy.utils.unregister_class(BLENDERMCP_OT_Initialize)
     bpy.utils.unregister_class(BLENDERMCP_OT_Test)
-
+    bpy.utils.unregister_class(BLENDERMCP_OT_FrameViewportRender)
     del bpy.types.Scene.blendermcp_port
     del bpy.types.Scene.blendermcp_server_running
 

@@ -7,7 +7,9 @@ requires-python = ">=3.13"
 dependencies = [
     "dataclasses>=0.8",
     "future-fstrings>=1.2.0",
+    "google-genai>=1.14.0",
     "httpx>=0.28.1",
     "mcp[cli]>=1.7.1",
+    "python-dotenv>=1.1.0",
     "uuid>=1.30",
 ]
