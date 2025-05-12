@@ -12,6 +12,7 @@ import uuid
 import traceback
 import os
 import shutil
+import types
 from bpy.props import StringProperty, IntProperty, BoolProperty, EnumProperty
 import io
 from contextlib import redirect_stdout
@@ -208,7 +209,7 @@ class BlenderMCPServer:
             "add_link": self.add_link,
             "set_output_node": self.set_output_node,
             "visually_evaluate_node": self.visually_evaluate_node,
-            "set_node_operation": self.set_node_operation
+            "set_node_property": self.set_node_property
         }
         
         handler = handlers.get(cmd_type)
@@ -245,6 +246,8 @@ class BlenderMCPServer:
         if(inputValues is not None):
             set_output = self.set_node_values(new_node['id'], inputValues)
             if(set_output['status'] == "error"):
+                del self.nodes[new_node['id']]
+                geo_node_group.nodes.remove(new_node)
                 return set_output # pass error back
 
         print("new_node.outputs[0].type: ", new_node.outputs[0].type)
@@ -316,8 +319,9 @@ class BlenderMCPServer:
             else:
                 nodeState["outputs"].append({"socket": outputSocket.name, "to": "None"})
 
-        if hasattr(node, "operation"):
-            nodeState["operation"] = node.operation
+        propertyNames = get_extra_property_names(node)
+        for property_name in propertyNames:
+            nodeState[property_name] = getattr(node, property_name)
 
         print('nodeState: ', nodeState)
 
@@ -355,13 +359,18 @@ class BlenderMCPServer:
 
         return {"status": "success", "message": f"Output node set to {self.output_node.name}"}
 
-    def set_node_operation(self, node_id: int, operation: str):
+    def set_node_property(self, node_id: int, name: str, value: any):
         if(not node_id in self.nodes):
             return {"status": "error", "message": f"Node with id {node_id} not found"}
         
-        self.nodes[node_id].operation = operation
+        node = self.nodes[node_id]
 
-        return {"status": "success", "message": f"Node operation set to {operation}"}
+        if not hasattr(node, name):
+            return {"status": "error", "message": f"Node with id {node_id} does not have property {name}. Available properties: {get_extra_property_names(node)}"}
+
+        setattr(node, name, value)
+
+        return {"status": "success", "message": f"Node property {name} set to {value}"}
 
     def set_viewer_node(self, node_id: int):
         print('setting viewer node to: ', node_id)
@@ -599,6 +608,9 @@ class BLENDERMCP_OT_Initialize(bpy.types.Operator):
             for node in get_nodes(cat):
                 print('bl_idname: {node.nodetype}, type: {node.label}'.format(node=node))      
 
+        node_vecmath = node_group.nodes.new("ShaderNodeVectorMath")
+        setattr(node_vecmath, "operation", "MULTIPLY")
+
         mod.node_group = node_group
 
         global geo_node_group
@@ -609,10 +621,39 @@ class BLENDERMCP_OT_Initialize(bpy.types.Operator):
 
         return {'FINISHED'}
 
+def get_extra_property_names(node):
+    obj_props = node.bl_rna.properties.keys()
+    base_props = node.bl_rna.base.properties.keys()
+
+    non_inherited_props = [x for x in obj_props if x not in base_props]
+    return non_inherited_props
+
+def get_extra_properties(node):
+    non_inherited_props = get_extra_property_names(node)
+
+    extraProperties = []
+    for prop in non_inherited_props:
+        description = node.bl_rna.properties[prop].description
+        prop_type = node.bl_rna.properties[prop].type
+        if prop_type == "ENUM":
+            values = node.bl_rna.properties[prop].enum_items
+            property = {"name": prop, "description": description, "type": prop_type, "values": [x.identifier for x in values]}
+        else:
+            property = {"name": prop, "description": description, "type": prop_type}
+        
+        if description == "":
+            del property["description"]
+
+        extraProperties.append(property)
+    return extraProperties
+
 def print_node_data(node): # TODO: json node type names are doubled in the output
     nodeData = {}
     nodeData["inputs"] = []
     nodeData["outputs"] = [] 
+
+    extraProperties = get_extra_properties(node)
+    nodeData["properties"] = extraProperties
 
     for i in range(len(node.inputs)):
         name = str(node.inputs[i].name) + ": " + type(node.inputs[i]).__name__.replace("NodeSocket", "")
@@ -626,11 +667,7 @@ def print_node_data(node): # TODO: json node type names are doubled in the outpu
 
     nodeData["description"] = node.bl_description
 
-    nodeData = {type(node).__name__: nodeData}
-
     return nodeData
-
-    # print(json.dumps(nodeData))
 
 class BLENDERMCP_OT_GenerateNodeData(bpy.types.Operator):
     bl_idname = "blendermcp.generate_node_data"
@@ -943,7 +980,9 @@ node_types = [
     "ShaderNodeTexGabor",
     "ShaderNodeVectorMath",
     "ShaderNodeMath",
-    "ShaderNodeClamp"
+    "ShaderNodeClamp",
+    "ShaderNodeSeparateXYZ",
+    "ShaderNodeCombineXYZ",
 ]
 
 # Registration functions

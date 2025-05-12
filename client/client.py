@@ -86,14 +86,34 @@ class MCPClient:
                         "is_done": True
                     }
 
-                result = await self.session.call_tool(tool_name, tool_args)
-                final_text.append(f"[Calling tool {tool_name} with args {tool_args}]")
 
                 assistant_message_content.append(content)
                 self.messages.append({
                     "role": "assistant",
                     "content": assistant_message_content
                 })
+
+                final_text.append(f"[Calling tool {tool_name} with args {tool_args}]")
+
+                try:
+                    result = await asyncio.wait_for(
+                        self.session.call_tool(tool_name, tool_args),
+                        timeout=10
+                    )
+                except asyncio.TimeoutError:
+                    final_text.append(f"Tool {tool_name} timed out after 10 seconds")
+                    self.messages.append({
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "tool_result",
+                                "tool_use_id": content.id,
+                                "content": "tool call failed: timeout"
+                            }
+                        ]
+                    })
+                    continue
+
                 self.messages.append({
                     "role": "user",
                     "content": [
@@ -105,7 +125,8 @@ class MCPClient:
                     ]
                 })
 
-                final_text.append(f"Got tool output: {[content.text.replace('\n', '') for content in result.content]}")
+                final_text.append(f"Got tool output: {[content.text for content in result.content]}")
+
 
                 # # Get next response from Claude
                 # response = self.anthropic.messages.create(
@@ -128,6 +149,13 @@ class MCPClient:
         print("Type your queries or 'quit' to exit.")
 
         self.messages = []
+
+        available_node_types = await self.session.call_tool("list_node_types", {})
+
+        self.messages.append({
+            "role": "user",
+            "content": "Available node types: " + str(available_node_types.content[0].text)
+        })
 
         while True:
             query = input("\nQuery: ").strip()

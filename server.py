@@ -222,7 +222,7 @@ def send_blender_command(command: str, params: Dict[str, Any] = None):
         blender = get_blender_connection()
         result = blender.send_command(command, params)
         
-        return json.dumps(result, indent=2)
+        return json.dumps(result)
     except Exception as e:
         return f"Error with command {command}: {str(e)}"
 
@@ -246,7 +246,7 @@ def get_node_type_info(ctx: Context, node_type: str) -> str:
     if(node_data is None):
         load_node_data()
 
-    return json.dumps(node_data[node_type], indent=2)
+    return json.dumps(node_data[node_type])
 
 @mcp.tool()
 def get_current_graph(ctx: Context) -> str:
@@ -321,19 +321,8 @@ def end_loop(ctx: Context) -> str:
     return "trying to end the loop"
 
 @mcp.tool()
-def get_node_operation_types(node_type: Annotated[str, "either ShaderNodeVectorMath, ShaderNodeMath, or FunctionNodeBooleanMath"]):
-    operations = []
-    if(node_type == "ShaderNodeVectorMath"):
-        operations = ["ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "MULTIPLY_ADD", "CROSS_PRODUCT", "PROJECT", "REFLECT", "REFRACT", "FACEFORWARD", "DOT_PRODUCT", "DISTANCE", "LENGTH", "SCALE", "NORMALIZE", "ABSOLUTE", "MINIMUM", "MAXIMUM", "FLOOR", "CEIL", "FRACTION", "MODULO", "WRAP", "SNAP", "SINE", "COSINE", "TANGENT"]
-    elif(node_type == "ShaderNodeMath"):
-        operations = ["ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "MULTIPLY_ADD", "POWER", "LOGARITHM", "SQRT", "INVERSE_SQRT", "ABSOLUTE", "EXPONENT", "MINIMUM", "MAXIMUM", "LESS_THAN", "GREATER_THAN", "SIGN", "FRACT", "MODULO", "SINE", "COSINE", "TANGENT"]
-    elif(node_type == "FunctionNodeBooleanMath"):
-        operations = ["AND", "OR", "NOT", "NAND", "NOR", "XNOR", "XOR", "IMPLY", "NIMPLY"]
-    return str(operations)
-
-@mcp.tool()
-def set_node_operation(ctx: Context, node_id: int, operation: Annotated[str, "the type of operation for the node to perform. use get_node_operation_types to see available operations"]) -> str:
-    return send_blender_command("set_node_operation", {"node_id": node_id, "operation": operation})
+def set_node_property(ctx: Context, node_id: int, name: Annotated[str, "non-input property to set. use get_node_type_info to see available properties"], value: any) -> str:
+    return send_blender_command("set_node_property", {"node_id": node_id, "name": name, "value": value})
 
 @mcp.tool()
 def visually_evaluate_node(ctx: Context, node_id: int, expected_output_description: str) -> str:
