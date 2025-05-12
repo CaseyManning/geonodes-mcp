@@ -14,3 +14,6 @@ wheels/
 .env
 
 *.png
+
+*.blend
+*.blend1

@@ -147,7 +147,7 @@ class BlenderMCPServer:
                         def execute_wrapper():
                             try:
                                 response = self.execute_command(command)
-                                response_json = json.dumps(response)
+                                response_json = json.dumps(response).replace('\n', '')
                                 try:
                                     print("Sending response: ", response_json)
                                     client.sendall(response_json.encode('utf-8'))
@@ -207,7 +207,8 @@ class BlenderMCPServer:
             "get_node_state": self.get_node_state,
             "add_link": self.add_link,
             "set_output_node": self.set_output_node,
-            "visually_evaluate_node": self.visually_evaluate_node
+            "visually_evaluate_node": self.visually_evaluate_node,
+            "set_node_operation": self.set_node_operation
         }
         
         handler = handlers.get(cmd_type)
@@ -235,22 +236,29 @@ class BlenderMCPServer:
         
         new_node = geo_node_group.nodes.new(node_type)
         new_node['id'] = self.generate_id()
+
+        self.nodes[new_node['id']] = new_node
         
         print('inputValues: ', inputValues)
         print('new_node.inputs: ', new_node.inputs)
 
         if(inputValues is not None):
-            for inputSocket in inputValues.keys():
-                if(not inputSocket in new_node.inputs):
-                    # geo_node_group.nodes.remove(new_node) TODO: this seems to break it
-                    return {"status": "error", "message": f"Input socket {inputSocket} not found for node {node_type}. Available inputs: {new_node.inputs.keys()}"}
-                new_node.inputs[inputSocket].default_value = inputValues[inputSocket]
-        
-        self.nodes[new_node['id']] = new_node
+            set_output = self.set_node_values(new_node['id'], inputValues)
+            if(set_output['status'] == "error"):
+                return set_output # pass error back
 
-        self.set_viewer_node(new_node['id'])
+        print("new_node.outputs[0].type: ", new_node.outputs[0].type)
+        if(new_node.outputs[0].type == "GEOMETRY"):
+            self.set_viewer_node(new_node['id'])
 
         return {"status": "success", "result": {"nodeId": new_node['id']}}
+
+    def title_case_input_values(self, inputValues):
+        newValues = {}
+        for inputSocket in inputValues.keys():
+            inputSocket_upper = inputSocket[0].upper() + inputSocket[1:]
+            newValues[inputSocket_upper] = inputValues[inputSocket]
+        return newValues
 
     def set_node_values(self, node_id, inputValues):
         if(not node_id in self.nodes):
@@ -258,13 +266,24 @@ class BlenderMCPServer:
         
         node = self.nodes[node_id]
 
+        inputValues = self.title_case_input_values(inputValues)
+
         newValues = {}
+
+        # TODO: hack. for inputs we want to set the default output values which is a weird special case
+        if type(node).__name__ == "FunctionNodeInputVector" and "Vector" in inputValues:
+            print('setting function node input values in special case mode')
+            node.vector = inputValues["Vector"]
+            return {"status": "success"}
+    
         for inputSocket in inputValues.keys():
-            if(not inputSocket in node.inputs):
-                return {"status": "error", "message": f"Input socket {inputSocket} not found for node. Available inputs: {node.inputs.keys()}"}
+            if inputSocket.isnumeric():
+                inputSocket = int(inputSocket)
+            elif(not inputSocket in node.inputs):
+                return {"status": "error", "message": f"Input socket {inputSocket} not found for node. Available inputs: {node.inputs.keys()}. Alternatively, pass a number for the input key to set an input by index"}
             node.inputs[inputSocket].default_value = inputValues[inputSocket]
             newValues[inputSocket] = str(node.inputs[inputSocket].default_value)
-                
+                    
         return {"status": "success", "result": {"nodeValues": newValues}}
 
     def get_node_state(self, node_id):
@@ -274,15 +293,21 @@ class BlenderMCPServer:
         node = self.nodes[node_id]
 
         nodeState = {}
-        nodeState["inputs"] = {}
+        nodeState["inputs"] = []
         nodeState["outputs"] = []
 
         for inputSocket in node.inputs:
-            if(inputSocket.is_linked):
+            if inputSocket.is_linked:
                 for link in inputSocket.links:
-                    nodeState["inputs"][inputSocket.name] = {"node": link.from_node.name, "id": link.from_node['id']}
+                    nodeState["inputs"].append({"socket": inputSocket.name, "node": link.from_node.name, "id": link.from_node['id']})
+            elif hasattr(inputSocket, "default_value"):
+                inputVal = inputSocket.default_value
+                result = {"socket": inputSocket.name, "value": str(inputVal)}
+                if(type(inputVal).__name__ == "bpy_prop_array"):
+                    result["value"] = str([i for i in inputVal])
+                nodeState["inputs"].append(result)
             else:
-                nodeState["inputs"][inputSocket.name] = inputSocket.default_value
+                nodeState["inputs"].append({'socket': inputSocket.name, 'value': "Not connected"})
 
         for outputSocket in node.outputs:
             if(outputSocket.is_linked):
@@ -290,6 +315,11 @@ class BlenderMCPServer:
                     nodeState["outputs"].append({"socket": outputSocket.name, "to": link.to_node.name})
             else:
                 nodeState["outputs"].append({"socket": outputSocket.name, "to": "None"})
+
+        if hasattr(node, "operation"):
+            nodeState["operation"] = node.operation
+
+        print('nodeState: ', nodeState)
 
         return {"status": "success", "result": nodeState}
 
@@ -324,6 +354,14 @@ class BlenderMCPServer:
         geo_node_group.links.new(self.nodes[node_id].outputs[0], self.output_node.inputs[0])
 
         return {"status": "success", "message": f"Output node set to {self.output_node.name}"}
+
+    def set_node_operation(self, node_id: int, operation: str):
+        if(not node_id in self.nodes):
+            return {"status": "error", "message": f"Node with id {node_id} not found"}
+        
+        self.nodes[node_id].operation = operation
+
+        return {"status": "success", "message": f"Node operation set to {operation}"}
 
     def set_viewer_node(self, node_id: int):
         print('setting viewer node to: ', node_id)
@@ -552,18 +590,6 @@ class BLENDERMCP_OT_Initialize(bpy.types.Operator):
         global initialized_output_node
         initialized_output_node = node_out
 
-        # nodesData = {}
-        # for node_type in node_types:
-        #     node = node_group.nodes.new(node_type)
-        #     nodesData[node_type] = print_node_data(node)
-
-        # print(json.dumps(nodesData, indent=2))
-
-        # node_group.links.new(node_in.outputs[0], node_transform.inputs[0])
-        # node_group.links.new(node_transform.outputs[0], node_out.inputs[0])
-
-        # node_transform.inputs["Translation"].default_value[2] = 1
-
         ddir = lambda data, filter_str: [i for i in dir(data) if i.startswith(filter_str)]
         get_nodes = lambda cat: [i for i in getattr(bpy.types, cat).category.items(None)]
 
@@ -583,10 +609,10 @@ class BLENDERMCP_OT_Initialize(bpy.types.Operator):
 
         return {'FINISHED'}
 
-def print_node_data(node):
+def print_node_data(node): # TODO: json node type names are doubled in the output
     nodeData = {}
     nodeData["inputs"] = []
-    nodeData["outputs"] = []
+    nodeData["outputs"] = [] 
 
     for i in range(len(node.inputs)):
         name = str(node.inputs[i].name) + ": " + type(node.inputs[i]).__name__.replace("NodeSocket", "")
@@ -595,6 +621,8 @@ def print_node_data(node):
     for i in range(len(node.outputs)):
         name = str(node.outputs[i].name) + ": " + type(node.outputs[i]).__name__.replace("NodeSocket", "")
         nodeData["outputs"].append(name)
+        if "FunctionNodeInput" in type(node).__name__: # TODO: hack. for inputs we want to set the default output values which is a weird special case
+            nodeData["inputs"].append(name)
 
     nodeData["description"] = node.bl_description
 
@@ -881,7 +909,6 @@ node_types = [
     "FunctionNodeInputColor",
     "FunctionNodeInputInt",
     "FunctionNodeInputRotation",
-    "FunctionNodeInputSpecialCharacters",
     "FunctionNodeInputString",
     "FunctionNodeInputVector",
     "FunctionNodeIntegerMath",
@@ -913,7 +940,10 @@ node_types = [
     "ShaderNodeTexNoise",
     "ShaderNodeTexVoronoi",
     "ShaderNodeTexWhiteNoise",
-    "ShaderNodeTexGabor"
+    "ShaderNodeTexGabor",
+    "ShaderNodeVectorMath",
+    "ShaderNodeMath",
+    "ShaderNodeClamp"
 ]
 
 # Registration functions

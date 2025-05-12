@@ -5,20 +5,17 @@ from contextlib import AsyncExitStack
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
-from anthropic import Anthropic
-from dotenv import load_dotenv
-
-load_dotenv()  # load environment variables from .env
+from modelprovider import ModelProvider
 
 class MCPClient:
     def __init__(self):
         # Initialize session and client objects
         self.session: Optional[ClientSession] = None
         self.exit_stack = AsyncExitStack()
-        self.anthropic = Anthropic()
+        self.model_provider = ModelProvider()
         self.messages = []
 
-        self.system_prompt = "You are a blender geometry nodes artist agent. Work with the tools provided to manipulate the geometry nodes graph into the requested 3d model. Add as many nodes as necessary to achieve the end result. While iterating, use the visual evaluation tool to get a description of any node to check if you're on the right track. When finished, or if you encounter a persistent error, call the end_loop tool."
+        self.system_prompt = "You are a blender geometry nodes artist agent. Work with the tools provided to manipulate the geometry nodes graph into the requested 3d model. Add as many nodes as necessary to achieve the end result. While iterating, use the visual evaluation tool to get a description of any node to check if you're on the right track. When finished, or if you encounter a persistent error, call the end_loop tool to finish."
 
     async def connect_to_server(self, server_script_path: str):
         """Connect to an MCP server
@@ -64,22 +61,14 @@ class MCPClient:
             "input_schema": tool.inputSchema
         } for tool in response.tools]
 
-        available_tools.append({
-            "name": "end_loop",
-            "description": "end the agent loop",
-            "input_schema": {'properties': {}, 'title': 'end_loopArguments', 'type': 'object'}
-        })
+        # available_tools.append({
+        #     "name": "end_loop",
+        #     "description": "end the agent loop",
+        #     "input_schema": {'properties': {}, 'title': 'end_loopArguments', 'type': 'object'}
+        # })
 
-        # Initial Claude API call
-        response = self.anthropic.messages.create(
-            model="claude-3-5-sonnet-20241022",
-            max_tokens=1000,
-            messages=self.messages,
-            system=self.system_prompt,
-            tools=available_tools
-        )
+        response = self.model_provider.get_response(self.messages, self.system_prompt, available_tools)
 
-        # Process response and handle tool calls
         final_text = []
 
         assistant_message_content = []
@@ -97,7 +86,6 @@ class MCPClient:
                         "is_done": True
                     }
 
-                # Execute tool call
                 result = await self.session.call_tool(tool_name, tool_args)
                 final_text.append(f"[Calling tool {tool_name} with args {tool_args}]")
 
@@ -117,7 +105,7 @@ class MCPClient:
                     ]
                 })
 
-                final_text.append(f"Got tool output: {result.content}")
+                final_text.append(f"Got tool output: {[content.text.replace('\n', '') for content in result.content]}")
 
                 # # Get next response from Claude
                 # response = self.anthropic.messages.create(

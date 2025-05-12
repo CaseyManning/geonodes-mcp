@@ -238,7 +238,7 @@ def list_node_types(ctx: Context) -> str:
     if(node_data is None):
         load_node_data()
 
-    return json.dumps(list(node_data.keys()), indent=2)
+    return str(list(node_data.keys()))
 
 @mcp.tool()
 def get_node_type_info(ctx: Context, node_type: str) -> str:
@@ -315,6 +315,25 @@ def set_output_node(ctx: Context, node_id: int) -> str:
     """
     return send_blender_command("set_output_node", {"node_id": node_id})
 
+@mcp.tool()
+def end_loop(ctx: Context) -> str:
+    """End the loop"""
+    return "trying to end the loop"
+
+@mcp.tool()
+def get_node_operation_types(node_type: Annotated[str, "either ShaderNodeVectorMath, ShaderNodeMath, or FunctionNodeBooleanMath"]):
+    operations = []
+    if(node_type == "ShaderNodeVectorMath"):
+        operations = ["ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "MULTIPLY_ADD", "CROSS_PRODUCT", "PROJECT", "REFLECT", "REFRACT", "FACEFORWARD", "DOT_PRODUCT", "DISTANCE", "LENGTH", "SCALE", "NORMALIZE", "ABSOLUTE", "MINIMUM", "MAXIMUM", "FLOOR", "CEIL", "FRACTION", "MODULO", "WRAP", "SNAP", "SINE", "COSINE", "TANGENT"]
+    elif(node_type == "ShaderNodeMath"):
+        operations = ["ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "MULTIPLY_ADD", "POWER", "LOGARITHM", "SQRT", "INVERSE_SQRT", "ABSOLUTE", "EXPONENT", "MINIMUM", "MAXIMUM", "LESS_THAN", "GREATER_THAN", "SIGN", "FRACT", "MODULO", "SINE", "COSINE", "TANGENT"]
+    elif(node_type == "FunctionNodeBooleanMath"):
+        operations = ["AND", "OR", "NOT", "NAND", "NOR", "XNOR", "XOR", "IMPLY", "NIMPLY"]
+    return str(operations)
+
+@mcp.tool()
+def set_node_operation(ctx: Context, node_id: int, operation: Annotated[str, "the type of operation for the node to perform. use get_node_operation_types to see available operations"]) -> str:
+    return send_blender_command("set_node_operation", {"node_id": node_id, "operation": operation})
 
 @mcp.tool()
 def visually_evaluate_node(ctx: Context, node_id: int, expected_output_description: str) -> str:

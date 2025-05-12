@@ -2,13 +2,13 @@
     "GeometryNodeAccumulateField": {
       "GeometryNodeAccumulateField": {
         "inputs": [
-          "0: Value [Float]",
-          "1: Group ID [Int]"
+          "Value: Float",
+          "Group ID: Int"
         ],
         "outputs": [
-          "0: Leading [Float]",
-          "1: Trailing [Float]",
-          "2: Total [Float]"
+          "Leading: Float",
+          "Trailing: Float",
+          "Total: Float"
         ],
         "description": "Add the values of an evaluated field together and output the running total for each element"
       }
@@ -16,16 +16,16 @@
     "GeometryNodeAttributeDomainSize": {
       "GeometryNodeAttributeDomainSize": {
         "inputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "outputs": [
-          "0: Point Count [Int]",
-          "1: Edge Count [Int]",
-          "2: Face Count [Int]",
-          "3: Face Corner Count [Int]",
-          "4: Spline Count [Int]",
-          "5: Instance Count [Int]",
-          "6: Layer Count [Int]"
+          "Point Count: Int",
+          "Edge Count: Int",
+          "Face Count: Int",
+          "Face Corner Count: Int",
+          "Spline Count: Int",
+          "Instance Count: Int",
+          "Layer Count: Int"
         ],
         "description": "Retrieve the number of elements in a geometry for each attribute domain"
       }
@@ -33,19 +33,19 @@
     "GeometryNodeAttributeStatistic": {
       "GeometryNodeAttributeStatistic": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Attribute [Float]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Attribute: Float"
         ],
         "outputs": [
-          "0: Mean [Float]",
-          "1: Median [Float]",
-          "2: Sum [Float]",
-          "3: Min [Float]",
-          "4: Max [Float]",
-          "5: Range [Float]",
-          "6: Standard Deviation [Float]",
-          "7: Variance [Float]"
+          "Mean: Float",
+          "Median: Float",
+          "Sum: Float",
+          "Min: Float",
+          "Max: Float",
+          "Range: Float",
+          "Standard Deviation: Float",
+          "Variance: Float"
         ],
         "description": "Calculate statistics about a data set from a field evaluated on a geometry"
       }
@@ -53,12 +53,12 @@
     "GeometryNodeBake": {
       "GeometryNodeBake": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1:  [Virtual]"
+          "Geometry: Geometry",
+          ": Virtual"
         ],
         "outputs": [
-          "0: Geometry [Geometry]",
-          "1:  [Virtual]"
+          "Geometry: Geometry",
+          ": Virtual"
         ],
         "description": "Cache the incoming data so that it can be used without recomputation"
       }
@@ -66,12 +66,12 @@
     "GeometryNodeBlurAttribute": {
       "GeometryNodeBlurAttribute": {
         "inputs": [
-          "0: Value [Float]",
-          "1: Iterations [Int]",
-          "2: Weight [FloatFactor]"
+          "Value: Float",
+          "Iterations: Int",
+          "Weight: FloatFactor"
         ],
         "outputs": [
-          "0: Value [Float]"
+          "Value: Float"
         ],
         "description": "Mix attribute values of neighboring elements"
       }
@@ -79,12 +79,12 @@
     "GeometryNodeBoundBox": {
       "GeometryNodeBoundBox": {
         "inputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "outputs": [
-          "0: Bounding Box [Geometry]",
-          "1: Min [Vector]",
-          "2: Max [Vector]"
+          "Bounding Box: Geometry",
+          "Min: Vector",
+          "Max: Vector"
         ],
         "description": "Calculate the limits of a geometry's positions and generate a box mesh with those dimensions"
       }
@@ -92,12 +92,12 @@
     "GeometryNodeCaptureAttribute": {
       "GeometryNodeCaptureAttribute": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1:  [Virtual]"
+          "Geometry: Geometry",
+          ": Virtual"
         ],
         "outputs": [
-          "0: Geometry [Geometry]",
-          "1:  [Virtual]"
+          "Geometry: Geometry",
+          ": Virtual"
         ],
         "description": "Store the result of a field on a geometry and output the data as a node socket. Allows remembering or interpolating data as the geometry changes, such as positions before deformation"
       }
@@ -105,12 +105,12 @@
     "GeometryNodeCollectionInfo": {
       "GeometryNodeCollectionInfo": {
         "inputs": [
-          "0: Collection [Collection]",
-          "1: Separate Children [Bool]",
-          "2: Reset Children [Bool]"
+          "Collection: Collection",
+          "Separate Children: Bool",
+          "Reset Children: Bool"
         ],
         "outputs": [
-          "0: Instances [Geometry]"
+          "Instances: Geometry"
         ],
         "description": "Retrieve geometry instances from a collection"
       }
@@ -118,10 +118,10 @@
     "GeometryNodeConvexHull": {
       "GeometryNodeConvexHull": {
         "inputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "outputs": [
-          "0: Convex Hull [Geometry]"
+          "Convex Hull: Geometry"
         ],
         "description": "Create a mesh that encloses all points in the input geometry with the smallest number of points"
       }
@@ -129,13 +129,13 @@
     "GeometryNodeCornersOfEdge": {
       "GeometryNodeCornersOfEdge": {
         "inputs": [
-          "0: Edge Index [Int]",
-          "1: Weights [Float]",
-          "2: Sort Index [Int]"
+          "Edge Index: Int",
+          "Weights: Float",
+          "Sort Index: Int"
         ],
         "outputs": [
-          "0: Corner Index [Int]",
-          "1: Total [Int]"
+          "Corner Index: Int",
+          "Total: Int"
         ],
         "description": "Retrieve face corners connected to edges"
       }
@@ -143,13 +143,13 @@
     "GeometryNodeCornersOfFace": {
       "GeometryNodeCornersOfFace": {
         "inputs": [
-          "0: Face Index [Int]",
-          "1: Weights [Float]",
-          "2: Sort Index [Int]"
+          "Face Index: Int",
+          "Weights: Float",
+          "Sort Index: Int"
         ],
         "outputs": [
-          "0: Corner Index [Int]",
-          "1: Total [Int]"
+          "Corner Index: Int",
+          "Total: Int"
         ],
         "description": "Retrieve corners that make up a face"
       }
@@ -157,13 +157,13 @@
     "GeometryNodeCornersOfVertex": {
       "GeometryNodeCornersOfVertex": {
         "inputs": [
-          "0: Vertex Index [Int]",
-          "1: Weights [Float]",
-          "2: Sort Index [Int]"
+          "Vertex Index: Int",
+          "Weights: Float",
+          "Sort Index: Int"
         ],
         "outputs": [
-          "0: Corner Index [Int]",
-          "1: Total [Int]"
+          "Corner Index: Int",
+          "Total: Int"
         ],
         "description": "Retrieve face corners connected to vertices"
       }
@@ -171,22 +171,22 @@
     "GeometryNodeCurveArc": {
       "GeometryNodeCurveArc": {
         "inputs": [
-          "0: Resolution [IntUnsigned]",
-          "1: Start [VectorTranslation]",
-          "2: Middle [VectorTranslation]",
-          "3: End [VectorTranslation]",
-          "4: Radius [FloatDistance]",
-          "5: Start Angle [FloatAngle]",
-          "6: Sweep Angle [FloatAngle]",
-          "7: Offset Angle [FloatAngle]",
-          "8: Connect Center [Bool]",
-          "9: Invert Arc [Bool]"
+          "Resolution: IntUnsigned",
+          "Start: VectorTranslation",
+          "Middle: VectorTranslation",
+          "End: VectorTranslation",
+          "Radius: FloatDistance",
+          "Start Angle: FloatAngle",
+          "Sweep Angle: FloatAngle",
+          "Offset Angle: FloatAngle",
+          "Connect Center: Bool",
+          "Invert Arc: Bool"
         ],
         "outputs": [
-          "0: Curve [Geometry]",
-          "1: Center [Vector]",
-          "2: Normal [Vector]",
-          "3: Radius [Float]"
+          "Curve: Geometry",
+          "Center: Vector",
+          "Normal: Vector",
+          "Radius: Float"
         ],
         "description": "Generate a poly spline arc"
       }
@@ -194,11 +194,11 @@
     "GeometryNodeCurveEndpointSelection": {
       "GeometryNodeCurveEndpointSelection": {
         "inputs": [
-          "0: Start Size [Int]",
-          "1: End Size [Int]"
+          "Start Size: Int",
+          "End Size: Int"
         ],
         "outputs": [
-          "0: Selection [Bool]"
+          "Selection: Bool"
         ],
         "description": "Provide a selection for an arbitrary number of endpoints in each spline"
       }
@@ -207,7 +207,7 @@
       "GeometryNodeCurveHandleTypeSelection": {
         "inputs": [],
         "outputs": [
-          "0: Selection [Bool]"
+          "Selection: Bool"
         ],
         "description": "Provide a selection based on the handle types of B\u00e9zier control points"
       }
@@ -215,10 +215,10 @@
     "GeometryNodeCurveLength": {
       "GeometryNodeCurveLength": {
         "inputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "outputs": [
-          "0: Length [Float]"
+          "Length: Float"
         ],
         "description": "Retrieve the length of all splines added together"
       }
@@ -226,11 +226,11 @@
     "GeometryNodeCurveOfPoint": {
       "GeometryNodeCurveOfPoint": {
         "inputs": [
-          "0: Point Index [Int]"
+          "Point Index: Int"
         ],
         "outputs": [
-          "0: Curve Index [Int]",
-          "1: Index in Curve [Int]"
+          "Curve Index: Int",
+          "Index in Curve: Int"
         ],
         "description": "Retrieve the curve a control point is part of"
       }
@@ -238,14 +238,14 @@
     "GeometryNodeCurvePrimitiveBezierSegment": {
       "GeometryNodeCurvePrimitiveBezierSegment": {
         "inputs": [
-          "0: Resolution [IntUnsigned]",
-          "1: Start [VectorTranslation]",
-          "2: Start Handle [VectorTranslation]",
-          "3: End Handle [VectorTranslation]",
-          "4: End [VectorTranslation]"
+          "Resolution: IntUnsigned",
+          "Start: VectorTranslation",
+          "Start Handle: VectorTranslation",
+          "End Handle: VectorTranslation",
+          "End: VectorTranslation"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Generate a 2D B\u00e9zier spline from the given control points and handles"
       }
@@ -253,15 +253,15 @@
     "GeometryNodeCurvePrimitiveCircle": {
       "GeometryNodeCurvePrimitiveCircle": {
         "inputs": [
-          "0: Resolution [Int]",
-          "1: Point 1 [VectorTranslation]",
-          "2: Point 2 [VectorTranslation]",
-          "3: Point 3 [VectorTranslation]",
-          "4: Radius [FloatDistance]"
+          "Resolution: Int",
+          "Point 1: VectorTranslation",
+          "Point 2: VectorTranslation",
+          "Point 3: VectorTranslation",
+          "Radius: FloatDistance"
         ],
         "outputs": [
-          "0: Curve [Geometry]",
-          "1: Center [Vector]"
+          "Curve: Geometry",
+          "Center: Vector"
         ],
         "description": "Generate a poly spline circle"
       }
@@ -269,13 +269,13 @@
     "GeometryNodeCurvePrimitiveLine": {
       "GeometryNodeCurvePrimitiveLine": {
         "inputs": [
-          "0: Start [VectorTranslation]",
-          "1: End [VectorTranslation]",
-          "2: Direction [Vector]",
-          "3: Length [FloatDistance]"
+          "Start: VectorTranslation",
+          "End: VectorTranslation",
+          "Direction: Vector",
+          "Length: FloatDistance"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Generate a poly spline line with two points"
       }
@@ -283,20 +283,20 @@
     "GeometryNodeCurvePrimitiveQuadrilateral": {
       "GeometryNodeCurvePrimitiveQuadrilateral": {
         "inputs": [
-          "0: Width [FloatDistance]",
-          "1: Height [FloatDistance]",
-          "2: Bottom Width [FloatDistance]",
-          "3: Top Width [FloatDistance]",
-          "4: Offset [FloatDistance]",
-          "5: Bottom Height [FloatDistance]",
-          "6: Top Height [FloatDistance]",
-          "7: Point 1 [VectorTranslation]",
-          "8: Point 2 [VectorTranslation]",
-          "9: Point 3 [VectorTranslation]",
-          "10: Point 4 [VectorTranslation]"
+          "Width: FloatDistance",
+          "Height: FloatDistance",
+          "Bottom Width: FloatDistance",
+          "Top Width: FloatDistance",
+          "Offset: FloatDistance",
+          "Bottom Height: FloatDistance",
+          "Top Height: FloatDistance",
+          "Point 1: VectorTranslation",
+          "Point 2: VectorTranslation",
+          "Point 3: VectorTranslation",
+          "Point 4: VectorTranslation"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Generate a polygon with four points"
       }
@@ -304,13 +304,13 @@
     "GeometryNodeCurveQuadraticBezier": {
       "GeometryNodeCurveQuadraticBezier": {
         "inputs": [
-          "0: Resolution [IntUnsigned]",
-          "1: Start [VectorTranslation]",
-          "2: Middle [VectorTranslation]",
-          "3: End [VectorTranslation]"
+          "Resolution: IntUnsigned",
+          "Start: VectorTranslation",
+          "Middle: VectorTranslation",
+          "End: VectorTranslation"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Generate a poly spline in a parabola shape with control points positions"
       }
@@ -318,11 +318,11 @@
     "GeometryNodeCurveSetHandles": {
       "GeometryNodeCurveSetHandles": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Selection [Bool]"
+          "Curve: Geometry",
+          "Selection: Bool"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Set the handle type for the control points of a B\u00e9zier curve"
       }
@@ -330,15 +330,15 @@
     "GeometryNodeCurveSpiral": {
       "GeometryNodeCurveSpiral": {
         "inputs": [
-          "0: Resolution [IntUnsigned]",
-          "1: Rotations [Float]",
-          "2: Start Radius [FloatDistance]",
-          "3: End Radius [FloatDistance]",
-          "4: Height [FloatDistance]",
-          "5: Reverse [Bool]"
+          "Resolution: IntUnsigned",
+          "Rotations: Float",
+          "Start Radius: FloatDistance",
+          "End Radius: FloatDistance",
+          "Height: FloatDistance",
+          "Reverse: Bool"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Generate a poly spline in a spiral shape"
       }
@@ -346,11 +346,11 @@
     "GeometryNodeCurveSplineType": {
       "GeometryNodeCurveSplineType": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Selection [Bool]"
+          "Curve: Geometry",
+          "Selection: Bool"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Change the type of curves"
       }
@@ -358,14 +358,14 @@
     "GeometryNodeCurveStar": {
       "GeometryNodeCurveStar": {
         "inputs": [
-          "0: Points [IntUnsigned]",
-          "1: Inner Radius [FloatDistance]",
-          "2: Outer Radius [FloatDistance]",
-          "3: Twist [FloatAngle]"
+          "Points: IntUnsigned",
+          "Inner Radius: FloatDistance",
+          "Outer Radius: FloatDistance",
+          "Twist: FloatAngle"
         ],
         "outputs": [
-          "0: Curve [Geometry]",
-          "1: Outer Points [Bool]"
+          "Curve: Geometry",
+          "Outer Points: Bool"
         ],
         "description": "Generate a poly spline in a star pattern by connecting alternating points of two circles"
       }
@@ -373,12 +373,12 @@
     "GeometryNodeCurveToMesh": {
       "GeometryNodeCurveToMesh": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Profile Curve [Geometry]",
-          "2: Fill Caps [Bool]"
+          "Curve: Geometry",
+          "Profile Curve: Geometry",
+          "Fill Caps: Bool"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Convert curves into a mesh, optionally with a custom profile shape defined by curves"
       }
@@ -386,15 +386,15 @@
     "GeometryNodeCurveToPoints": {
       "GeometryNodeCurveToPoints": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Count [Int]",
-          "2: Length [FloatDistance]"
+          "Curve: Geometry",
+          "Count: Int",
+          "Length: FloatDistance"
         ],
         "outputs": [
-          "0: Points [Geometry]",
-          "1: Tangent [Vector]",
-          "2: Normal [Vector]",
-          "3: Rotation [Rotation]"
+          "Points: Geometry",
+          "Tangent: Vector",
+          "Normal: Vector",
+          "Rotation: Rotation"
         ],
         "description": "Generate a point cloud by sampling positions along curves"
       }
@@ -402,12 +402,12 @@
     "GeometryNodeCurvesToGreasePencil": {
       "GeometryNodeCurvesToGreasePencil": {
         "inputs": [
-          "0: Curves [Geometry]",
-          "1: Selection [Bool]",
-          "2: Instances as Layers [Bool]"
+          "Curves: Geometry",
+          "Selection: Bool",
+          "Instances as Layers: Bool"
         ],
         "outputs": [
-          "0: Grease Pencil [Geometry]"
+          "Grease Pencil: Geometry"
         ],
         "description": "Convert the curves in each top-level instance into Grease Pencil layer"
       }
@@ -415,10 +415,10 @@
     "GeometryNodeDeformCurvesOnSurface": {
       "GeometryNodeDeformCurvesOnSurface": {
         "inputs": [
-          "0: Curves [Geometry]"
+          "Curves: Geometry"
         ],
         "outputs": [
-          "0: Curves [Geometry]"
+          "Curves: Geometry"
         ],
         "description": "Translate and rotate curves based on changes between the object's original and evaluated surface mesh"
       }
@@ -426,11 +426,11 @@
     "GeometryNodeDeleteGeometry": {
       "GeometryNodeDeleteGeometry": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]"
+          "Geometry: Geometry",
+          "Selection: Bool"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Remove selected elements of a geometry"
       }
@@ -438,14 +438,14 @@
     "GeometryNodeDistributePointsInGrid": {
       "GeometryNodeDistributePointsInGrid": {
         "inputs": [
-          "0: Grid [Float]",
-          "1: Density [Float]",
-          "2: Seed [Int]",
-          "3: Spacing [VectorXYZ]",
-          "4: Threshold [Float]"
+          "Grid: Float",
+          "Density: Float",
+          "Seed: Int",
+          "Spacing: VectorXYZ",
+          "Threshold: Float"
         ],
         "outputs": [
-          "0: Points [Geometry]"
+          "Points: Geometry"
         ],
         "description": "Generate points inside a volume grid"
       }
@@ -453,14 +453,14 @@
     "GeometryNodeDistributePointsInVolume": {
       "GeometryNodeDistributePointsInVolume": {
         "inputs": [
-          "0: Volume [Geometry]",
-          "1: Density [Float]",
-          "2: Seed [Int]",
-          "3: Spacing [VectorXYZ]",
-          "4: Threshold [Float]"
+          "Volume: Geometry",
+          "Density: Float",
+          "Seed: Int",
+          "Spacing: VectorXYZ",
+          "Threshold: Float"
         ],
         "outputs": [
-          "0: Points [Geometry]"
+          "Points: Geometry"
         ],
         "description": "Generate points inside a volume"
       }
@@ -468,18 +468,18 @@
     "GeometryNodeDistributePointsOnFaces": {
       "GeometryNodeDistributePointsOnFaces": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Selection [Bool]",
-          "2: Distance Min [FloatDistance]",
-          "3: Density Max [Float]",
-          "4: Density [Float]",
-          "5: Density Factor [FloatFactor]",
-          "6: Seed [Int]"
+          "Mesh: Geometry",
+          "Selection: Bool",
+          "Distance Min: FloatDistance",
+          "Density Max: Float",
+          "Density: Float",
+          "Density Factor: FloatFactor",
+          "Seed: Int"
         ],
         "outputs": [
-          "0: Points [Geometry]",
-          "1: Normal [Vector]",
-          "2: Rotation [Rotation]"
+          "Points: Geometry",
+          "Normal: Vector",
+          "Rotation: Rotation"
         ],
         "description": "Generate points spread out on the surface of a mesh"
       }
@@ -487,11 +487,11 @@
     "GeometryNodeDualMesh": {
       "GeometryNodeDualMesh": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Keep Boundaries [Bool]"
+          "Mesh: Geometry",
+          "Keep Boundaries: Bool"
         ],
         "outputs": [
-          "0: Dual Mesh [Geometry]"
+          "Dual Mesh: Geometry"
         ],
         "description": "Convert Faces into vertices and vertices into faces"
       }
@@ -499,13 +499,13 @@
     "GeometryNodeDuplicateElements": {
       "GeometryNodeDuplicateElements": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Amount [Int]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Amount: Int"
         ],
         "outputs": [
-          "0: Geometry [Geometry]",
-          "1: Duplicate Index [Int]"
+          "Geometry: Geometry",
+          "Duplicate Index: Int"
         ],
         "description": "Generate an arbitrary number copies of each selected input element"
       }
@@ -513,12 +513,12 @@
     "GeometryNodeEdgePathsToCurves": {
       "GeometryNodeEdgePathsToCurves": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Start Vertices [Bool]",
-          "2: Next Vertex Index [Int]"
+          "Mesh: Geometry",
+          "Start Vertices: Bool",
+          "Next Vertex Index: Int"
         ],
         "outputs": [
-          "0: Curves [Geometry]"
+          "Curves: Geometry"
         ],
         "description": "Output curves following paths across mesh edges"
       }
@@ -526,11 +526,11 @@
     "GeometryNodeEdgePathsToSelection": {
       "GeometryNodeEdgePathsToSelection": {
         "inputs": [
-          "0: Start Vertices [Bool]",
-          "1: Next Vertex Index [Int]"
+          "Start Vertices: Bool",
+          "Next Vertex Index: Int"
         ],
         "outputs": [
-          "0: Selection [Bool]"
+          "Selection: Bool"
         ],
         "description": "Output a selection of edges by following paths across mesh edges"
       }
@@ -538,11 +538,11 @@
     "GeometryNodeEdgesOfCorner": {
       "GeometryNodeEdgesOfCorner": {
         "inputs": [
-          "0: Corner Index [Int]"
+          "Corner Index: Int"
         ],
         "outputs": [
-          "0: Next Edge Index [Int]",
-          "1: Previous Edge Index [Int]"
+          "Next Edge Index: Int",
+          "Previous Edge Index: Int"
         ],
         "description": "Retrieve the edges on both sides of a face corner"
       }
@@ -550,13 +550,13 @@
     "GeometryNodeEdgesOfVertex": {
       "GeometryNodeEdgesOfVertex": {
         "inputs": [
-          "0: Vertex Index [Int]",
-          "1: Weights [Float]",
-          "2: Sort Index [Int]"
+          "Vertex Index: Int",
+          "Weights: Float",
+          "Sort Index: Int"
         ],
         "outputs": [
-          "0: Edge Index [Int]",
-          "1: Total [Int]"
+          "Edge Index: Int",
+          "Total: Int"
         ],
         "description": "Retrieve the edges connected to each vertex"
       }
@@ -564,10 +564,10 @@
     "GeometryNodeEdgesToFaceGroups": {
       "GeometryNodeEdgesToFaceGroups": {
         "inputs": [
-          "0: Boundary Edges [Bool]"
+          "Boundary Edges: Bool"
         ],
         "outputs": [
-          "0: Face Group ID [Int]"
+          "Face Group ID: Int"
         ],
         "description": "Group faces into regions surrounded by the selected boundary edges"
       }
@@ -575,16 +575,16 @@
     "GeometryNodeExtrudeMesh": {
       "GeometryNodeExtrudeMesh": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Selection [Bool]",
-          "2: Offset [VectorTranslation]",
-          "3: Offset Scale [Float]",
-          "4: Individual [Bool]"
+          "Mesh: Geometry",
+          "Selection: Bool",
+          "Offset: VectorTranslation",
+          "Offset Scale: Float",
+          "Individual: Bool"
         ],
         "outputs": [
-          "0: Mesh [Geometry]",
-          "1: Top [Bool]",
-          "2: Side [Bool]"
+          "Mesh: Geometry",
+          "Top: Bool",
+          "Side: Bool"
         ],
         "description": "Generate new vertices, edges, or faces from selected elements and move them based on an offset while keeping them connected by their boundary"
       }
@@ -592,11 +592,11 @@
     "GeometryNodeFaceOfCorner": {
       "GeometryNodeFaceOfCorner": {
         "inputs": [
-          "0: Corner Index [Int]"
+          "Corner Index: Int"
         ],
         "outputs": [
-          "0: Face Index [Int]",
-          "1: Index in Face [Int]"
+          "Face Index: Int",
+          "Index in Face: Int"
         ],
         "description": "Retrieve the face each face corner is part of"
       }
@@ -604,11 +604,11 @@
     "GeometryNodeFieldAtIndex": {
       "GeometryNodeFieldAtIndex": {
         "inputs": [
-          "0: Index [Int]",
-          "1: Value [Float]"
+          "Index: Int",
+          "Value: Float"
         ],
         "outputs": [
-          "0: Value [Float]"
+          "Value: Float"
         ],
         "description": "Retrieve data of other elements in the context's geometry"
       }
@@ -616,10 +616,10 @@
     "GeometryNodeFieldOnDomain": {
       "GeometryNodeFieldOnDomain": {
         "inputs": [
-          "0: Value [Float]"
+          "Value: Float"
         ],
         "outputs": [
-          "0: Value [Float]"
+          "Value: Float"
         ],
         "description": "Retrieve values from a field on a different domain besides the domain from the context"
       }
@@ -627,11 +627,11 @@
     "GeometryNodeFillCurve": {
       "GeometryNodeFillCurve": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Group ID [Int]"
+          "Curve: Geometry",
+          "Group ID: Int"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Generate a mesh on the XY plane with faces on the inside of input curves"
       }
@@ -639,13 +639,13 @@
     "GeometryNodeFilletCurve": {
       "GeometryNodeFilletCurve": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Count [Int]",
-          "2: Radius [FloatDistance]",
-          "3: Limit Radius [Bool]"
+          "Curve: Geometry",
+          "Count: Int",
+          "Radius: FloatDistance",
+          "Limit Radius: Bool"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Round corners by generating circular arcs on each control point"
       }
@@ -653,11 +653,11 @@
     "GeometryNodeFlipFaces": {
       "GeometryNodeFlipFaces": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Selection [Bool]"
+          "Mesh: Geometry",
+          "Selection: Bool"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Reverse the order of the vertices and edges of selected faces, flipping their normal direction"
       }
@@ -665,14 +665,14 @@
     "GeometryNodeForeachGeometryElementInput": {
       "GeometryNodeForeachGeometryElementInput": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2:  [Virtual]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          ": Virtual"
         ],
         "outputs": [
-          "0: Index [Int]",
-          "1: Element [Geometry]",
-          "2:  [Virtual]"
+          "Index: Int",
+          "Element: Geometry",
+          ": Virtual"
         ],
         "description": ""
       }
@@ -680,15 +680,15 @@
     "GeometryNodeForeachGeometryElementOutput": {
       "GeometryNodeForeachGeometryElementOutput": {
         "inputs": [
-          "0:  [Virtual]",
-          "1: Geometry [Geometry]",
-          "2:  [Virtual]"
+          ": Virtual",
+          "Geometry: Geometry",
+          ": Virtual"
         ],
         "outputs": [
-          "0: Geometry [Geometry]",
-          "1:  [Virtual]",
-          "2: Geometry [Geometry]",
-          "3:  [Virtual]"
+          "Geometry: Geometry",
+          ": Virtual",
+          "Geometry: Geometry",
+          ": Virtual"
         ],
         "description": ""
       }
@@ -696,10 +696,10 @@
     "GeometryNodeGeometryToInstance": {
       "GeometryNodeGeometryToInstance": {
         "inputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "outputs": [
-          "0: Instances [Geometry]"
+          "Instances: Geometry"
         ],
         "description": "Convert each input geometry into an instance, which can be much faster than the Join Geometry node when the inputs are large"
       }
@@ -707,13 +707,13 @@
     "GeometryNodeGetNamedGrid": {
       "GeometryNodeGetNamedGrid": {
         "inputs": [
-          "0: Volume [Geometry]",
-          "1: Name [String]",
-          "2: Remove [Bool]"
+          "Volume: Geometry",
+          "Name: String",
+          "Remove: Bool"
         ],
         "outputs": [
-          "0: Volume [Geometry]",
-          "1: Grid [Float]"
+          "Volume: Geometry",
+          "Grid: Float"
         ],
         "description": "Get volume grid from a volume geometry with the specified name"
       }
@@ -721,14 +721,14 @@
     "GeometryNodeGizmoDial": {
       "GeometryNodeGizmoDial": {
         "inputs": [
-          "0: Value [Float]",
-          "1: Position [VectorTranslation]",
-          "2: Up [VectorXYZ]",
-          "3: Screen Space [Bool]",
-          "4: Radius [Float]"
+          "Value: Float",
+          "Position: VectorTranslation",
+          "Up: VectorXYZ",
+          "Screen Space: Bool",
+          "Radius: Float"
         ],
         "outputs": [
-          "0: Transform [Geometry]"
+          "Transform: Geometry"
         ],
         "description": "Show a dial gizmo in the viewport for a value"
       }
@@ -736,12 +736,12 @@
     "GeometryNodeGizmoLinear": {
       "GeometryNodeGizmoLinear": {
         "inputs": [
-          "0: Value [Float]",
-          "1: Position [VectorTranslation]",
-          "2: Direction [VectorXYZ]"
+          "Value: Float",
+          "Position: VectorTranslation",
+          "Direction: VectorXYZ"
         ],
         "outputs": [
-          "0: Transform [Geometry]"
+          "Transform: Geometry"
         ],
         "description": "Show a linear gizmo in the viewport for a value"
       }
@@ -749,12 +749,12 @@
     "GeometryNodeGizmoTransform": {
       "GeometryNodeGizmoTransform": {
         "inputs": [
-          "0: Value [Matrix]",
-          "1: Position [VectorTranslation]",
-          "2: Rotation [Rotation]"
+          "Value: Matrix",
+          "Position: VectorTranslation",
+          "Rotation: Rotation"
         ],
         "outputs": [
-          "0: Transform [Geometry]"
+          "Transform: Geometry"
         ],
         "description": "Show a transform gizmo in the viewport"
       }
@@ -762,12 +762,12 @@
     "GeometryNodeGreasePencilToCurves": {
       "GeometryNodeGreasePencilToCurves": {
         "inputs": [
-          "0: Grease Pencil [Geometry]",
-          "1: Selection [Bool]",
-          "2: Layers as Instances [Bool]"
+          "Grease Pencil: Geometry",
+          "Selection: Bool",
+          "Layers as Instances: Bool"
         ],
         "outputs": [
-          "0: Curves [Geometry]"
+          "Curves: Geometry"
         ],
         "description": "Convert Grease Pencil layers into curve instances"
       }
@@ -775,12 +775,12 @@
     "GeometryNodeGridToMesh": {
       "GeometryNodeGridToMesh": {
         "inputs": [
-          "0: Grid [Float]",
-          "1: Threshold [Float]",
-          "2: Adaptivity [FloatFactor]"
+          "Grid: Float",
+          "Threshold: Float",
+          "Adaptivity: FloatFactor"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Generate a mesh on the \"surface\" of a volume grid"
       }
@@ -795,15 +795,15 @@
     "GeometryNodeImageInfo": {
       "GeometryNodeImageInfo": {
         "inputs": [
-          "0: Image [Image]",
-          "1: Frame [Int]"
+          "Image: Image",
+          "Frame: Int"
         ],
         "outputs": [
-          "0: Width [Int]",
-          "1: Height [Int]",
-          "2: Has Alpha [Bool]",
-          "3: Frame Count [Int]",
-          "4: FPS [Float]"
+          "Width: Int",
+          "Height: Int",
+          "Has Alpha: Bool",
+          "Frame Count: Int",
+          "FPS: Float"
         ],
         "description": "Retrieve information about an image"
       }
@@ -811,13 +811,13 @@
     "GeometryNodeImageTexture": {
       "GeometryNodeImageTexture": {
         "inputs": [
-          "0: Image [Image]",
-          "1: Vector [Vector]",
-          "2: Frame [Int]"
+          "Image: Image",
+          "Vector: Vector",
+          "Frame: Int"
         ],
         "outputs": [
-          "0: Color [Color]",
-          "1: Alpha [Float]"
+          "Color: Color",
+          "Alpha: Float"
         ],
         "description": "Sample values from an image texture"
       }
@@ -825,10 +825,10 @@
     "GeometryNodeImportOBJ": {
       "GeometryNodeImportOBJ": {
         "inputs": [
-          "0: Path [StringFilePath]"
+          "Path: StringFilePath"
         ],
         "outputs": [
-          "0: Instances [Geometry]"
+          "Instances: Geometry"
         ],
         "description": "Import geometry from an OBJ file"
       }
@@ -836,10 +836,10 @@
     "GeometryNodeImportPLY": {
       "GeometryNodeImportPLY": {
         "inputs": [
-          "0: Path [StringFilePath]"
+          "Path: StringFilePath"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Import a point cloud from a PLY file"
       }
@@ -847,10 +847,10 @@
     "GeometryNodeImportSTL": {
       "GeometryNodeImportSTL": {
         "inputs": [
-          "0: Path [StringFilePath]"
+          "Path: StringFilePath"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Import a mesh from an STL file"
       }
@@ -858,12 +858,12 @@
     "GeometryNodeIndexOfNearest": {
       "GeometryNodeIndexOfNearest": {
         "inputs": [
-          "0: Position [Vector]",
-          "1: Group ID [Int]"
+          "Position: Vector",
+          "Group ID: Int"
         ],
         "outputs": [
-          "0: Index [Int]",
-          "1: Has Neighbor [Bool]"
+          "Index: Int",
+          "Has Neighbor: Bool"
         ],
         "description": "Find the nearest element in a group. Similar to the \"Sample Nearest\" node"
       }
@@ -871,13 +871,13 @@
     "GeometryNodeIndexSwitch": {
       "GeometryNodeIndexSwitch": {
         "inputs": [
-          "0: Index [Int]",
-          "1: 0 [Geometry]",
-          "2: 1 [Geometry]",
-          "3:  [Virtual]"
+          "Index: Int",
+          "0: Geometry",
+          "1: Geometry",
+          ": Virtual"
         ],
         "outputs": [
-          "0: Output [Geometry]"
+          "Output: Geometry"
         ],
         "description": "Choose between an arbitrary number of values with an index"
       }
@@ -886,7 +886,7 @@
       "GeometryNodeInputActiveCamera": {
         "inputs": [],
         "outputs": [
-          "0: Active Camera [Object]"
+          "Active Camera: Object"
         ],
         "description": "Retrieve the scene's active camera"
       }
@@ -895,7 +895,7 @@
       "GeometryNodeInputCollection": {
         "inputs": [],
         "outputs": [
-          "0: Collection [Collection]"
+          "Collection: Collection"
         ],
         "description": "Output a single collection"
       }
@@ -903,11 +903,11 @@
     "GeometryNodeInputCurveHandlePositions": {
       "GeometryNodeInputCurveHandlePositions": {
         "inputs": [
-          "0: Relative [Bool]"
+          "Relative: Bool"
         ],
         "outputs": [
-          "0: Left [Vector]",
-          "1: Right [Vector]"
+          "Left: Vector",
+          "Right: Vector"
         ],
         "description": "Retrieve the position of each B\u00e9zier control point's handles"
       }
@@ -916,7 +916,7 @@
       "GeometryNodeInputCurveTilt": {
         "inputs": [],
         "outputs": [
-          "0: Tilt [Float]"
+          "Tilt: Float"
         ],
         "description": "Retrieve the angle at each control point used to twist the curve's normal around its tangent"
       }
@@ -925,7 +925,7 @@
       "GeometryNodeInputEdgeSmooth": {
         "inputs": [],
         "outputs": [
-          "0: Smooth [Bool]"
+          "Smooth: Bool"
         ],
         "description": "Retrieve whether each edge is marked for smooth or split normals"
       }
@@ -934,7 +934,7 @@
       "GeometryNodeInputID": {
         "inputs": [],
         "outputs": [
-          "0: ID [Int]"
+          "ID: Int"
         ],
         "description": "Retrieve a stable random identifier value from the \"id\" attribute on the point domain, or the index if the attribute does not exist"
       }
@@ -943,7 +943,7 @@
       "GeometryNodeInputImage": {
         "inputs": [],
         "outputs": [
-          "0: Image [Image]"
+          "Image: Image"
         ],
         "description": "Input an image data-block"
       }
@@ -952,7 +952,7 @@
       "GeometryNodeInputIndex": {
         "inputs": [],
         "outputs": [
-          "0: Index [Int]"
+          "Index: Int"
         ],
         "description": "Retrieve an integer value indicating the position of each element in the list, starting at zero"
       }
@@ -961,7 +961,7 @@
       "GeometryNodeInputInstanceRotation": {
         "inputs": [],
         "outputs": [
-          "0: Rotation [Rotation]"
+          "Rotation: Rotation"
         ],
         "description": "Retrieve the rotation of each instance in the geometry"
       }
@@ -970,7 +970,7 @@
       "GeometryNodeInputInstanceScale": {
         "inputs": [],
         "outputs": [
-          "0: Scale [Vector]"
+          "Scale: Vector"
         ],
         "description": "Retrieve the scale of each instance in the geometry"
       }
@@ -979,7 +979,7 @@
       "GeometryNodeInputMaterial": {
         "inputs": [],
         "outputs": [
-          "0: Material [Material]"
+          "Material: Material"
         ],
         "description": "Output a single material"
       }
@@ -988,7 +988,7 @@
       "GeometryNodeInputMaterialIndex": {
         "inputs": [],
         "outputs": [
-          "0: Material Index [Int]"
+          "Material Index: Int"
         ],
         "description": "Retrieve the index of the material used for each element in the geometry's list of materials"
       }
@@ -997,8 +997,8 @@
       "GeometryNodeInputMeshEdgeAngle": {
         "inputs": [],
         "outputs": [
-          "0: Unsigned Angle [Float]",
-          "1: Signed Angle [Float]"
+          "Unsigned Angle: Float",
+          "Signed Angle: Float"
         ],
         "description": "The angle between the normals of connected manifold faces"
       }
@@ -1007,7 +1007,7 @@
       "GeometryNodeInputMeshEdgeNeighbors": {
         "inputs": [],
         "outputs": [
-          "0: Face Count [Int]"
+          "Face Count: Int"
         ],
         "description": "Retrieve the number of faces that use each edge as one of their sides"
       }
@@ -1016,10 +1016,10 @@
       "GeometryNodeInputMeshEdgeVertices": {
         "inputs": [],
         "outputs": [
-          "0: Vertex Index 1 [Int]",
-          "1: Vertex Index 2 [Int]",
-          "2: Position 1 [Vector]",
-          "3: Position 2 [Vector]"
+          "Vertex Index 1: Int",
+          "Vertex Index 2: Int",
+          "Position 1: Vector",
+          "Position 2: Vector"
         ],
         "description": "Retrieve topology information relating to each edge of a mesh"
       }
@@ -1028,7 +1028,7 @@
       "GeometryNodeInputMeshFaceArea": {
         "inputs": [],
         "outputs": [
-          "0: Area [Float]"
+          "Area: Float"
         ],
         "description": "Calculate the surface area of a mesh's faces"
       }
@@ -1036,10 +1036,10 @@
     "GeometryNodeInputMeshFaceIsPlanar": {
       "GeometryNodeInputMeshFaceIsPlanar": {
         "inputs": [
-          "0: Threshold [FloatDistance]"
+          "Threshold: FloatDistance"
         ],
         "outputs": [
-          "0: Planar [Bool]"
+          "Planar: Bool"
         ],
         "description": "Retrieve whether all triangles in a face are on the same plane, i.e. whether they have the same normal"
       }
@@ -1048,8 +1048,8 @@
       "GeometryNodeInputMeshFaceNeighbors": {
         "inputs": [],
         "outputs": [
-          "0: Vertex Count [Int]",
-          "1: Face Count [Int]"
+          "Vertex Count: Int",
+          "Face Count: Int"
         ],
         "description": "Retrieve topology information relating to each face of a mesh"
       }
@@ -1058,8 +1058,8 @@
       "GeometryNodeInputMeshIsland": {
         "inputs": [],
         "outputs": [
-          "0: Island Index [Int]",
-          "1: Island Count [Int]"
+          "Island Index: Int",
+          "Island Count: Int"
         ],
         "description": "Retrieve information about separate connected regions in a mesh"
       }
@@ -1068,8 +1068,8 @@
       "GeometryNodeInputMeshVertexNeighbors": {
         "inputs": [],
         "outputs": [
-          "0: Vertex Count [Int]",
-          "1: Face Count [Int]"
+          "Vertex Count: Int",
+          "Face Count: Int"
         ],
         "description": "Retrieve topology information relating to each vertex of a mesh"
       }
@@ -1077,11 +1077,11 @@
     "GeometryNodeInputNamedAttribute": {
       "GeometryNodeInputNamedAttribute": {
         "inputs": [
-          "0: Name [String]"
+          "Name: String"
         ],
         "outputs": [
-          "0: Attribute [Float]",
-          "1: Exists [Bool]"
+          "Attribute: Float",
+          "Exists: Bool"
         ],
         "description": "Retrieve the data of a specified attribute"
       }
@@ -1089,10 +1089,10 @@
     "GeometryNodeInputNamedLayerSelection": {
       "GeometryNodeInputNamedLayerSelection": {
         "inputs": [
-          "0: Name [String]"
+          "Name: String"
         ],
         "outputs": [
-          "0: Selection [Bool]"
+          "Selection: Bool"
         ],
         "description": "Output a selection of a Grease Pencil layer"
       }
@@ -1101,7 +1101,7 @@
       "GeometryNodeInputNormal": {
         "inputs": [],
         "outputs": [
-          "0: Normal [Vector]"
+          "Normal: Vector"
         ],
         "description": "Retrieve a unit length vector indicating the direction pointing away from the geometry at each element"
       }
@@ -1110,7 +1110,7 @@
       "GeometryNodeInputObject": {
         "inputs": [],
         "outputs": [
-          "0: Object [Object]"
+          "Object: Object"
         ],
         "description": "Output a single object"
       }
@@ -1119,7 +1119,7 @@
       "GeometryNodeInputPosition": {
         "inputs": [],
         "outputs": [
-          "0: Position [Vector]"
+          "Position: Vector"
         ],
         "description": "Retrieve a vector indicating the location of each element"
       }
@@ -1128,7 +1128,7 @@
       "GeometryNodeInputRadius": {
         "inputs": [],
         "outputs": [
-          "0: Radius [Float]"
+          "Radius: Float"
         ],
         "description": "Retrieve the radius at each point on curve or point cloud geometry"
       }
@@ -1137,8 +1137,8 @@
       "GeometryNodeInputSceneTime": {
         "inputs": [],
         "outputs": [
-          "0: Seconds [Float]",
-          "1: Frame [Float]"
+          "Seconds: Float",
+          "Frame: Float"
         ],
         "description": "Retrieve the current time in the scene's animation in units of seconds or frames"
       }
@@ -1147,7 +1147,7 @@
       "GeometryNodeInputShadeSmooth": {
         "inputs": [],
         "outputs": [
-          "0: Smooth [Bool]"
+          "Smooth: Bool"
         ],
         "description": "Retrieve whether each face is marked for smooth or sharp normals"
       }
@@ -1155,12 +1155,12 @@
     "GeometryNodeInputShortestEdgePaths": {
       "GeometryNodeInputShortestEdgePaths": {
         "inputs": [
-          "0: End Vertex [Bool]",
-          "1: Edge Cost [Float]"
+          "End Vertex: Bool",
+          "Edge Cost: Float"
         ],
         "outputs": [
-          "0: Next Vertex Index [Int]",
-          "1: Total Cost [Float]"
+          "Next Vertex Index: Int",
+          "Total Cost: Float"
         ],
         "description": "Find the shortest paths along mesh edges to selected end vertices, with customizable cost per edge"
       }
@@ -1169,7 +1169,7 @@
       "GeometryNodeInputSplineCyclic": {
         "inputs": [],
         "outputs": [
-          "0: Cyclic [Bool]"
+          "Cyclic: Bool"
         ],
         "description": "Retrieve whether each spline endpoint connects to the beginning"
       }
@@ -1178,7 +1178,7 @@
       "GeometryNodeInputSplineResolution": {
         "inputs": [],
         "outputs": [
-          "0: Resolution [Int]"
+          "Resolution: Int"
         ],
         "description": "Retrieve the number of evaluated points that will be generated for every control point on curves"
       }
@@ -1187,7 +1187,7 @@
       "GeometryNodeInputTangent": {
         "inputs": [],
         "outputs": [
-          "0: Tangent [Vector]"
+          "Tangent: Vector"
         ],
         "description": "Retrieve the direction of curves at each control point"
       }
@@ -1195,16 +1195,16 @@
     "GeometryNodeInstanceOnPoints": {
       "GeometryNodeInstanceOnPoints": {
         "inputs": [
-          "0: Points [Geometry]",
-          "1: Selection [Bool]",
-          "2: Instance [Geometry]",
-          "3: Pick Instance [Bool]",
-          "4: Instance Index [Int]",
-          "5: Rotation [Rotation]",
-          "6: Scale [VectorXYZ]"
+          "Points: Geometry",
+          "Selection: Bool",
+          "Instance: Geometry",
+          "Pick Instance: Bool",
+          "Instance Index: Int",
+          "Rotation: Rotation",
+          "Scale: VectorXYZ"
         ],
         "outputs": [
-          "0: Instances [Geometry]"
+          "Instances: Geometry"
         ],
         "description": "Generate a reference to geometry at each of the input points, without duplicating its underlying data"
       }
@@ -1213,7 +1213,7 @@
       "GeometryNodeInstanceTransform": {
         "inputs": [],
         "outputs": [
-          "0: Transform [Matrix]"
+          "Transform: Matrix"
         ],
         "description": "Retrieve the full transformation of each instance in the geometry"
       }
@@ -1221,13 +1221,13 @@
     "GeometryNodeInstancesToPoints": {
       "GeometryNodeInstancesToPoints": {
         "inputs": [
-          "0: Instances [Geometry]",
-          "1: Selection [Bool]",
-          "2: Position [Vector]",
-          "3: Radius [FloatDistance]"
+          "Instances: Geometry",
+          "Selection: Bool",
+          "Position: Vector",
+          "Radius: FloatDistance"
         ],
         "outputs": [
-          "0: Points [Geometry]"
+          "Points: Geometry"
         ],
         "description": "Generate points at the origins of instances.\nNote: Nested instances are not affected by this node"
       }
@@ -1235,18 +1235,18 @@
     "GeometryNodeInterpolateCurves": {
       "GeometryNodeInterpolateCurves": {
         "inputs": [
-          "0: Guide Curves [Geometry]",
-          "1: Guide Up [Vector]",
-          "2: Guide Group ID [Int]",
-          "3: Points [Geometry]",
-          "4: Point Up [Vector]",
-          "5: Point Group ID [Int]",
-          "6: Max Neighbors [Int]"
+          "Guide Curves: Geometry",
+          "Guide Up: Vector",
+          "Guide Group ID: Int",
+          "Points: Geometry",
+          "Point Up: Vector",
+          "Point Group ID: Int",
+          "Max Neighbors: Int"
         ],
         "outputs": [
-          "0: Curves [Geometry]",
-          "1: Closest Index [Int]",
-          "2: Closest Weight [Float]"
+          "Curves: Geometry",
+          "Closest Index: Int",
+          "Closest Weight: Float"
         ],
         "description": "Generate new curves on points by interpolating between existing curves"
       }
@@ -1255,7 +1255,7 @@
       "GeometryNodeIsViewport": {
         "inputs": [],
         "outputs": [
-          "0: Is Viewport [Bool]"
+          "Is Viewport: Bool"
         ],
         "description": "Retrieve whether the nodes are being evaluated for the viewport rather than the final render"
       }
@@ -1263,10 +1263,10 @@
     "GeometryNodeJoinGeometry": {
       "GeometryNodeJoinGeometry": {
         "inputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Merge separately generated geometries into a single one"
       }
@@ -1274,10 +1274,10 @@
     "GeometryNodeMaterialSelection": {
       "GeometryNodeMaterialSelection": {
         "inputs": [
-          "0: Material [Material]"
+          "Material: Material"
         ],
         "outputs": [
-          "0: Selection [Bool]"
+          "Selection: Bool"
         ],
         "description": "Provide a selection of faces that use the specified material"
       }
@@ -1285,13 +1285,13 @@
     "GeometryNodeMenuSwitch": {
       "GeometryNodeMenuSwitch": {
         "inputs": [
-          "0: Menu [Menu]",
-          "1: A [Geometry]",
-          "2: B [Geometry]",
-          "3:  [Virtual]"
+          "Menu: Menu",
+          "A: Geometry",
+          "B: Geometry",
+          ": Virtual"
         ],
         "outputs": [
-          "0: Output [Geometry]"
+          "Output: Geometry"
         ],
         "description": "Select from multiple inputs by name"
       }
@@ -1299,12 +1299,12 @@
     "GeometryNodeMergeByDistance": {
       "GeometryNodeMergeByDistance": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Distance [FloatDistance]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Distance: FloatDistance"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Merge vertices or points within a given distance"
       }
@@ -1312,12 +1312,12 @@
     "GeometryNodeMergeLayers": {
       "GeometryNodeMergeLayers": {
         "inputs": [
-          "0: Grease Pencil [Geometry]",
-          "1: Selection [Bool]",
-          "2: Group ID [Int]"
+          "Grease Pencil: Geometry",
+          "Selection: Bool",
+          "Group ID: Int"
         ],
         "outputs": [
-          "0: Grease Pencil [Geometry]"
+          "Grease Pencil: Geometry"
         ],
         "description": "Join groups of Grease Pencil layers into one"
       }
@@ -1325,14 +1325,14 @@
     "GeometryNodeMeshBoolean": {
       "GeometryNodeMeshBoolean": {
         "inputs": [
-          "0: Mesh 1 [Geometry]",
-          "1: Mesh 2 [Geometry]",
-          "2: Self Intersection [Bool]",
-          "3: Hole Tolerant [Bool]"
+          "Mesh 1: Geometry",
+          "Mesh 2: Geometry",
+          "Self Intersection: Bool",
+          "Hole Tolerant: Bool"
         ],
         "outputs": [
-          "0: Mesh [Geometry]",
-          "1: Intersecting Edges [Bool]"
+          "Mesh: Geometry",
+          "Intersecting Edges: Bool"
         ],
         "description": "Cut, subtract, or join multiple mesh inputs"
       }
@@ -1340,11 +1340,11 @@
     "GeometryNodeMeshCircle": {
       "GeometryNodeMeshCircle": {
         "inputs": [
-          "0: Vertices [Int]",
-          "1: Radius [FloatDistance]"
+          "Vertices: Int",
+          "Radius: FloatDistance"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Generate a circular ring of edges"
       }
@@ -1352,19 +1352,19 @@
     "GeometryNodeMeshCone": {
       "GeometryNodeMeshCone": {
         "inputs": [
-          "0: Vertices [Int]",
-          "1: Side Segments [Int]",
-          "2: Fill Segments [Int]",
-          "3: Radius Top [FloatDistance]",
-          "4: Radius Bottom [FloatDistance]",
-          "5: Depth [FloatDistance]"
+          "Vertices: Int",
+          "Side Segments: Int",
+          "Fill Segments: Int",
+          "Radius Top: FloatDistance",
+          "Radius Bottom: FloatDistance",
+          "Depth: FloatDistance"
         ],
         "outputs": [
-          "0: Mesh [Geometry]",
-          "1: Top [Bool]",
-          "2: Bottom [Bool]",
-          "3: Side [Bool]",
-          "4: UV Map [Vector]"
+          "Mesh: Geometry",
+          "Top: Bool",
+          "Bottom: Bool",
+          "Side: Bool",
+          "UV Map: Vector"
         ],
         "description": "Generate a cone mesh"
       }
@@ -1372,14 +1372,14 @@
     "GeometryNodeMeshCube": {
       "GeometryNodeMeshCube": {
         "inputs": [
-          "0: Size [VectorTranslation]",
-          "1: Vertices X [Int]",
-          "2: Vertices Y [Int]",
-          "3: Vertices Z [Int]"
+          "Size: VectorTranslation",
+          "Vertices X: Int",
+          "Vertices Y: Int",
+          "Vertices Z: Int"
         ],
         "outputs": [
-          "0: Mesh [Geometry]",
-          "1: UV Map [Vector]"
+          "Mesh: Geometry",
+          "UV Map: Vector"
         ],
         "description": "Generate a cuboid mesh with variable side lengths and subdivisions"
       }
@@ -1387,18 +1387,18 @@
     "GeometryNodeMeshCylinder": {
       "GeometryNodeMeshCylinder": {
         "inputs": [
-          "0: Vertices [Int]",
-          "1: Side Segments [Int]",
-          "2: Fill Segments [Int]",
-          "3: Radius [FloatDistance]",
-          "4: Depth [FloatDistance]"
+          "Vertices: Int",
+          "Side Segments: Int",
+          "Fill Segments: Int",
+          "Radius: FloatDistance",
+          "Depth: FloatDistance"
         ],
         "outputs": [
-          "0: Mesh [Geometry]",
-          "1: Top [Bool]",
-          "2: Side [Bool]",
-          "3: Bottom [Bool]",
-          "4: UV Map [Vector]"
+          "Mesh: Geometry",
+          "Top: Bool",
+          "Side: Bool",
+          "Bottom: Bool",
+          "UV Map: Vector"
         ],
         "description": "Generate a cylinder mesh"
       }
@@ -1406,10 +1406,10 @@
     "GeometryNodeMeshFaceSetBoundaries": {
       "GeometryNodeMeshFaceSetBoundaries": {
         "inputs": [
-          "0: Face Group ID [Int]"
+          "Face Group ID: Int"
         ],
         "outputs": [
-          "0: Boundary Edges [Bool]"
+          "Boundary Edges: Bool"
         ],
         "description": "Find edges on the boundaries between groups of faces with the same ID value"
       }
@@ -1417,14 +1417,14 @@
     "GeometryNodeMeshGrid": {
       "GeometryNodeMeshGrid": {
         "inputs": [
-          "0: Size X [FloatDistance]",
-          "1: Size Y [FloatDistance]",
-          "2: Vertices X [Int]",
-          "3: Vertices Y [Int]"
+          "Size X: FloatDistance",
+          "Size Y: FloatDistance",
+          "Vertices X: Int",
+          "Vertices Y: Int"
         ],
         "outputs": [
-          "0: Mesh [Geometry]",
-          "1: UV Map [Vector]"
+          "Mesh: Geometry",
+          "UV Map: Vector"
         ],
         "description": "Generate a planar mesh on the XY plane"
       }
@@ -1432,12 +1432,12 @@
     "GeometryNodeMeshIcoSphere": {
       "GeometryNodeMeshIcoSphere": {
         "inputs": [
-          "0: Radius [FloatDistance]",
-          "1: Subdivisions [Int]"
+          "Radius: FloatDistance",
+          "Subdivisions: Int"
         ],
         "outputs": [
-          "0: Mesh [Geometry]",
-          "1: UV Map [Vector]"
+          "Mesh: Geometry",
+          "UV Map: Vector"
         ],
         "description": "Generate a spherical mesh that consists of equally sized triangles"
       }
@@ -1445,13 +1445,13 @@
     "GeometryNodeMeshLine": {
       "GeometryNodeMeshLine": {
         "inputs": [
-          "0: Count [Int]",
-          "1: Resolution [FloatDistance]",
-          "2: Start Location [VectorTranslation]",
-          "3: Offset [VectorTranslation]"
+          "Count: Int",
+          "Resolution: FloatDistance",
+          "Start Location: VectorTranslation",
+          "Offset: VectorTranslation"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Generate vertices in a line and connect them with edges"
       }
@@ -1459,11 +1459,11 @@
     "GeometryNodeMeshToCurve": {
       "GeometryNodeMeshToCurve": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Selection [Bool]"
+          "Mesh: Geometry",
+          "Selection: Bool"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Generate a curve from a mesh"
       }
@@ -1471,13 +1471,13 @@
     "GeometryNodeMeshToDensityGrid": {
       "GeometryNodeMeshToDensityGrid": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Density [Float]",
-          "2: Voxel Size [FloatDistance]",
-          "3: Gradient Width [FloatDistance]"
+          "Mesh: Geometry",
+          "Density: Float",
+          "Voxel Size: FloatDistance",
+          "Gradient Width: FloatDistance"
         ],
         "outputs": [
-          "0: Density Grid [Float]"
+          "Density Grid: Float"
         ],
         "description": "Create a filled volume grid from a mesh"
       }
@@ -1485,13 +1485,13 @@
     "GeometryNodeMeshToPoints": {
       "GeometryNodeMeshToPoints": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Selection [Bool]",
-          "2: Position [Vector]",
-          "3: Radius [FloatDistance]"
+          "Mesh: Geometry",
+          "Selection: Bool",
+          "Position: Vector",
+          "Radius: FloatDistance"
         ],
         "outputs": [
-          "0: Points [Geometry]"
+          "Points: Geometry"
         ],
         "description": "Generate a point cloud from a mesh's vertices"
       }
@@ -1499,12 +1499,12 @@
     "GeometryNodeMeshToSDFGrid": {
       "GeometryNodeMeshToSDFGrid": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Voxel Size [FloatDistance]",
-          "2: Band Width [Int]"
+          "Mesh: Geometry",
+          "Voxel Size: FloatDistance",
+          "Band Width: Int"
         ],
         "outputs": [
-          "0: SDF Grid [Float]"
+          "SDF Grid: Float"
         ],
         "description": "Create a signed distance volume grid from a mesh"
       }
@@ -1512,14 +1512,14 @@
     "GeometryNodeMeshToVolume": {
       "GeometryNodeMeshToVolume": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Density [Float]",
-          "2: Voxel Size [FloatDistance]",
-          "3: Voxel Amount [Float]",
-          "4: Interior Band Width [FloatDistance]"
+          "Mesh: Geometry",
+          "Density: Float",
+          "Voxel Size: FloatDistance",
+          "Voxel Amount: Float",
+          "Interior Band Width: FloatDistance"
         ],
         "outputs": [
-          "0: Volume [Geometry]"
+          "Volume: Geometry"
         ],
         "description": "Create a fog volume with the shape of the input mesh's surface"
       }
@@ -1527,13 +1527,13 @@
     "GeometryNodeMeshUVSphere": {
       "GeometryNodeMeshUVSphere": {
         "inputs": [
-          "0: Segments [Int]",
-          "1: Rings [Int]",
-          "2: Radius [FloatDistance]"
+          "Segments: Int",
+          "Rings: Int",
+          "Radius: FloatDistance"
         ],
         "outputs": [
-          "0: Mesh [Geometry]",
-          "1: UV Map [Vector]"
+          "Mesh: Geometry",
+          "UV Map: Vector"
         ],
         "description": "Generate a spherical mesh with quads, except for triangles at the top and bottom"
       }
@@ -1541,15 +1541,15 @@
     "GeometryNodeObjectInfo": {
       "GeometryNodeObjectInfo": {
         "inputs": [
-          "0: Object [Object]",
-          "1: As Instance [Bool]"
+          "Object: Object",
+          "As Instance: Bool"
         ],
         "outputs": [
-          "0: Transform [Matrix]",
-          "1: Location [Vector]",
-          "2: Rotation [Rotation]",
-          "3: Scale [Vector]",
-          "4: Geometry [Geometry]"
+          "Transform: Matrix",
+          "Location: Vector",
+          "Rotation: Rotation",
+          "Scale: Vector",
+          "Geometry: Geometry"
         ],
         "description": "Retrieve information from an object"
       }
@@ -1557,11 +1557,11 @@
     "GeometryNodeOffsetCornerInFace": {
       "GeometryNodeOffsetCornerInFace": {
         "inputs": [
-          "0: Corner Index [Int]",
-          "1: Offset [Int]"
+          "Corner Index: Int",
+          "Offset: Int"
         ],
         "outputs": [
-          "0: Corner Index [Int]"
+          "Corner Index: Int"
         ],
         "description": "Retrieve corners in the same face as another"
       }
@@ -1569,12 +1569,12 @@
     "GeometryNodeOffsetPointInCurve": {
       "GeometryNodeOffsetPointInCurve": {
         "inputs": [
-          "0: Point Index [Int]",
-          "1: Offset [Int]"
+          "Point Index: Int",
+          "Offset: Int"
         ],
         "outputs": [
-          "0: Is Valid Offset [Bool]",
-          "1: Point Index [Int]"
+          "Is Valid Offset: Bool",
+          "Point Index: Int"
         ],
         "description": "Offset a control point index within its curve"
       }
@@ -1582,12 +1582,12 @@
     "GeometryNodePoints": {
       "GeometryNodePoints": {
         "inputs": [
-          "0: Count [Int]",
-          "1: Position [VectorTranslation]",
-          "2: Radius [FloatDistance]"
+          "Count: Int",
+          "Position: VectorTranslation",
+          "Radius: FloatDistance"
         ],
         "outputs": [
-          "0: Points [Geometry]"
+          "Points: Geometry"
         ],
         "description": "Generate a point cloud with positions and radii defined by fields"
       }
@@ -1595,13 +1595,13 @@
     "GeometryNodePointsOfCurve": {
       "GeometryNodePointsOfCurve": {
         "inputs": [
-          "0: Curve Index [Int]",
-          "1: Weights [Float]",
-          "2: Sort Index [Int]"
+          "Curve Index: Int",
+          "Weights: Float",
+          "Sort Index: Int"
         ],
         "outputs": [
-          "0: Point Index [Int]",
-          "1: Total [Int]"
+          "Point Index: Int",
+          "Total: Int"
         ],
         "description": "Retrieve a point index within a curve"
       }
@@ -1609,12 +1609,12 @@
     "GeometryNodePointsToCurves": {
       "GeometryNodePointsToCurves": {
         "inputs": [
-          "0: Points [Geometry]",
-          "1: Curve Group ID [Int]",
-          "2: Weight [Float]"
+          "Points: Geometry",
+          "Curve Group ID: Int",
+          "Weight: Float"
         ],
         "outputs": [
-          "0: Curves [Geometry]"
+          "Curves: Geometry"
         ],
         "description": "Split all points to curve by its group ID and reorder by weight"
       }
@@ -1622,12 +1622,12 @@
     "GeometryNodePointsToSDFGrid": {
       "GeometryNodePointsToSDFGrid": {
         "inputs": [
-          "0: Points [Geometry]",
-          "1: Radius [FloatDistance]",
-          "2: Voxel Size [FloatDistance]"
+          "Points: Geometry",
+          "Radius: FloatDistance",
+          "Voxel Size: FloatDistance"
         ],
         "outputs": [
-          "0: SDF Grid [Float]"
+          "SDF Grid: Float"
         ],
         "description": "Create a signed distance volume grid from points"
       }
@@ -1635,11 +1635,11 @@
     "GeometryNodePointsToVertices": {
       "GeometryNodePointsToVertices": {
         "inputs": [
-          "0: Points [Geometry]",
-          "1: Selection [Bool]"
+          "Points: Geometry",
+          "Selection: Bool"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Generate a mesh vertex for each point cloud point"
       }
@@ -1647,14 +1647,14 @@
     "GeometryNodePointsToVolume": {
       "GeometryNodePointsToVolume": {
         "inputs": [
-          "0: Points [Geometry]",
-          "1: Density [Float]",
-          "2: Voxel Size [FloatDistance]",
-          "3: Voxel Amount [Float]",
-          "4: Radius [FloatDistance]"
+          "Points: Geometry",
+          "Density: Float",
+          "Voxel Size: FloatDistance",
+          "Voxel Amount: Float",
+          "Radius: FloatDistance"
         ],
         "outputs": [
-          "0: Volume [Geometry]"
+          "Volume: Geometry"
         ],
         "description": "Generate a fog volume sphere around every point"
       }
@@ -1662,15 +1662,15 @@
     "GeometryNodeProximity": {
       "GeometryNodeProximity": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Group ID [Int]",
-          "2: Sample Position [Vector]",
-          "3: Sample Group ID [Int]"
+          "Geometry: Geometry",
+          "Group ID: Int",
+          "Sample Position: Vector",
+          "Sample Group ID: Int"
         ],
         "outputs": [
-          "0: Position [Vector]",
-          "1: Distance [Float]",
-          "2: Is Valid [Bool]"
+          "Position: Vector",
+          "Distance: Float",
+          "Is Valid: Bool"
         ],
         "description": "Compute the closest location on the target geometry"
       }
@@ -1678,18 +1678,18 @@
     "GeometryNodeRaycast": {
       "GeometryNodeRaycast": {
         "inputs": [
-          "0: Target Geometry [Geometry]",
-          "1: Attribute [Float]",
-          "2: Source Position [Vector]",
-          "3: Ray Direction [Vector]",
-          "4: Ray Length [FloatDistance]"
+          "Target Geometry: Geometry",
+          "Attribute: Float",
+          "Source Position: Vector",
+          "Ray Direction: Vector",
+          "Ray Length: FloatDistance"
         ],
         "outputs": [
-          "0: Is Hit [Bool]",
-          "1: Hit Position [Vector]",
-          "2: Hit Normal [Vector]",
-          "3: Hit Distance [Float]",
-          "4: Attribute [Float]"
+          "Is Hit: Bool",
+          "Hit Position: Vector",
+          "Hit Normal: Vector",
+          "Hit Distance: Float",
+          "Attribute: Float"
         ],
         "description": "Cast rays from the context geometry onto a target geometry, and retrieve information from each hit point"
       }
@@ -1697,13 +1697,13 @@
     "GeometryNodeRealizeInstances": {
       "GeometryNodeRealizeInstances": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Realize All [Bool]",
-          "3: Depth [Int]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Realize All: Bool",
+          "Depth: Int"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Convert instances into real geometry data"
       }
@@ -1711,11 +1711,11 @@
     "GeometryNodeRemoveAttribute": {
       "GeometryNodeRemoveAttribute": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Name [String]"
+          "Geometry: Geometry",
+          "Name: String"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Delete an attribute with a specified name from a geometry. Typically used to optimize performance"
       }
@@ -1723,12 +1723,12 @@
     "GeometryNodeRepeatInput": {
       "GeometryNodeRepeatInput": {
         "inputs": [
-          "0: Iterations [Int]",
-          "1:  [Virtual]"
+          "Iterations: Int",
+          ": Virtual"
         ],
         "outputs": [
-          "0: Iteration [Int]",
-          "1:  [Virtual]"
+          "Iteration: Int",
+          ": Virtual"
         ],
         "description": ""
       }
@@ -1736,12 +1736,12 @@
     "GeometryNodeRepeatOutput": {
       "GeometryNodeRepeatOutput": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1:  [Virtual]"
+          "Geometry: Geometry",
+          ": Virtual"
         ],
         "outputs": [
-          "0: Geometry [Geometry]",
-          "1:  [Virtual]"
+          "Geometry: Geometry",
+          ": Virtual"
         ],
         "description": ""
       }
@@ -1749,12 +1749,12 @@
     "GeometryNodeReplaceMaterial": {
       "GeometryNodeReplaceMaterial": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Old [Material]",
-          "2: New [Material]"
+          "Geometry: Geometry",
+          "Old: Material",
+          "New: Material"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Swap one material with another"
       }
@@ -1762,13 +1762,13 @@
     "GeometryNodeResampleCurve": {
       "GeometryNodeResampleCurve": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Selection [Bool]",
-          "2: Count [Int]",
-          "3: Length [FloatDistance]"
+          "Curve: Geometry",
+          "Selection: Bool",
+          "Count: Int",
+          "Length: FloatDistance"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Generate a poly spline for each input spline"
       }
@@ -1776,11 +1776,11 @@
     "GeometryNodeReverseCurve": {
       "GeometryNodeReverseCurve": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Selection [Bool]"
+          "Curve: Geometry",
+          "Selection: Bool"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Change the direction of curves by swapping their start and end data"
       }
@@ -1788,14 +1788,14 @@
     "GeometryNodeRotateInstances": {
       "GeometryNodeRotateInstances": {
         "inputs": [
-          "0: Instances [Geometry]",
-          "1: Selection [Bool]",
-          "2: Rotation [Rotation]",
-          "3: Pivot Point [VectorTranslation]",
-          "4: Local Space [Bool]"
+          "Instances: Geometry",
+          "Selection: Bool",
+          "Rotation: Rotation",
+          "Pivot Point: VectorTranslation",
+          "Local Space: Bool"
         ],
         "outputs": [
-          "0: Instances [Geometry]"
+          "Instances: Geometry"
         ],
         "description": "Rotate geometry instances in local or global space"
       }
@@ -1803,11 +1803,11 @@
     "GeometryNodeSDFGridBoolean": {
       "GeometryNodeSDFGridBoolean": {
         "inputs": [
-          "0: Grid 1 [Float]",
-          "1: Grid 2 [Float]"
+          "Grid 1: Float",
+          "Grid 2: Float"
         ],
         "outputs": [
-          "0: Grid [Float]"
+          "Grid: Float"
         ],
         "description": "Cut, subtract, or join multiple SDF volume grid inputs"
       }
@@ -1815,17 +1815,17 @@
     "GeometryNodeSampleCurve": {
       "GeometryNodeSampleCurve": {
         "inputs": [
-          "0: Curves [Geometry]",
-          "1: Value [Float]",
-          "2: Factor [FloatFactor]",
-          "3: Length [FloatDistance]",
-          "4: Curve Index [Int]"
+          "Curves: Geometry",
+          "Value: Float",
+          "Factor: FloatFactor",
+          "Length: FloatDistance",
+          "Curve Index: Int"
         ],
         "outputs": [
-          "0: Value [Float]",
-          "1: Position [Vector]",
-          "2: Tangent [Vector]",
-          "3: Normal [Vector]"
+          "Value: Float",
+          "Position: Vector",
+          "Tangent: Vector",
+          "Normal: Vector"
         ],
         "description": "Retrieve data from a point on a curve at a certain distance from its start"
       }
@@ -1833,11 +1833,11 @@
     "GeometryNodeSampleGrid": {
       "GeometryNodeSampleGrid": {
         "inputs": [
-          "0: Grid [Float]",
-          "1: Position [Vector]"
+          "Grid: Float",
+          "Position: Vector"
         ],
         "outputs": [
-          "0: Value [Float]"
+          "Value: Float"
         ],
         "description": ""
       }
@@ -1845,13 +1845,13 @@
     "GeometryNodeSampleGridIndex": {
       "GeometryNodeSampleGridIndex": {
         "inputs": [
-          "0: Grid [Float]",
-          "1: X [Int]",
-          "2: Y [Int]",
-          "3: Z [Int]"
+          "Grid: Float",
+          "X: Int",
+          "Y: Int",
+          "Z: Int"
         ],
         "outputs": [
-          "0: Value [Float]"
+          "Value: Float"
         ],
         "description": "Retrieve volume grid values at specific voxels"
       }
@@ -1859,12 +1859,12 @@
     "GeometryNodeSampleIndex": {
       "GeometryNodeSampleIndex": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Value [Float]",
-          "2: Index [Int]"
+          "Geometry: Geometry",
+          "Value: Float",
+          "Index: Int"
         ],
         "outputs": [
-          "0: Value [Float]"
+          "Value: Float"
         ],
         "description": "Retrieve values from specific geometry elements"
       }
@@ -1872,11 +1872,11 @@
     "GeometryNodeSampleNearest": {
       "GeometryNodeSampleNearest": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Sample Position [Vector]"
+          "Geometry: Geometry",
+          "Sample Position: Vector"
         ],
         "outputs": [
-          "0: Index [Int]"
+          "Index: Int"
         ],
         "description": "Find the element of a geometry closest to a position. Similar to the \"Index of Nearest\" node"
       }
@@ -1884,15 +1884,15 @@
     "GeometryNodeSampleNearestSurface": {
       "GeometryNodeSampleNearestSurface": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Value [Float]",
-          "2: Group ID [Int]",
-          "3: Sample Position [Vector]",
-          "4: Sample Group ID [Int]"
+          "Mesh: Geometry",
+          "Value: Float",
+          "Group ID: Int",
+          "Sample Position: Vector",
+          "Sample Group ID: Int"
         ],
         "outputs": [
-          "0: Value [Float]",
-          "1: Is Valid [Bool]"
+          "Value: Float",
+          "Is Valid: Bool"
         ],
         "description": "Calculate the interpolated value of a mesh attribute on the closest point of its surface"
       }
@@ -1900,14 +1900,14 @@
     "GeometryNodeSampleUVSurface": {
       "GeometryNodeSampleUVSurface": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Value [Float]",
-          "2: UV Map [Vector]",
-          "3: Sample UV [Vector]"
+          "Mesh: Geometry",
+          "Value: Float",
+          "UV Map: Vector",
+          "Sample UV: Vector"
         ],
         "outputs": [
-          "0: Value [Float]",
-          "1: Is Valid [Bool]"
+          "Value: Float",
+          "Is Valid: Bool"
         ],
         "description": "Calculate the interpolated values of a mesh attribute at a UV coordinate"
       }
@@ -1915,14 +1915,14 @@
     "GeometryNodeScaleElements": {
       "GeometryNodeScaleElements": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Scale [Float]",
-          "3: Center [VectorTranslation]",
-          "4: Axis [Vector]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Scale: Float",
+          "Center: VectorTranslation",
+          "Axis: Vector"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Scale groups of connected edges and faces"
       }
@@ -1930,14 +1930,14 @@
     "GeometryNodeScaleInstances": {
       "GeometryNodeScaleInstances": {
         "inputs": [
-          "0: Instances [Geometry]",
-          "1: Selection [Bool]",
-          "2: Scale [VectorXYZ]",
-          "3: Center [VectorTranslation]",
-          "4: Local Space [Bool]"
+          "Instances: Geometry",
+          "Selection: Bool",
+          "Scale: VectorXYZ",
+          "Center: VectorTranslation",
+          "Local Space: Bool"
         ],
         "outputs": [
-          "0: Instances [Geometry]"
+          "Instances: Geometry"
         ],
         "description": "Scale geometry instances in local or global space"
       }
@@ -1946,7 +1946,7 @@
       "GeometryNodeSelfObject": {
         "inputs": [],
         "outputs": [
-          "0: Self Object [Object]"
+          "Self Object: Object"
         ],
         "description": "Retrieve the object that contains the geometry nodes modifier currently being executed"
       }
@@ -1954,15 +1954,15 @@
     "GeometryNodeSeparateComponents": {
       "GeometryNodeSeparateComponents": {
         "inputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "outputs": [
-          "0: Mesh [Geometry]",
-          "1: Curve [Geometry]",
-          "2: Grease Pencil [Geometry]",
-          "3: Point Cloud [Geometry]",
-          "4: Volume [Geometry]",
-          "5: Instances [Geometry]"
+          "Mesh: Geometry",
+          "Curve: Geometry",
+          "Grease Pencil: Geometry",
+          "Point Cloud: Geometry",
+          "Volume: Geometry",
+          "Instances: Geometry"
         ],
         "description": "Split a geometry into a separate output for each type of data in the geometry"
       }
@@ -1970,12 +1970,12 @@
     "GeometryNodeSeparateGeometry": {
       "GeometryNodeSeparateGeometry": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]"
+          "Geometry: Geometry",
+          "Selection: Bool"
         ],
         "outputs": [
-          "0: Selection [Geometry]",
-          "1: Inverted [Geometry]"
+          "Selection: Geometry",
+          "Inverted: Geometry"
         ],
         "description": "Split a geometry into two geometry outputs based on a selection"
       }
@@ -1983,13 +1983,13 @@
     "GeometryNodeSetCurveHandlePositions": {
       "GeometryNodeSetCurveHandlePositions": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Selection [Bool]",
-          "2: Position [Vector]",
-          "3: Offset [Vector]"
+          "Curve: Geometry",
+          "Selection: Bool",
+          "Position: Vector",
+          "Offset: Vector"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Set the positions for the handles of B\u00e9zier curves"
       }
@@ -1997,12 +1997,12 @@
     "GeometryNodeSetCurveNormal": {
       "GeometryNodeSetCurveNormal": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Selection [Bool]",
-          "2: Normal [VectorXYZ]"
+          "Curve: Geometry",
+          "Selection: Bool",
+          "Normal: VectorXYZ"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Set the evaluation mode for curve normals"
       }
@@ -2010,12 +2010,12 @@
     "GeometryNodeSetCurveRadius": {
       "GeometryNodeSetCurveRadius": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Selection [Bool]",
-          "2: Radius [FloatDistance]"
+          "Curve: Geometry",
+          "Selection: Bool",
+          "Radius: FloatDistance"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Set the radius of the curve at each control point"
       }
@@ -2023,12 +2023,12 @@
     "GeometryNodeSetCurveTilt": {
       "GeometryNodeSetCurveTilt": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Selection [Bool]",
-          "2: Tilt [FloatAngle]"
+          "Curve: Geometry",
+          "Selection: Bool",
+          "Tilt: FloatAngle"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Set the tilt angle at each curve control point"
       }
@@ -2036,11 +2036,11 @@
     "GeometryNodeSetGeometryName": {
       "GeometryNodeSetGeometryName": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Name [String]"
+          "Geometry: Geometry",
+          "Name: String"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Set the name of a geometry for easier debugging"
       }
@@ -2048,12 +2048,12 @@
     "GeometryNodeSetID": {
       "GeometryNodeSetID": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: ID [Int]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "ID: Int"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Set the id attribute on the input geometry, mainly used internally for randomizing"
       }
@@ -2061,12 +2061,12 @@
     "GeometryNodeSetInstanceTransform": {
       "GeometryNodeSetInstanceTransform": {
         "inputs": [
-          "0: Instances [Geometry]",
-          "1: Selection [Bool]",
-          "2: Transform [Matrix]"
+          "Instances: Geometry",
+          "Selection: Bool",
+          "Transform: Matrix"
         ],
         "outputs": [
-          "0: Instances [Geometry]"
+          "Instances: Geometry"
         ],
         "description": "Set the transformation matrix of every instance"
       }
@@ -2074,12 +2074,12 @@
     "GeometryNodeSetMaterial": {
       "GeometryNodeSetMaterial": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Material [Material]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Material: Material"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Assign a material to geometry elements"
       }
@@ -2087,12 +2087,12 @@
     "GeometryNodeSetMaterialIndex": {
       "GeometryNodeSetMaterialIndex": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Material Index [Int]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Material Index: Int"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Set the material index for each selected geometry element"
       }
@@ -2100,12 +2100,12 @@
     "GeometryNodeSetPointRadius": {
       "GeometryNodeSetPointRadius": {
         "inputs": [
-          "0: Points [Geometry]",
-          "1: Selection [Bool]",
-          "2: Radius [FloatDistance]"
+          "Points: Geometry",
+          "Selection: Bool",
+          "Radius: FloatDistance"
         ],
         "outputs": [
-          "0: Points [Geometry]"
+          "Points: Geometry"
         ],
         "description": "Set the display size of point cloud points"
       }
@@ -2113,13 +2113,13 @@
     "GeometryNodeSetPosition": {
       "GeometryNodeSetPosition": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Position [Vector]",
-          "3: Offset [VectorTranslation]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Position: Vector",
+          "Offset: VectorTranslation"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Set the location of each point"
       }
@@ -2127,12 +2127,12 @@
     "GeometryNodeSetShadeSmooth": {
       "GeometryNodeSetShadeSmooth": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Shade Smooth [Bool]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Shade Smooth: Bool"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Control the smoothness of mesh normals around each face by changing the \"shade smooth\" attribute"
       }
@@ -2140,12 +2140,12 @@
     "GeometryNodeSetSplineCyclic": {
       "GeometryNodeSetSplineCyclic": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Cyclic [Bool]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Cyclic: Bool"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Control whether each spline loops back on itself by changing the \"cyclic\" attribute"
       }
@@ -2153,12 +2153,12 @@
     "GeometryNodeSetSplineResolution": {
       "GeometryNodeSetSplineResolution": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Resolution [Int]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Resolution: Int"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Control how many evaluated points should be generated on every curve segment"
       }
@@ -2167,7 +2167,7 @@
       "GeometryNodeSimulationInput": {
         "inputs": [],
         "outputs": [
-          "0: Delta Time [Float]"
+          "Delta Time: Float"
         ],
         "description": "Input data for the simulation zone"
       }
@@ -2175,13 +2175,13 @@
     "GeometryNodeSimulationOutput": {
       "GeometryNodeSimulationOutput": {
         "inputs": [
-          "0: Skip [Bool]",
-          "1: Geometry [Geometry]",
-          "2:  [Virtual]"
+          "Skip: Bool",
+          "Geometry: Geometry",
+          ": Virtual"
         ],
         "outputs": [
-          "0: Geometry [Geometry]",
-          "1:  [Virtual]"
+          "Geometry: Geometry",
+          ": Virtual"
         ],
         "description": "Output data from the simulation zone"
       }
@@ -2189,13 +2189,13 @@
     "GeometryNodeSortElements": {
       "GeometryNodeSortElements": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Group ID [Int]",
-          "3: Sort Weight [Float]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Group ID: Int",
+          "Sort Weight: Float"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Rearrange geometry elements, changing their indices"
       }
@@ -2204,8 +2204,8 @@
       "GeometryNodeSplineLength": {
         "inputs": [],
         "outputs": [
-          "0: Length [Float]",
-          "1: Point Count [Int]"
+          "Length: Float",
+          "Point Count: Int"
         ],
         "description": "Retrieve the total length of each spline, as a distance or as a number of points"
       }
@@ -2214,9 +2214,9 @@
       "GeometryNodeSplineParameter": {
         "inputs": [],
         "outputs": [
-          "0: Factor [Float]",
-          "1: Length [Float]",
-          "2: Index [Int]"
+          "Factor: Float",
+          "Length: Float",
+          "Index: Int"
         ],
         "description": "Retrieve how far along each spline a control point is"
       }
@@ -2224,11 +2224,11 @@
     "GeometryNodeSplitEdges": {
       "GeometryNodeSplitEdges": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Selection [Bool]"
+          "Mesh: Geometry",
+          "Selection: Bool"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Duplicate mesh edges and break connections with the surrounding faces"
       }
@@ -2236,13 +2236,13 @@
     "GeometryNodeSplitToInstances": {
       "GeometryNodeSplitToInstances": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Group ID [Int]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Group ID: Int"
         ],
         "outputs": [
-          "0: Instances [Geometry]",
-          "1: Group ID [Int]"
+          "Instances: Geometry",
+          "Group ID: Int"
         ],
         "description": "Create separate geometries containing the elements from the same group"
       }
@@ -2250,13 +2250,13 @@
     "GeometryNodeStoreNamedAttribute": {
       "GeometryNodeStoreNamedAttribute": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]",
-          "2: Name [String]",
-          "3: Value [Float]"
+          "Geometry: Geometry",
+          "Selection: Bool",
+          "Name: String",
+          "Value: Float"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Store the result of a field on a geometry as an attribute with the specified name"
       }
@@ -2264,12 +2264,12 @@
     "GeometryNodeStoreNamedGrid": {
       "GeometryNodeStoreNamedGrid": {
         "inputs": [
-          "0: Volume [Geometry]",
-          "1: Name [String]",
-          "2: Grid [Float]"
+          "Volume: Geometry",
+          "Name: String",
+          "Grid: Float"
         ],
         "outputs": [
-          "0: Volume [Geometry]"
+          "Volume: Geometry"
         ],
         "description": "Store grid data in a volume geometry with the specified name"
       }
@@ -2277,11 +2277,11 @@
     "GeometryNodeStringJoin": {
       "GeometryNodeStringJoin": {
         "inputs": [
-          "0: Delimiter [String]",
-          "1: Strings [String]"
+          "Delimiter: String",
+          "Strings: String"
         ],
         "outputs": [
-          "0: String [String]"
+          "String: String"
         ],
         "description": "Combine any number of input strings"
       }
@@ -2289,19 +2289,19 @@
     "GeometryNodeStringToCurves": {
       "GeometryNodeStringToCurves": {
         "inputs": [
-          "0: String [String]",
-          "1: Size [FloatDistance]",
-          "2: Character Spacing [Float]",
-          "3: Word Spacing [Float]",
-          "4: Line Spacing [Float]",
-          "5: Text Box Width [FloatDistance]",
-          "6: Text Box Height [FloatDistance]"
+          "String: String",
+          "Size: FloatDistance",
+          "Character Spacing: Float",
+          "Word Spacing: Float",
+          "Line Spacing: Float",
+          "Text Box Width: FloatDistance",
+          "Text Box Height: FloatDistance"
         ],
         "outputs": [
-          "0: Curve Instances [Geometry]",
-          "1: Remainder [String]",
-          "2: Line [Int]",
-          "3: Pivot Point [Vector]"
+          "Curve Instances: Geometry",
+          "Remainder: String",
+          "Line: Int",
+          "Pivot Point: Vector"
         ],
         "description": "Generate a paragraph of text with a specific font, using a curve instance to store each character"
       }
@@ -2309,11 +2309,11 @@
     "GeometryNodeSubdivideCurve": {
       "GeometryNodeSubdivideCurve": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Cuts [Int]"
+          "Curve: Geometry",
+          "Cuts: Int"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Dividing each curve segment into a specified number of pieces"
       }
@@ -2321,11 +2321,11 @@
     "GeometryNodeSubdivideMesh": {
       "GeometryNodeSubdivideMesh": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Level [Int]"
+          "Mesh: Geometry",
+          "Level: Int"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Divide mesh faces into smaller ones without changing the shape or volume, using linear interpolation to place the new vertices"
       }
@@ -2333,14 +2333,14 @@
     "GeometryNodeSubdivisionSurface": {
       "GeometryNodeSubdivisionSurface": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Level [Int]",
-          "2: Edge Crease [FloatFactor]",
-          "3: Vertex Crease [FloatFactor]",
-          "4: Limit Surface [Bool]"
+          "Mesh: Geometry",
+          "Level: Int",
+          "Edge Crease: FloatFactor",
+          "Vertex Crease: FloatFactor",
+          "Limit Surface: Bool"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Divide mesh faces to form a smooth surface, using the Catmull-Clark subdivision method"
       }
@@ -2348,12 +2348,12 @@
     "GeometryNodeSwitch": {
       "GeometryNodeSwitch": {
         "inputs": [
-          "0: Switch [Bool]",
-          "1: False [Geometry]",
-          "2: True [Geometry]"
+          "Switch: Bool",
+          "False: Geometry",
+          "True: Geometry"
         ],
         "outputs": [
-          "0: Output [Geometry]"
+          "Output: Geometry"
         ],
         "description": "Switch between two inputs"
       }
@@ -2362,8 +2362,8 @@
       "GeometryNodeTool3DCursor": {
         "inputs": [],
         "outputs": [
-          "0: Location [VectorTranslation]",
-          "1: Rotation [Rotation]"
+          "Location: VectorTranslation",
+          "Rotation: Rotation"
         ],
         "description": "The scene's 3D cursor location and rotation"
       }
@@ -2372,8 +2372,8 @@
       "GeometryNodeToolActiveElement": {
         "inputs": [],
         "outputs": [
-          "0: Index [Int]",
-          "1: Exists [Bool]"
+          "Index: Int",
+          "Exists: Bool"
         ],
         "description": "Active element indices of the edited geometry, for tool execution"
       }
@@ -2382,8 +2382,8 @@
       "GeometryNodeToolFaceSet": {
         "inputs": [],
         "outputs": [
-          "0: Face Set [Int]",
-          "1: Exists [Bool]"
+          "Face Set: Int",
+          "Exists: Bool"
         ],
         "description": "Each face's sculpt face set value"
       }
@@ -2392,10 +2392,10 @@
       "GeometryNodeToolMousePosition": {
         "inputs": [],
         "outputs": [
-          "0: Mouse X [Int]",
-          "1: Mouse Y [Int]",
-          "2: Region Width [Int]",
-          "3: Region Height [Int]"
+          "Mouse X: Int",
+          "Mouse Y: Int",
+          "Region Width: Int",
+          "Region Height: Int"
         ],
         "description": "Retrieve the position of the mouse cursor"
       }
@@ -2404,8 +2404,8 @@
       "GeometryNodeToolSelection": {
         "inputs": [],
         "outputs": [
-          "0: Boolean [Bool]",
-          "1: Float [Float]"
+          "Boolean: Bool",
+          "Float: Float"
         ],
         "description": "User selection of the edited geometry, for tool execution"
       }
@@ -2413,12 +2413,12 @@
     "GeometryNodeToolSetFaceSet": {
       "GeometryNodeToolSetFaceSet": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Selection [Bool]",
-          "2: Face Set [Int]"
+          "Mesh: Geometry",
+          "Selection: Bool",
+          "Face Set: Int"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Set sculpt face set values for faces"
       }
@@ -2426,11 +2426,11 @@
     "GeometryNodeToolSetSelection": {
       "GeometryNodeToolSetSelection": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Selection [Bool]"
+          "Geometry: Geometry",
+          "Selection: Bool"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Set selection of the edited geometry, for tool execution"
       }
@@ -2438,14 +2438,14 @@
     "GeometryNodeTransform": {
       "GeometryNodeTransform": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Translation [VectorTranslation]",
-          "2: Rotation [Rotation]",
-          "3: Scale [VectorXYZ]",
-          "4: Transform [Matrix]"
+          "Geometry: Geometry",
+          "Translation: VectorTranslation",
+          "Rotation: Rotation",
+          "Scale: VectorXYZ",
+          "Transform: Matrix"
         ],
         "outputs": [
-          "0: Geometry [Geometry]"
+          "Geometry: Geometry"
         ],
         "description": "Translate, rotate or scale the geometry"
       }
@@ -2453,13 +2453,13 @@
     "GeometryNodeTranslateInstances": {
       "GeometryNodeTranslateInstances": {
         "inputs": [
-          "0: Instances [Geometry]",
-          "1: Selection [Bool]",
-          "2: Translation [VectorTranslation]",
-          "3: Local Space [Bool]"
+          "Instances: Geometry",
+          "Selection: Bool",
+          "Translation: VectorTranslation",
+          "Local Space: Bool"
         ],
         "outputs": [
-          "0: Instances [Geometry]"
+          "Instances: Geometry"
         ],
         "description": "Move top-level geometry instances in local or global space"
       }
@@ -2467,11 +2467,11 @@
     "GeometryNodeTriangulate": {
       "GeometryNodeTriangulate": {
         "inputs": [
-          "0: Mesh [Geometry]",
-          "1: Selection [Bool]"
+          "Mesh: Geometry",
+          "Selection: Bool"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Convert all faces in a mesh to triangular faces"
       }
@@ -2479,15 +2479,15 @@
     "GeometryNodeTrimCurve": {
       "GeometryNodeTrimCurve": {
         "inputs": [
-          "0: Curve [Geometry]",
-          "1: Selection [Bool]",
-          "2: Start [FloatFactor]",
-          "3: End [FloatFactor]",
-          "4: Start [FloatDistance]",
-          "5: End [FloatDistance]"
+          "Curve: Geometry",
+          "Selection: Bool",
+          "Start: FloatFactor",
+          "End: FloatFactor",
+          "Start: FloatDistance",
+          "End: FloatDistance"
         ],
         "outputs": [
-          "0: Curve [Geometry]"
+          "Curve: Geometry"
         ],
         "description": "Shorten curves by removing portions at the start or end"
       }
@@ -2495,13 +2495,13 @@
     "GeometryNodeUVPackIslands": {
       "GeometryNodeUVPackIslands": {
         "inputs": [
-          "0: UV [Vector]",
-          "1: Selection [Bool]",
-          "2: Margin [Float]",
-          "3: Rotate [Bool]"
+          "UV: Vector",
+          "Selection: Bool",
+          "Margin: Float",
+          "Rotate: Bool"
         ],
         "outputs": [
-          "0: UV [Vector]"
+          "UV: Vector"
         ],
         "description": "Scale islands of a UV map and move them so they fill the UV space as much as possible"
       }
@@ -2509,13 +2509,13 @@
     "GeometryNodeUVUnwrap": {
       "GeometryNodeUVUnwrap": {
         "inputs": [
-          "0: Selection [Bool]",
-          "1: Seam [Bool]",
-          "2: Margin [Float]",
-          "3: Fill Holes [Bool]"
+          "Selection: Bool",
+          "Seam: Bool",
+          "Margin: Float",
+          "Fill Holes: Bool"
         ],
         "outputs": [
-          "0: UV [Vector]"
+          "UV: Vector"
         ],
         "description": "Generate a UV map based on seam edges"
       }
@@ -2523,10 +2523,10 @@
     "GeometryNodeVertexOfCorner": {
       "GeometryNodeVertexOfCorner": {
         "inputs": [
-          "0: Corner Index [Int]"
+          "Corner Index: Int"
         ],
         "outputs": [
-          "0: Vertex Index [Int]"
+          "Vertex Index: Int"
         ],
         "description": "Retrieve the vertex each face corner is attached to"
       }
@@ -2534,8 +2534,8 @@
     "GeometryNodeViewer": {
       "GeometryNodeViewer": {
         "inputs": [
-          "0: Geometry [Geometry]",
-          "1: Value [Float]"
+          "Geometry: Geometry",
+          "Value: Float"
         ],
         "outputs": [],
         "description": "Display the input data in the Spreadsheet Editor"
@@ -2545,9 +2545,9 @@
       "GeometryNodeViewportTransform": {
         "inputs": [],
         "outputs": [
-          "0: Projection [Matrix]",
-          "1: View [Matrix]",
-          "2: Is Orthographic [Bool]"
+          "Projection: Matrix",
+          "View: Matrix",
+          "Is Orthographic: Bool"
         ],
         "description": "Retrieve the view direction and location of the 3D viewport"
       }
@@ -2555,16 +2555,16 @@
     "GeometryNodeVolumeCube": {
       "GeometryNodeVolumeCube": {
         "inputs": [
-          "0: Density [Float]",
-          "1: Background [Float]",
-          "2: Min [Vector]",
-          "3: Max [Vector]",
-          "4: Resolution X [Int]",
-          "5: Resolution Y [Int]",
-          "6: Resolution Z [Int]"
+          "Density: Float",
+          "Background: Float",
+          "Min: Vector",
+          "Max: Vector",
+          "Resolution X: Int",
+          "Resolution Y: Int",
+          "Resolution Z: Int"
         ],
         "outputs": [
-          "0: Volume [Geometry]"
+          "Volume: Geometry"
         ],
         "description": "Generate a dense volume with a field that controls the density at each grid voxel based on its position"
       }
@@ -2572,14 +2572,14 @@
     "GeometryNodeVolumeToMesh": {
       "GeometryNodeVolumeToMesh": {
         "inputs": [
-          "0: Volume [Geometry]",
-          "1: Voxel Size [FloatDistance]",
-          "2: Voxel Amount [Float]",
-          "3: Threshold [Float]",
-          "4: Adaptivity [FloatFactor]"
+          "Volume: Geometry",
+          "Voxel Size: FloatDistance",
+          "Voxel Amount: Float",
+          "Threshold: Float",
+          "Adaptivity: FloatFactor"
         ],
         "outputs": [
-          "0: Mesh [Geometry]"
+          "Mesh: Geometry"
         ],
         "description": "Generate a mesh on the \"surface\" of a volume"
       }
@@ -2587,12 +2587,12 @@
     "FunctionNodeAlignEulerToVector": {
       "FunctionNodeAlignEulerToVector": {
         "inputs": [
-          "0: Rotation [VectorEuler]",
-          "1: Factor [FloatFactor]",
-          "2: Vector [Vector]"
+          "Rotation: VectorEuler",
+          "Factor: FloatFactor",
+          "Vector: Vector"
         ],
         "outputs": [
-          "0: Rotation [VectorEuler]"
+          "Rotation: VectorEuler"
         ],
         "description": ""
       }
@@ -2600,12 +2600,12 @@
     "FunctionNodeAlignRotationToVector": {
       "FunctionNodeAlignRotationToVector": {
         "inputs": [
-          "0: Rotation [Rotation]",
-          "1: Factor [FloatFactor]",
-          "2: Vector [VectorXYZ]"
+          "Rotation: Rotation",
+          "Factor: FloatFactor",
+          "Vector: VectorXYZ"
         ],
         "outputs": [
-          "0: Rotation [Rotation]"
+          "Rotation: Rotation"
         ],
         "description": ""
       }
@@ -2613,11 +2613,11 @@
     "FunctionNodeAxesToRotation": {
       "FunctionNodeAxesToRotation": {
         "inputs": [
-          "0: Primary Axis [Vector]",
-          "1: Secondary Axis [Vector]"
+          "Primary Axis: Vector",
+          "Secondary Axis: Vector"
         ],
         "outputs": [
-          "0: Rotation [Rotation]"
+          "Rotation: Rotation"
         ],
         "description": "Create a rotation from a primary and (ideally orthogonal) secondary axis"
       }
@@ -2625,11 +2625,11 @@
     "FunctionNodeAxisAngleToRotation": {
       "FunctionNodeAxisAngleToRotation": {
         "inputs": [
-          "0: Axis [Vector]",
-          "1: Angle [FloatAngle]"
+          "Axis: Vector",
+          "Angle: FloatAngle"
         ],
         "outputs": [
-          "0: Rotation [Rotation]"
+          "Rotation: Rotation"
         ],
         "description": ""
       }
@@ -2637,11 +2637,11 @@
     "FunctionNodeBooleanMath": {
       "FunctionNodeBooleanMath": {
         "inputs": [
-          "0: Boolean [Bool]",
-          "1: Boolean [Bool]"
+          "Boolean: Bool",
+          "Boolean: Bool"
         ],
         "outputs": [
-          "0: Boolean [Bool]"
+          "Boolean: Bool"
         ],
         "description": ""
       }
@@ -2649,13 +2649,13 @@
     "FunctionNodeCombineColor": {
       "FunctionNodeCombineColor": {
         "inputs": [
-          "0: Red [FloatFactor]",
-          "1: Green [FloatFactor]",
-          "2: Blue [FloatFactor]",
-          "3: Alpha [FloatFactor]"
+          "Red: FloatFactor",
+          "Green: FloatFactor",
+          "Blue: FloatFactor",
+          "Alpha: FloatFactor"
         ],
         "outputs": [
-          "0: Color [Color]"
+          "Color: Color"
         ],
         "description": ""
       }
@@ -2663,25 +2663,25 @@
     "FunctionNodeCombineMatrix": {
       "FunctionNodeCombineMatrix": {
         "inputs": [
-          "0: Column 1 Row 1 [Float]",
-          "1: Column 1 Row 2 [Float]",
-          "2: Column 1 Row 3 [Float]",
-          "3: Column 1 Row 4 [Float]",
-          "4: Column 2 Row 1 [Float]",
-          "5: Column 2 Row 2 [Float]",
-          "6: Column 2 Row 3 [Float]",
-          "7: Column 2 Row 4 [Float]",
-          "8: Column 3 Row 1 [Float]",
-          "9: Column 3 Row 2 [Float]",
-          "10: Column 3 Row 3 [Float]",
-          "11: Column 3 Row 4 [Float]",
-          "12: Column 4 Row 1 [Float]",
-          "13: Column 4 Row 2 [Float]",
-          "14: Column 4 Row 3 [Float]",
-          "15: Column 4 Row 4 [Float]"
+          "Column 1 Row 1: Float",
+          "Column 1 Row 2: Float",
+          "Column 1 Row 3: Float",
+          "Column 1 Row 4: Float",
+          "Column 2 Row 1: Float",
+          "Column 2 Row 2: Float",
+          "Column 2 Row 3: Float",
+          "Column 2 Row 4: Float",
+          "Column 3 Row 1: Float",
+          "Column 3 Row 2: Float",
+          "Column 3 Row 3: Float",
+          "Column 3 Row 4: Float",
+          "Column 4 Row 1: Float",
+          "Column 4 Row 2: Float",
+          "Column 4 Row 3: Float",
+          "Column 4 Row 4: Float"
         ],
         "outputs": [
-          "0: Matrix [Matrix]"
+          "Matrix: Matrix"
         ],
         "description": "Construct a 4x4 matrix from its individual values"
       }
@@ -2689,12 +2689,12 @@
     "FunctionNodeCombineTransform": {
       "FunctionNodeCombineTransform": {
         "inputs": [
-          "0: Translation [VectorTranslation]",
-          "1: Rotation [Rotation]",
-          "2: Scale [VectorXYZ]"
+          "Translation: VectorTranslation",
+          "Rotation: Rotation",
+          "Scale: VectorXYZ"
         ],
         "outputs": [
-          "0: Transform [Matrix]"
+          "Transform: Matrix"
         ],
         "description": ""
       }
@@ -2702,22 +2702,22 @@
     "FunctionNodeCompare": {
       "FunctionNodeCompare": {
         "inputs": [
-          "0: A [Float]",
-          "1: B [Float]",
-          "2: A [Int]",
-          "3: B [Int]",
-          "4: A [Vector]",
-          "5: B [Vector]",
-          "6: A [Color]",
-          "7: B [Color]",
-          "8: A [String]",
-          "9: B [String]",
-          "10: C [Float]",
-          "11: Angle [FloatAngle]",
-          "12: Epsilon [Float]"
+          "A: Float",
+          "B: Float",
+          "A: Int",
+          "B: Int",
+          "A: Vector",
+          "B: Vector",
+          "A: Color",
+          "B: Color",
+          "A: String",
+          "B: String",
+          "C: Float",
+          "Angle: FloatAngle",
+          "Epsilon: Float"
         ],
         "outputs": [
-          "0: Result [Bool]"
+          "Result: Bool"
         ],
         "description": ""
       }
@@ -2725,10 +2725,10 @@
     "FunctionNodeEulerToRotation": {
       "FunctionNodeEulerToRotation": {
         "inputs": [
-          "0: Euler [VectorEuler]"
+          "Euler: VectorEuler"
         ],
         "outputs": [
-          "0: Rotation [Rotation]"
+          "Rotation: Rotation"
         ],
         "description": ""
       }
@@ -2736,12 +2736,12 @@
     "FunctionNodeFindInString": {
       "FunctionNodeFindInString": {
         "inputs": [
-          "0: String [String]",
-          "1: Search [String]"
+          "String: String",
+          "Search: String"
         ],
         "outputs": [
-          "0: First Found [Int]",
-          "1: Count [Int]"
+          "First Found: Int",
+          "Count: Int"
         ],
         "description": ""
       }
@@ -2749,10 +2749,10 @@
     "FunctionNodeFloatToInt": {
       "FunctionNodeFloatToInt": {
         "inputs": [
-          "0: Float [Float]"
+          "Float: Float"
         ],
         "outputs": [
-          "0: Integer [Int]"
+          "Integer: Int"
         ],
         "description": ""
       }
@@ -2760,75 +2760,77 @@
     "FunctionNodeHashValue": {
       "FunctionNodeHashValue": {
         "inputs": [
-          "0: Value [Int]",
-          "1: Seed [Int]"
+          "Value: Int",
+          "Seed: Int"
         ],
         "outputs": [
-          "0: Hash [Int]"
+          "Hash: Int"
         ],
         "description": ""
       }
     },
     "FunctionNodeInputBool": {
       "FunctionNodeInputBool": {
-        "inputs": [],
+        "inputs": [
+          "Boolean: Bool"
+        ],
         "outputs": [
-          "0: Boolean [Bool]"
+          "Boolean: Bool"
         ],
         "description": ""
       }
     },
     "FunctionNodeInputColor": {
       "FunctionNodeInputColor": {
-        "inputs": [],
+        "inputs": [
+          "Color: Color"
+        ],
         "outputs": [
-          "0: Color [Color]"
+          "Color: Color"
         ],
         "description": ""
       }
     },
     "FunctionNodeInputInt": {
       "FunctionNodeInputInt": {
-        "inputs": [],
+        "inputs": [
+          "Integer: Int"
+        ],
         "outputs": [
-          "0: Integer [Int]"
+          "Integer: Int"
         ],
         "description": ""
       }
     },
     "FunctionNodeInputRotation": {
       "FunctionNodeInputRotation": {
-        "inputs": [],
-        "outputs": [
-          "0: Rotation [Rotation]"
+        "inputs": [
+          "Rotation: Rotation"
         ],
-        "description": ""
-      }
-    },
-    "FunctionNodeInputSpecialCharacters": {
-      "FunctionNodeInputSpecialCharacters": {
-        "inputs": [],
         "outputs": [
-          "0: Line Break [String]",
-          "1: Tab [String]"
+          "Rotation: Rotation"
         ],
         "description": ""
       }
     },
     "FunctionNodeInputString": {
       "FunctionNodeInputString": {
-        "inputs": [],
+        "inputs": [
+          "String: String"
+        ],
         "outputs": [
-          "0: String [String]"
+          "String: String"
         ],
         "description": ""
       }
     },
     "FunctionNodeInputVector": {
       "FunctionNodeInputVector": {
-        "inputs": [],
+        "inputs": [
+          "Vector: Vector"
+        ],
         "outputs": [
-          "0: Vector [Vector]"
+          "Vector: Vector"
         ],
         "description": ""
       }
@@ -2836,12 +2838,12 @@
     "FunctionNodeIntegerMath": {
       "FunctionNodeIntegerMath": {
         "inputs": [
-          "0: Value [Int]",
-          "1: Value [Int]",
-          "2: Value [Int]"
+          "Value: Int",
+          "Value: Int",
+          "Value: Int"
         ],
         "outputs": [
-          "0: Value [Int]"
+          "Value: Int"
         ],
         "description": ""
       }
@@ -2849,11 +2851,11 @@
     "FunctionNodeInvertMatrix": {
       "FunctionNodeInvertMatrix": {
         "inputs": [
-          "0: Matrix [Matrix]"
+          "Matrix: Matrix"
         ],
         "outputs": [
-          "0: Matrix [Matrix]",
-          "1: Invertible [Bool]"
+          "Matrix: Matrix",
+          "Invertible: Bool"
         ],
         "description": ""
       }
@@ -2861,10 +2863,10 @@
     "FunctionNodeInvertRotation": {
       "FunctionNodeInvertRotation": {
         "inputs": [
-          "0: Rotation [Rotation]"
+          "Rotation: Rotation"
         ],
         "outputs": [
-          "0: Rotation [Rotation]"
+          "Rotation: Rotation"
         ],
         "description": ""
       }
@@ -2872,10 +2874,10 @@
     "FunctionNodeMatrixDeterminant": {
       "FunctionNodeMatrixDeterminant": {
         "inputs": [
-          "0: Matrix [Matrix]"
+          "Matrix: Matrix"
         ],
         "outputs": [
-          "0: Determinant [Float]"
+          "Determinant: Float"
         ],
         "description": ""
       }
@@ -2883,11 +2885,11 @@
     "FunctionNodeMatrixMultiply": {
       "FunctionNodeMatrixMultiply": {
         "inputs": [
-          "0: Matrix [Matrix]",
-          "1: Matrix [Matrix]"
+          "Matrix: Matrix",
+          "Matrix: Matrix"
         ],
         "outputs": [
-          "0: Matrix [Matrix]"
+          "Matrix: Matrix"
         ],
         "description": ""
       }
@@ -2895,11 +2897,11 @@
     "FunctionNodeProjectPoint": {
       "FunctionNodeProjectPoint": {
         "inputs": [
-          "0: Vector [VectorXYZ]",
-          "1: Transform [Matrix]"
+          "Vector: VectorXYZ",
+          "Transform: Matrix"
         ],
         "outputs": [
-          "0: Vector [VectorXYZ]"
+          "Vector: VectorXYZ"
         ],
         "description": "Project a point using a matrix, using location, rotation, scale, and perspective divide"
       }
@@ -2907,13 +2909,13 @@
     "FunctionNodeQuaternionToRotation": {
       "FunctionNodeQuaternionToRotation": {
         "inputs": [
-          "0: W [Float]",
-          "1: X [Float]",
-          "2: Y [Float]",
-          "3: Z [Float]"
+          "W: Float",
+          "X: Float",
+          "Y: Float",
+          "Z: Float"
         ],
         "outputs": [
-          "0: Rotation [Rotation]"
+          "Rotation: Rotation"
         ],
         "description": ""
       }
@@ -2921,21 +2923,21 @@
     "FunctionNodeRandomValue": {
       "FunctionNodeRandomValue": {
         "inputs": [
-          "0: Min [Vector]",
-          "1: Max [Vector]",
-          "2: Min [Float]",
-          "3: Max [Float]",
-          "4: Min [Int]",
-          "5: Max [Int]",
-          "6: Probability [FloatFactor]",
-          "7: ID [Int]",
-          "8: Seed [Int]"
+          "Min: Vector",
+          "Max: Vector",
+          "Min: Float",
+          "Max: Float",
+          "Min: Int",
+          "Max: Int",
+          "Probability: FloatFactor",
+          "ID: Int",
+          "Seed: Int"
         ],
         "outputs": [
-          "0: Value [Vector]",
-          "1: Value [Float]",
-          "2: Value [Int]",
-          "3: Value [Bool]"
+          "Value: Vector",
+          "Value: Float",
+          "Value: Int",
+          "Value: Bool"
         ],
         "description": ""
       }
@@ -2943,12 +2945,12 @@
     "FunctionNodeReplaceString": {
       "FunctionNodeReplaceString": {
         "inputs": [
-          "0: String [String]",
-          "1: Find [String]",
-          "2: Replace [String]"
+          "String: String",
+          "Find: String",
+          "Replace: String"
         ],
         "outputs": [
-          "0: String [String]"
+          "String: String"
         ],
         "description": ""
       }
@@ -2956,13 +2958,13 @@
     "FunctionNodeRotateEuler": {
       "FunctionNodeRotateEuler": {
         "inputs": [
-          "0: Rotation [VectorEuler]",
-          "1: Rotate By [VectorEuler]",
-          "2: Axis [VectorXYZ]",
-          "3: Angle [FloatAngle]"
+          "Rotation: VectorEuler",
+          "Rotate By: VectorEuler",
+          "Axis: VectorXYZ",
+          "Angle: FloatAngle"
         ],
         "outputs": [
-          "0: Rotation [Vector]"
+          "Rotation: Vector"
         ],
         "description": ""
       }
@@ -2970,11 +2972,11 @@
     "FunctionNodeRotateRotation": {
       "FunctionNodeRotateRotation": {
         "inputs": [
-          "0: Rotation [Rotation]",
-          "1: Rotate By [Rotation]"
+          "Rotation: Rotation",
+          "Rotate By: Rotation"
         ],
         "outputs": [
-          "0: Rotation [Rotation]"
+          "Rotation: Rotation"
         ],
         "description": ""
       }
@@ -2982,11 +2984,11 @@
     "FunctionNodeRotateVector": {
       "FunctionNodeRotateVector": {
         "inputs": [
-          "0: Vector [Vector]",
-          "1: Rotation [Rotation]"
+          "Vector: Vector",
+          "Rotation: Rotation"
         ],
         "outputs": [
-          "0: Vector [Vector]"
+          "Vector: Vector"
         ],
         "description": ""
       }
@@ -2994,11 +2996,11 @@
     "FunctionNodeRotationToAxisAngle": {
       "FunctionNodeRotationToAxisAngle": {
         "inputs": [
-          "0: Rotation [Rotation]"
+          "Rotation: Rotation"
         ],
         "outputs": [
-          "0: Axis [Vector]",
-          "1: Angle [FloatAngle]"
+          "Axis: Vector",
+          "Angle: FloatAngle"
         ],
         "description": ""
       }
@@ -3006,10 +3008,10 @@
     "FunctionNodeRotationToEuler": {
       "FunctionNodeRotationToEuler": {
         "inputs": [
-          "0: Rotation [Rotation]"
+          "Rotation: Rotation"
         ],
         "outputs": [
-          "0: Euler [VectorEuler]"
+          "Euler: VectorEuler"
         ],
         "description": ""
       }
@@ -3017,13 +3019,13 @@
     "FunctionNodeRotationToQuaternion": {
       "FunctionNodeRotationToQuaternion": {
         "inputs": [
-          "0: Rotation [Rotation]"
+          "Rotation: Rotation"
         ],
         "outputs": [
-          "0: W [Float]",
-          "1: X [Float]",
-          "2: Y [Float]",
-          "3: Z [Float]"
+          "W: Float",
+          "X: Float",
+          "Y: Float",
+          "Z: Float"
         ],
         "description": ""
       }
@@ -3031,13 +3033,13 @@
     "FunctionNodeSeparateColor": {
       "FunctionNodeSeparateColor": {
         "inputs": [
-          "0: Color [Color]"
+          "Color: Color"
         ],
         "outputs": [
-          "0: Red [Float]",
-          "1: Green [Float]",
-          "2: Blue [Float]",
-          "3: Alpha [Float]"
+          "Red: Float",
+          "Green: Float",
+          "Blue: Float",
+          "Alpha: Float"
         ],
         "description": ""
       }
@@ -3045,25 +3047,25 @@
     "FunctionNodeSeparateMatrix": {
       "FunctionNodeSeparateMatrix": {
         "inputs": [
-          "0: Matrix [Matrix]"
+          "Matrix: Matrix"
         ],
         "outputs": [
-          "0: Column 1 Row 1 [Float]",
-          "1: Column 1 Row 2 [Float]",
-          "2: Column 1 Row 3 [Float]",
-          "3: Column 1 Row 4 [Float]",
-          "4: Column 2 Row 1 [Float]",
-          "5: Column 2 Row 2 [Float]",
-          "6: Column 2 Row 3 [Float]",
-          "7: Column 2 Row 4 [Float]",
-          "8: Column 3 Row 1 [Float]",
-          "9: Column 3 Row 2 [Float]",
-          "10: Column 3 Row 3 [Float]",
-          "11: Column 3 Row 4 [Float]",
-          "12: Column 4 Row 1 [Float]",
-          "13: Column 4 Row 2 [Float]",
-          "14: Column 4 Row 3 [Float]",
-          "15: Column 4 Row 4 [Float]"
+          "Column 1 Row 1: Float",
+          "Column 1 Row 2: Float",
+          "Column 1 Row 3: Float",
+          "Column 1 Row 4: Float",
+          "Column 2 Row 1: Float",
+          "Column 2 Row 2: Float",
+          "Column 2 Row 3: Float",
+          "Column 2 Row 4: Float",
+          "Column 3 Row 1: Float",
+          "Column 3 Row 2: Float",
+          "Column 3 Row 3: Float",
+          "Column 3 Row 4: Float",
+          "Column 4 Row 1: Float",
+          "Column 4 Row 2: Float",
+          "Column 4 Row 3: Float",
+          "Column 4 Row 4: Float"
         ],
         "description": "Split a 4x4 matrix into its individual values"
       }
@@ -3071,12 +3073,12 @@
     "FunctionNodeSeparateTransform": {
       "FunctionNodeSeparateTransform": {
         "inputs": [
-          "0: Transform [Matrix]"
+          "Transform: Matrix"
         ],
         "outputs": [
-          "0: Translation [VectorTranslation]",
-          "1: Rotation [Rotation]",
-          "2: Scale [VectorXYZ]"
+          "Translation: VectorTranslation",
+          "Rotation: Rotation",
+          "Scale: VectorXYZ"
         ],
         "description": ""
       }
@@ -3084,12 +3086,12 @@
     "FunctionNodeSliceString": {
       "FunctionNodeSliceString": {
         "inputs": [
-          "0: String [String]",
-          "1: Position [Int]",
-          "2: Length [Int]"
+          "String: String",
+          "Position: Int",
+          "Length: Int"
         ],
         "outputs": [
-          "0: String [String]"
+          "String: String"
         ],
         "description": ""
       }
@@ -3097,10 +3099,10 @@
     "FunctionNodeStringLength": {
       "FunctionNodeStringLength": {
         "inputs": [
-          "0: String [String]"
+          "String: String"
         ],
         "outputs": [
-          "0: Length [Int]"
+          "Length: Int"
         ],
         "description": ""
       }
@@ -3108,11 +3110,11 @@
     "FunctionNodeTransformDirection": {
       "FunctionNodeTransformDirection": {
         "inputs": [
-          "0: Direction [VectorXYZ]",
-          "1: Transform [Matrix]"
+          "Direction: VectorXYZ",
+          "Transform: Matrix"
         ],
         "outputs": [
-          "0: Direction [VectorXYZ]"
+          "Direction: VectorXYZ"
         ],
         "description": ""
       }
@@ -3120,11 +3122,11 @@
     "FunctionNodeTransformPoint": {
       "FunctionNodeTransformPoint": {
         "inputs": [
-          "0: Vector [VectorXYZ]",
-          "1: Transform [Matrix]"
+          "Vector: VectorXYZ",
+          "Transform: Matrix"
         ],
         "outputs": [
-          "0: Vector [VectorXYZ]"
+          "Vector: VectorXYZ"
         ],
         "description": ""
       }
@@ -3132,10 +3134,10 @@
     "FunctionNodeTransposeMatrix": {
       "FunctionNodeTransposeMatrix": {
         "inputs": [
-          "0: Matrix [Matrix]"
+          "Matrix: Matrix"
         ],
         "outputs": [
-          "0: Matrix [Matrix]"
+          "Matrix: Matrix"
         ],
         "description": ""
       }
@@ -3143,123 +3145,164 @@
     "FunctionNodeValueToString": {
       "FunctionNodeValueToString": {
         "inputs": [
-          "0: Value [Float]",
-          "1: Decimals [Int]"
+          "Value: Float",
+          "Decimals: Int"
         ],
         "outputs": [
-          "0: String [String]"
+          "String: String"
         ],
         "description": ""
       }
     },
     "ShaderNodeTexChecker": {
-        "ShaderNodeTexChecker": {
-          "inputs": [
-            "Vector: Vector",
-            "Color1: Color",
-            "Color2: Color",
-            "Scale: Float"
-          ],
-          "outputs": [
-            "Color: Color",
-            "Fac: Float"
-          ],
-          "description": "Generate a checkerboard texture"
-        }
-      },
+      "ShaderNodeTexChecker": {
+        "inputs": [
+          "Vector: Vector",
+          "Color1: Color",
+          "Color2: Color",
+          "Scale: Float"
+        ],
+        "outputs": [
+          "Color: Color",
+          "Fac: Float"
+        ],
+        "description": "Generate a checkerboard texture"
+      }
+    },
     "ShaderNodeTexBrick": {
-        "ShaderNodeTexBrick": {
-          "inputs": [
-            "Vector: Vector",
-            "Color1: Color",
-            "Color2: Color",
-            "Mortar: Color",
-            "Scale: Float",
-            "Mortar Size: Float",
-            "Mortar Smooth: Float",
-            "Bias: Float",
-            "Brick Width: Float",
-            "Row Height: Float"
-          ],
-          "outputs": [
-            "Color: Color",
-            "Fac: Float"
-          ],
-          "description": "Generate a procedural texture producing bricks"
-        }
-      },
+      "ShaderNodeTexBrick": {
+        "inputs": [
+          "Vector: Vector",
+          "Color1: Color",
+          "Color2: Color",
+          "Mortar: Color",
+          "Scale: Float",
+          "Mortar Size: Float",
+          "Mortar Smooth: Float",
+          "Bias: Float",
+          "Brick Width: Float",
+          "Row Height: Float"
+        ],
+        "outputs": [
+          "Color: Color",
+          "Fac: Float"
+        ],
+        "description": "Generate a procedural texture producing bricks"
+      }
+    },
     "ShaderNodeTexNoise": {
-        "ShaderNodeTexNoise": {
-          "inputs": [
-            "Vector: Vector",
-            "W: Float",
-            "Scale: Float",
-            "Detail: Float",
-            "Roughness: FloatFactor",
-            "Lacunarity: Float",
-            "Offset: Float",
-            "Gain: Float",
-            "Distortion: Float"
-          ],
-          "outputs": [
-            "Fac: Float",
-            "Color: Color"
-          ],
-          "description": "Generate fractal Perlin noise"
-        }
-      },
+      "ShaderNodeTexNoise": {
+        "inputs": [
+          "Vector: Vector",
+          "W: Float",
+          "Scale: Float",
+          "Detail: Float",
+          "Roughness: FloatFactor",
+          "Lacunarity: Float",
+          "Offset: Float",
+          "Gain: Float",
+          "Distortion: Float"
+        ],
+        "outputs": [
+          "Fac: Float",
+          "Color: Color"
+        ],
+        "description": "Generate fractal Perlin noise"
+      }
+    },
     "ShaderNodeTexVoronoi": {
-        "ShaderNodeTexVoronoi": {
-          "inputs": [
-            "Vector: Vector",
-            "W: Float",
-            "Scale: Float",
-            "Detail: Float",
-            "Roughness: FloatFactor",
-            "Lacunarity: Float",
-            "Smoothness: FloatFactor",
-            "Exponent: Float",
-            "Randomness: FloatFactor"
-          ],
-          "outputs": [
-            "Distance: Float",
-            "Color: Color",
-            "Position: Vector",
-            "W: Float",
-            "Radius: Float"
-          ],
-          "description": "Generate Worley noise based on the distance to random points. Typically used to generate textures such as stones, water, or biological cells"
-        }
-      },
+      "ShaderNodeTexVoronoi": {
+        "inputs": [
+          "Vector: Vector",
+          "W: Float",
+          "Scale: Float",
+          "Detail: Float",
+          "Roughness: FloatFactor",
+          "Lacunarity: Float",
+          "Smoothness: FloatFactor",
+          "Exponent: Float",
+          "Randomness: FloatFactor"
+        ],
+        "outputs": [
+          "Distance: Float",
+          "Color: Color",
+          "Position: Vector",
+          "W: Float",
+          "Radius: Float"
+        ],
+        "description": "Generate Worley noise based on the distance to random points. Typically used to generate textures such as stones, water, or biological cells"
+      }
+    },
     "ShaderNodeTexWhiteNoise": {
-        "ShaderNodeTexWhiteNoise": {
-          "inputs": [
-            "Vector: Vector",
-            "W: Float"
-          ],
-          "outputs": [
-            "Value: Float",
-            "Color: Color"
-          ],
-          "description": "Return a random value or color based on an input seed"
-        }
-      },
+      "ShaderNodeTexWhiteNoise": {
+        "inputs": [
+          "Vector: Vector",
+          "W: Float"
+        ],
+        "outputs": [
+          "Value: Float",
+          "Color: Color"
+        ],
+        "description": "Return a random value or color based on an input seed"
+      }
+    },
     "ShaderNodeTexGabor": {
-        "ShaderNodeTexGabor": {
+      "ShaderNodeTexGabor": {
+        "inputs": [
+          "Vector: Vector",
+          "Scale: Float",
+          "Frequency: Float",
+          "Anisotropy: FloatFactor",
+          "Orientation: FloatAngle",
+          "Orientation: VectorDirection"
+        ],
+        "outputs": [
+          "Value: Float",
+          "Phase: Float",
+          "Intensity: Float"
+        ],
+        "description": "Generate Gabor noise"
+      }
+    },
+    "ShaderNodeVectorMath": {
+      "ShaderNodeVectorMath": {
+        "inputs": [
+          "Vector: Vector",
+          "Vector: Vector",
+          "Vector: Vector",
+          "Scale: Float"
+        ],
+        "outputs": [
+          "Vector: Vector",
+          "Value: Float"
+        ],
+        "description": "Perform vector math operation"
+      }
+    },
+    "ShaderNodeClamp": {
+      "ShaderNodeClamp": {
+        "inputs": [
+          "Value: Float",
+          "Min: Float",
+          "Max: Float"
+        ],
+        "outputs": [
+          "Result: Float"
+        ],
+        "description": "Clamp a value between a minimum and a maximum"
+      }
+    },
+    "ShaderNodeMath": {
+        "ShaderNodeMath": {
           "inputs": [
-            "Vector: Vector",
-            "Scale: Float",
-            "Frequency: Float",
-            "Anisotropy: FloatFactor",
-            "Orientation: FloatAngle",
-            "Orientation: VectorDirection"
+            "Value: Float",
+            "Value: Float",
+            "Value: Float"
           ],
           "outputs": [
-            "Value: Float",
-            "Phase: Float",
-            "Intensity: Float"
+            "Value: Float"
           ],
-          "description": "Generate Gabor noise"
+          "description": "Perform math operations"
         }
-    }
-}
+      }
+  }
