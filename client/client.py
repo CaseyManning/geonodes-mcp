@@ -114,16 +114,37 @@ class MCPClient:
                     })
                     continue
 
-                self.messages.append({
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "tool_result",
-                            "tool_use_id": content.id,
-                            "content": result.content
-                        }
-                    ]
-                })
+                if tool_name == "visually_evaluate_node":
+                    self.messages.append({
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "tool_result",
+                                "tool_use_id": content.id,
+                                "content": "capture viewport image"
+                            }
+                        ]
+                    })
+                    self.messages.append({
+                        "role": "assistant",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": result.content[0].text.replace("\n", "").strip()
+                            }
+                        ]
+                    })
+                else:
+                    self.messages.append({
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "tool_result",
+                                "tool_use_id": content.id,
+                                "content": result.content
+                            }
+                        ]
+                    })
 
                 final_text.append(f"Got tool output: {[content.text for content in result.content]}")
 

@@ -283,7 +283,10 @@ class BlenderMCPServer:
             if inputSocket.isnumeric():
                 inputSocket = int(inputSocket)
             elif(not inputSocket in node.inputs):
-                return {"status": "error", "message": f"Input socket {inputSocket} not found for node. Available inputs: {node.inputs.keys()}. Alternatively, pass a number for the input key to set an input by index"}
+                if inputSocket in get_extra_property_names(node):
+                    return {"status": "error", "message": f"Input socket {inputSocket} not found for node. It looks like you're trying to set a property, not an input. If so, use the set_node_property tool instead."}
+                else:
+                    return {"status": "error", "message": f"Input socket {inputSocket} not found for node. Available inputs: {node.inputs.keys()}. Alternatively, pass a number for the input key to set an input by index."}
             node.inputs[inputSocket].default_value = inputValues[inputSocket]
             newValues[inputSocket] = str(node.inputs[inputSocket].default_value)
                     
@@ -357,7 +360,7 @@ class BlenderMCPServer:
 
         geo_node_group.links.new(self.nodes[node_id].outputs[0], self.output_node.inputs[0])
 
-        return {"status": "success", "message": f"Output node set to {self.output_node.name}"}
+        return {"status": "success", "message": f"Output node set to {self.nodes[node_id].name}"}
 
     def set_node_property(self, node_id: int, name: str, value: any):
         if(not node_id in self.nodes):
@@ -499,12 +502,12 @@ class BlenderMCPServer:
                 node['id'] = self.generate_id()
                 print('err: no node id for node: ', node.name, ". regenerating.")
             nodesData["nodes"].append({"id": node["id"], "name": node.name})
-            self.nodes[node["id"]] = node #TODO: verify this works
+            self.nodes[node["id"]] = node
         nodesData["links"] = []
 
         for link in links:
-            fromData = link.from_node['id'] + ": " + link.from_node.name + " [" + link.from_socket.name + "]"
-            toData = link.to_node['id'] + ": " + link.to_node.name + " [" + link.to_socket.name + "]"
+            fromData = str(link.from_node['id']) + ": " + link.from_node.name + " [" + link.from_socket.name + "]"
+            toData = str(link.to_node['id']) + ": " + link.to_node.name + " [" + link.to_socket.name + "]"
             nodesData["links"].append({"from": fromData, "to": toData})
 
         print(nodesData)
@@ -590,10 +593,8 @@ class BLENDERMCP_OT_Initialize(bpy.types.Operator):
 
         mod = obj.modifiers.new("Geo Node Modifier", type='NODES')
         node_group = bpy.data.node_groups.new("mcp nodes", type='GeometryNodeTree')
-        node_group.interface.new_socket(name="Geo Out", in_out ="OUTPUT", socket_type="NodeSocketGeometry")
+        node_group.interface.new_socket(name="Geometry", in_out ="OUTPUT", socket_type="NodeSocketGeometry")
 
-        # node_in        = node_group.nodes.new("NodeGroupInput")
-        # node_transform = node_group.nodes.new("GeometryNodeTransform")
         node_out       = node_group.nodes.new("NodeGroupOutput")
         node_out['id'] = 0
         global initialized_output_node
@@ -608,8 +609,8 @@ class BLENDERMCP_OT_Initialize(bpy.types.Operator):
             for node in get_nodes(cat):
                 print('bl_idname: {node.nodetype}, type: {node.label}'.format(node=node))      
 
-        node_vecmath = node_group.nodes.new("ShaderNodeVectorMath")
-        setattr(node_vecmath, "operation", "MULTIPLY")
+        # node_vecmath = node_group.nodes.new("ShaderNodeVectorMath")
+        # setattr(node_vecmath, "operation", "MULTIPLY")
 
         mod.node_group = node_group
 
@@ -647,7 +648,7 @@ def get_extra_properties(node):
         extraProperties.append(property)
     return extraProperties
 
-def print_node_data(node): # TODO: json node type names are doubled in the output
+def print_node_data(node):
     nodeData = {}
     nodeData["inputs"] = []
     nodeData["outputs"] = [] 
@@ -688,7 +689,7 @@ class BLENDERMCP_OT_GenerateNodeData(bpy.types.Operator):
 
         mod = obj.modifiers.new("Geo Node Modifier", type='NODES')
         node_group = bpy.data.node_groups.new("mcp nodes", type='GeometryNodeTree')
-        node_group.interface.new_socket(name="Geo Out", in_out ="OUTPUT", socket_type="NodeSocketGeometry")
+        node_group.interface.new_socket(name="Geometry", in_out ="OUTPUT", socket_type="NodeSocketGeometry")
 
         # node_in        = node_group.nodes.new("NodeGroupInput")
         # node_transform = node_group.nodes.new("GeometryNodeTransform")
