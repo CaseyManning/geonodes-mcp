@@ -3151,5 +3151,115 @@
         ],
         "description": ""
       }
+    },
+    "ShaderNodeTexChecker": {
+        "ShaderNodeTexChecker": {
+          "inputs": [
+            "Vector: Vector",
+            "Color1: Color",
+            "Color2: Color",
+            "Scale: Float"
+          ],
+          "outputs": [
+            "Color: Color",
+            "Fac: Float"
+          ],
+          "description": "Generate a checkerboard texture"
+        }
+      },
+    "ShaderNodeTexBrick": {
+        "ShaderNodeTexBrick": {
+          "inputs": [
+            "Vector: Vector",
+            "Color1: Color",
+            "Color2: Color",
+            "Mortar: Color",
+            "Scale: Float",
+            "Mortar Size: Float",
+            "Mortar Smooth: Float",
+            "Bias: Float",
+            "Brick Width: Float",
+            "Row Height: Float"
+          ],
+          "outputs": [
+            "Color: Color",
+            "Fac: Float"
+          ],
+          "description": "Generate a procedural texture producing bricks"
+        }
+      },
+    "ShaderNodeTexNoise": {
+        "ShaderNodeTexNoise": {
+          "inputs": [
+            "Vector: Vector",
+            "W: Float",
+            "Scale: Float",
+            "Detail: Float",
+            "Roughness: FloatFactor",
+            "Lacunarity: Float",
+            "Offset: Float",
+            "Gain: Float",
+            "Distortion: Float"
+          ],
+          "outputs": [
+            "Fac: Float",
+            "Color: Color"
+          ],
+          "description": "Generate fractal Perlin noise"
+        }
+      },
+    "ShaderNodeTexVoronoi": {
+        "ShaderNodeTexVoronoi": {
+          "inputs": [
+            "Vector: Vector",
+            "W: Float",
+            "Scale: Float",
+            "Detail: Float",
+            "Roughness: FloatFactor",
+            "Lacunarity: Float",
+            "Smoothness: FloatFactor",
+            "Exponent: Float",
+            "Randomness: FloatFactor"
+          ],
+          "outputs": [
+            "Distance: Float",
+            "Color: Color",
+            "Position: Vector",
+            "W: Float",
+            "Radius: Float"
+          ],
+          "description": "Generate Worley noise based on the distance to random points. Typically used to generate textures such as stones, water, or biological cells"
+        }
+      },
+    "ShaderNodeTexWhiteNoise": {
+        "ShaderNodeTexWhiteNoise": {
+          "inputs": [
+            "Vector: Vector",
+            "W: Float"
+          ],
+          "outputs": [
+            "Value: Float",
+            "Color: Color"
+          ],
+          "description": "Return a random value or color based on an input seed"
+        }
+      },
+    "ShaderNodeTexGabor": {
+        "ShaderNodeTexGabor": {
+          "inputs": [
+            "Vector: Vector",
+            "Scale: Float",
+            "Frequency: Float",
+            "Anisotropy: FloatFactor",
+            "Orientation: FloatAngle",
+            "Orientation: VectorDirection"
+          ],
+          "outputs": [
+            "Value: Float",
+            "Phase: Float",
+            "Intensity: Float"
+          ],
+          "description": "Generate Gabor noise"
+        }
     }
 }
