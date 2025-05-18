@@ -28,7 +28,6 @@ bl_info = {
 }
 
 OBJECT_NAME = "Object"
-img_filepath = "//viewport_render.png"
 
 initialized_output_node = None
 
@@ -43,6 +42,7 @@ class BlenderMCPServer:
         self.nodes = {}
         self.output_node = None
         self.viewer_node = None
+        self.img_filepath = "//viewport_render.png"
 
     def start(self):
         if self.running:
@@ -199,7 +199,6 @@ class BlenderMCPServer:
         cmd_type = command.get("type")
         params = command.get("params", {})
 
-        # Base handlers that are always available
         handlers = {
             "ping": self.ping,
             "add_node": self.add_node,
@@ -209,7 +208,8 @@ class BlenderMCPServer:
             "add_link": self.add_link,
             "set_output_node": self.set_output_node,
             "visually_evaluate_node": self.visually_evaluate_node,
-            "set_node_property": self.set_node_property
+            "set_node_property": self.set_node_property,
+            "set_img_filepath": self.set_img_filepath
         }
         
         handler = handlers.get(cmd_type)
@@ -256,6 +256,9 @@ class BlenderMCPServer:
 
         return {"status": "success", "result": {"nodeId": new_node['id']}}
 
+    def set_img_filepath(self, filepath):
+        self.img_filepath = filepath
+
     def title_case_input_values(self, inputValues):
         newValues = {}
         for inputSocket in inputValues.keys():
@@ -283,7 +286,7 @@ class BlenderMCPServer:
             if inputSocket.isnumeric():
                 inputSocket = int(inputSocket)
             elif(not inputSocket in node.inputs):
-                if inputSocket in get_extra_property_names(node):
+                if inputSocket.lower() in get_extra_property_names(node):
                     return {"status": "error", "message": f"Input socket {inputSocket} not found for node. It looks like you're trying to set a property, not an input. If so, use the set_node_property tool instead."}
                 else:
                     return {"status": "error", "message": f"Input socket {inputSocket} not found for node. Available inputs: {node.inputs.keys()}. Alternatively, pass a number for the input key to set an input by index."}
@@ -419,7 +422,7 @@ class BlenderMCPServer:
         scene.render.engine = 'BLENDER_WORKBENCH'
         # Ensure output format and filepath
         scene.render.image_settings.file_format = 'PNG'
-        scene.render.filepath = bpy.path.abspath(img_filepath)
+        scene.render.filepath = bpy.path.abspath(self.img_filepath)
         
         # Find a 3D View area and region in the current context (for override)
         window = bpy.context.window or bpy.context.window_manager.windows[0]

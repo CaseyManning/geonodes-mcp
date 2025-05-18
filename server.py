@@ -9,6 +9,7 @@ import asyncio
 import logging
 from typing import AsyncIterator, Dict, Any, List, Annotated
 from gemini_image import describe_image, evaluate_image
+import os
 
 mcp = FastMCP("weather")
 
@@ -321,7 +322,7 @@ def end_loop(ctx: Context) -> str:
     return "trying to end the loop"
 
 @mcp.tool()
-def set_node_property(ctx: Context, node_id: int, name: Annotated[str, "non-input property to set. use get_node_type_info to see available properties"], value: any) -> str:
+def set_node_property(ctx: Context, node_id: int, name: Annotated[str, "non-input property to set. use get_node_type_info to see available properties"], value: Any) -> str:
     return send_blender_command("set_node_property", {"node_id": node_id, "name": name, "value": value})
 
 @mcp.tool()
@@ -352,4 +353,5 @@ def load_node_data():
 if __name__ == "__main__":
     load_node_data()
     get_blender_connection()
+    send_blender_command("set_img_filepath", {"filepath": os.path.abspath("./viewport_render.png")})
     mcp.run(transport='stdio')
