@@ -320,13 +320,28 @@ def end_loop(ctx: Context) -> str:
 def set_node_property(ctx: Context, node_id: int, name: Annotated[str, "non-input property to set. use get_node_type_info to see available properties"], value: Any) -> str:
     return send_blender_command("set_node_property", {"node_id": node_id, "name": name, "value": value})
 
+# @mcp.tool()
+# def visually_evaluate_node(ctx: Context, node_id: int, expected_output_description: str) -> str:
+#     """Visually evaluate a node
+#     Parameters:
+#     - node_id: The id of the node to visually evaluate
+#     - expected_output_description: A description of the expected visual output of that node
+#     """
+#     blender_out = send_blender_command("visually_evaluate_node", {"node_id": node_id})
+#     # return "got blender out: " + blender_out
+
+#     blender_out = json.loads(blender_out)
+
+#     if not blender_out["status"] == "success":
+#         return blender_out
+    
+#     filepath = blender_out["message"]
+#     # return "got filepath: " + filepath
+#     result = evaluate_image(filepath, expected_output_description)
+#     return result
+
 @mcp.tool()
-def visually_evaluate_node(ctx: Context, node_id: int, expected_output_description: str) -> str:
-    """Visually evaluate a node
-    Parameters:
-    - node_id: The id of the node to visually evaluate
-    - expected_output_description: A description of the expected visual output of that node
-    """
+def render_node_output(ctx: Context, node_id: int) -> str:
     blender_out = send_blender_command("visually_evaluate_node", {"node_id": node_id})
     # return "got blender out: " + blender_out
 
@@ -337,8 +352,7 @@ def visually_evaluate_node(ctx: Context, node_id: int, expected_output_descripti
     
     filepath = blender_out["message"]
     # return "got filepath: " + filepath
-    result = evaluate_image(filepath, expected_output_description)
-    return result
+    return filepath
 
 def load_node_data():
     global node_data

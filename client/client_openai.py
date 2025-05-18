@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 from openai import AsyncOpenAI
-
+import base64
 load_dotenv()          # pulls OPENAI_API_KEY and anything else from .env
 
 
@@ -18,7 +18,7 @@ class MCPClient:
     Same public surface as the original, but powered by OpenAI Chat Completions.
     """
 
-    def __init__(self, model: str = "gpt-4o-mini"):
+    def __init__(self, model: str = "gpt-4o"):
         self.model = model
         self.openai = AsyncOpenAI()         # uses environment vars for auth
         self.exit_stack = AsyncExitStack()
@@ -157,11 +157,33 @@ class MCPClient:
                            if getattr(result, "content", None) else str(result))
             final_text_chunks.append(f"[{tool_name} output] {result_text}")
 
-            self.messages.append({
-                "role": "tool",
-                "tool_call_id": call.id,
-                "content": result_text,
-            })
+            if tool_name == "render_node_output":
+                print('sending image output: ', result_text)
+                filepath = result_text
+                with open(filepath, 'rb') as f:
+                    image_bytes = f.read()
+
+                base64_image = base64.b64encode(image_bytes).decode('utf-8')
+
+                self.messages.append({
+                    "role": "tool",
+                    "tool_call_id": call.id,
+                    "content": "node rendered. visual output included in next user message."
+                })
+                self.messages.append({
+                    "role": "user",
+                    "content": [
+                        { "type": "text", "text": "node render output" },
+                        { "type": "image_url", "image_url": { "url": f"data:image/png;base64,{base64_image}" } },
+                    ],
+                })
+
+            else:
+                self.messages.append({
+                    "role": "tool",
+                    "tool_call_id": call.id,
+                    "content": result_text,
+                })
 
         return {"new_text": "\n".join(final_text_chunks), "is_done": False}
 

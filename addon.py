@@ -42,7 +42,7 @@ class BlenderMCPServer:
         self.nodes = {}
         self.output_node = None
         self.viewer_node = None
-        self.img_filepath = "//viewport_render.png"
+        self.img_filepath = "/Users/caseymanning/Documents/viewport_render.png"
 
     def start(self):
         if self.running:
