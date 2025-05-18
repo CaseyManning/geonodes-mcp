@@ -250,12 +250,7 @@ def get_node_type_info(ctx: Context, node_type: str) -> str:
     return json.dumps(node_data[node_type])
 
 @mcp.tool()
-def get_current_graph(ctx: Context) -> str:
-    """see the current node graph"""
-    return send_blender_command("get_current_graph")
-
-@mcp.tool()
-def add_node(ctx: Context, node_type: str, inputValues: Dict[str, Any]) -> str:
+def add_node(ctx: Context, node_type: str, inputValues: Dict[str, Any] = {}) -> str:
     """Add a node to the geometry nodes graph
     
     Parameters:

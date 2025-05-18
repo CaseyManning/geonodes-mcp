@@ -6,13 +6,17 @@ from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 from modelprovider import ModelProvider
+from anthropic import Anthropic
+from dotenv import load_dotenv
+
+load_dotenv()  # load environment variables from .env
 
 class MCPClient:
     def __init__(self):
         # Initialize session and client objects
         self.session: Optional[ClientSession] = None
         self.exit_stack = AsyncExitStack()
-        self.model_provider = ModelProvider()
+        self.anthropic = Anthropic()
         self.messages = []
 
         self.system_prompt = "You are a blender geometry nodes artist agent. Work with the tools provided to manipulate the geometry nodes graph into the requested 3d model. Add as many nodes as necessary to achieve the end result. While iterating, use the visual evaluation tool to get a description of any node to check if you're on the right track. When finished, or if you encounter a persistent error, call the end_loop tool to finish."
@@ -67,7 +71,7 @@ class MCPClient:
         #     "input_schema": {'properties': {}, 'title': 'end_loopArguments', 'type': 'object'}
         # })
 
-        response = self.model_provider.get_response(self.messages, self.system_prompt, available_tools)
+        response = self.get_response(self.messages, self.system_prompt, available_tools)
 
         final_text = []
 
@@ -163,6 +167,15 @@ class MCPClient:
             "new_text": "\n".join(final_text),
             "is_done": False
         }
+
+    def get_response(self, messages, system_prompt, available_tools):
+        return self.anthropic.messages.create(
+            model="claude-3-7-sonnet-20250219",
+            max_tokens=1000,
+            messages=messages,
+            system=system_prompt,
+            tools=available_tools
+        )
 
     async def agent_loop(self):
         """Run an interactive chat loop"""

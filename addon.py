@@ -257,7 +257,9 @@ class BlenderMCPServer:
         return {"status": "success", "result": {"nodeId": new_node['id']}}
 
     def set_img_filepath(self, filepath):
+        print('setting img filepath to: ', filepath)
         self.img_filepath = filepath
+        return {"status": "success", "result": {"img_filepath": self.img_filepath}}
 
     def title_case_input_values(self, inputValues):
         newValues = {}
@@ -312,7 +314,7 @@ class BlenderMCPServer:
             elif hasattr(inputSocket, "default_value"):
                 inputVal = inputSocket.default_value
                 result = {"socket": inputSocket.name, "value": str(inputVal)}
-                if(type(inputVal).__name__ == "bpy_prop_array"):
+                if(type(inputVal).__name__ == "bpy_prop_array" or type(inputVal).__name__ == "Vector"):
                     result["value"] = str([i for i in inputVal])
                 nodeState["inputs"].append(result)
             else:
@@ -358,8 +360,11 @@ class BlenderMCPServer:
             return {"status": "error", "message": f"Node with id {node_id} not found"}
         
         if(self.output_node == None):
-            self.output_node = geo_node_group.nodes.new("NodeGroupOutput")
-            self.output_node['id'] = self.generate_id()
+            if initialized_output_node is not None:
+                self.output_node = initialized_output_node
+            else:
+                self.output_node = geo_node_group.nodes.new("NodeGroupOutput")
+                self.output_node['id'] = self.generate_id()
 
         geo_node_group.links.new(self.nodes[node_id].outputs[0], self.output_node.inputs[0])
 
@@ -372,6 +377,8 @@ class BlenderMCPServer:
         node = self.nodes[node_id]
 
         if not hasattr(node, name):
+            if name in node.inputs:
+                return {"status": "error", "message": f"Node with id {node_id} does not have property {name}. It looks like you're trying to set an input. use set_node_values instead."}
             return {"status": "error", "message": f"Node with id {node_id} does not have property {name}. Available properties: {get_extra_property_names(node)}"}
 
         setattr(node, name, value)
@@ -422,7 +429,9 @@ class BlenderMCPServer:
         scene.render.engine = 'BLENDER_WORKBENCH'
         # Ensure output format and filepath
         scene.render.image_settings.file_format = 'PNG'
-        scene.render.filepath = bpy.path.abspath(self.img_filepath)
+        scene.render.filepath = self.img_filepath
+
+        print('scene.render.filepath: ', scene.render.filepath)
         
         # Find a 3D View area and region in the current context (for override)
         window = bpy.context.window or bpy.context.window_manager.windows[0]
@@ -477,7 +486,6 @@ class BlenderMCPServer:
         
         # Restore original render settings
         scene.render.engine = prev_engine
-        scene.render.filepath = prev_filepath
 
         for space in area.spaces: # TODO: lame
             if space.type == 'VIEW_3D':
